@@ -22,7 +22,6 @@ public class EquipmentController {
         menu.getItems().add("Sklepy");
         menu.getItems().add("Użytkownik");
         menu.getItems().add("Wyloguj się");
-        //Testowy push
     }
 
     @FXML
