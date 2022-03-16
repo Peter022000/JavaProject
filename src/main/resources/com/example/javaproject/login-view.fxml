@@ -3,16 +3,22 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="600.0" maxWidth="600.0" minHeight="600.0" minWidth="600.0" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javaproject.LoginController">
-   <children>
-      <Label layoutX="165.0" layoutY="128.0" prefHeight="94.0" prefWidth="308.0" text="Tu będzie logowanie">
-         <font>
-            <Font size="23.0" />
-         </font>
-      </Label>
-      <Button layoutX="139.0" layoutY="243.0" mnemonicParsing="false" onAction="#login" text="Zaloguj się" />
-      <Button layoutX="375.0" layoutY="243.0" mnemonicParsing="false" onAction="#register" text="Zarejestruj się" />
-   </children>
-</AnchorPane>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javaproject.LoginController">
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="110.0" layoutY="62.0" prefHeight="94.0" prefWidth="308.0" text="Tu będzie logowanie">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Label>
+            <Button layoutX="110.0" layoutY="200.0" mnemonicParsing="false" onAction="#login" text="Zaloguj się" />
+            <Button layoutX="300.0" layoutY="200.0" mnemonicParsing="false" onAction="#register" text="Zarejestruj się" />
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>

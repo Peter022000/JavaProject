@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javaproject.NavigationController">
+   <top>
+      <AnchorPane fx:id="navBody" prefHeight="57.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <ComboBox fx:id="menu" layoutX="14.0" layoutY="8.0" onAction="#menuAction" prefWidth="150.0" promptText="Menu" />
+            <ComboBox fx:id="shopMenu" layoutX="198.0" layoutY="8.0" onAction="#shopMenuAction" prefWidth="150.0" promptText="Shop menu" />
+         </children></AnchorPane>
+   </top>
+   <center>
+      <AnchorPane fx:id="sceneChange" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>
