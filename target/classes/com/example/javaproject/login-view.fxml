@@ -52,7 +52,7 @@
                </VBox.margin>
             </Label>
             <TextField maxWidth="300.0" prefHeight="10.0" prefWidth="300.0" styleClass="TextField" />
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="259.0" styleClass="MainButtonStyle" text="Log In">
+            <Button mnemonicParsing="false" onAction="#login" prefHeight="25.0" prefWidth="259.0" styleClass="MainButtonStyle" text="Log In">
                <VBox.margin>
                   <Insets top="30.0" />
                </VBox.margin>

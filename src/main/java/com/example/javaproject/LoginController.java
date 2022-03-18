@@ -17,21 +17,9 @@ import java.util.Objects;
 public class LoginController {
 
     @FXML
-    private ChoiceBox securityQuestions;
-
-    @FXML
-    void initialize()
+    public void initialize()
     {
-        securityQuestions.getItems().clear();
-        securityQuestions.getItems().add("What is the name of your favorite pet?");
-        securityQuestions.getItems().add("What primary school did you attend?");
-        securityQuestions.getItems().add("In what town or city was your first full time job?");
-        securityQuestions.getItems().add("What is your spouse or partner's mother's maiden name?");
-        securityQuestions.getItems().add("What is the middle name of your oldest child?");
-        securityQuestions.getItems().add("What is your favourite movie?");
-        securityQuestions.getItems().add("What is your memorable date?");
-        securityQuestions.getItems().add("What are the last five digits of your driver's license number?");
-        securityQuestions.setValue("What is the name of your favorite pet?");
+
     }
 
     @FXML
@@ -41,7 +29,6 @@ public class LoginController {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-
     }
 
     @FXML
