@@ -9,6 +9,8 @@ import java.util.regex.Pattern;
 
 public class Validator {
 
+
+
     static boolean loginFieldsCheck(PasswordField passwordField, TextField usernameField)
     {
         if(usernameField.getText().isEmpty() && passwordField.getText().isEmpty())
@@ -31,10 +33,33 @@ public class Validator {
             usernameField.setStyle("-fx-prompt-text-fill: red;");
             return false;
         }
+        return true;
+    }
+
+    static boolean emailValidator(TextField emailField)
+    {
+        Pattern emailPattern = Pattern.compile("^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$");
+        Matcher emailMatcher = emailPattern.matcher(emailField.getText());
+
+        if(emailField.getText().isEmpty() || emailField.equals(null)) {
+            emailField.setPromptText("This field can't be empty!");
+            emailField.setStyle("-fx-prompt-text-fill: red;");
+            return false;
+            //TODO: Sprawdzenie czy email występuje w bazie danych
+        }
+        else if(emailMatcher.find())
+        {
+
+        }
+        else
+        {
+            emailField.clear();
+            emailField.setPromptText("Email not correct!");
+            emailField.setStyle("-fx-prompt-text-fill: red;");
+            return false;
+        }
 
         return true;
-
-
     }
 
     static void createAccountValidator(PasswordField passwordField, PasswordField passwordConfirmField, TextField emailField, TextField usernameField, TextField securityAnswerField)
