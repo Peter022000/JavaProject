@@ -13,19 +13,20 @@
 
 <AnchorPane prefHeight="780.0" prefWidth="1280.0" stylesheets="@../../../css/logStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javaproject.LoginController">
    <children>
-      <VBox alignment="TOP_CENTER" layoutX="410.0" layoutY="62.0" prefHeight="657.0" prefWidth="460.0" style="-fx-border-color: black;" styleClass="backgroundMain">
+      <VBox alignment="TOP_CENTER" layoutX="410.0" layoutY="62.0" prefHeight="657.0" prefWidth="460.0" styleClass="backgroundMain">
          <children>
             <ImageView fitHeight="107.0" fitWidth="274.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../assets/transparent%20logo.png" />
-               </image>
+
                <VBox.margin>
                   <Insets top="20.0" />
                </VBox.margin>
+               <image>
+                  <Image url="@../../../assets/transparent_logo.png" />
+               </image>
             </ImageView>
-            <Label prefHeight="16.0" prefWidth="171.0" style="-fx-text-fill: #929292;" styleClass="text" text="Virtual Merchant">
+            <Label prefHeight="44.0" prefWidth="173.0" style="-fx-text-fill: #929292;" styleClass="text" text="Virtual Merchant">
                <font>
-                  <Font name="Dubai Regular" size="24.0" />
+                  <Font name="Dubai Medium" size="24.0" />
                </font>
                <VBox.margin>
                   <Insets top="-20.0" />
@@ -51,7 +52,7 @@
                </VBox.margin>
             </Label>
             <TextField maxWidth="300.0" prefHeight="10.0" prefWidth="300.0" styleClass="TextField" />
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="259.0" style="-fx-background-color: ec2127; -fx-text-fill: white; -fx-background-radius: 10;" text="Log In">
+            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="259.0" styleClass="MainButtonStyle" text="Log In">
                <VBox.margin>
                   <Insets top="30.0" />
                </VBox.margin>
@@ -59,19 +60,19 @@
                   <Font name="Dubai Bold" size="18.0" />
                </font>
             </Button>
-            <Label prefHeight="28.0" prefWidth="113.0" style="-fx-text-fill: #929292;" styleClass="text" text="Forgot Password?">
+            <Label prefHeight="28.0" prefWidth="113.0" styleClass="labelGrey" text="Forgot Password?">
                <font>
                   <Font name="Dubai Medium" size="15.0" />
                </font>
             </Label>
             <HBox alignment="CENTER" prefHeight="34.0" prefWidth="369.0">
                <children>
-                  <Label prefHeight="28.0" prefWidth="177.0" style="-fx-text-fill: #929292;" styleClass="text" text="Don't have an account yet?">
+                  <Label prefHeight="28.0" prefWidth="177.0" styleClass="labelGrey" text="Don't have an account yet?">
                      <font>
                         <Font name="Dubai Medium" size="15.0" />
                      </font>
                   </Label>
-                  <Label prefHeight="28.0" prefWidth="57.0" style="-fx-text-fill: #f15b60;" styleClass="text" text="Sign Up!">
+                  <Label onMouseClicked="#register" prefHeight="28.0" prefWidth="57.0" styleClass="labelLightRed" text="Sign Up!">
                      <font>
                         <Font name="Dubai Medium" size="15.0" />
                      </font>
