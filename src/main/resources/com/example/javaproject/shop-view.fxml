@@ -4,11 +4,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javaproject.ShopController">
+<BorderPane fx:id="borderPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javaproject.ShopController">
    <center>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="350.0" prefWidth="200.0" style="-fx-background-color: red;" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="shopLabel" layoutX="245.0" layoutY="175.0" text="Sklepy" />
+            <Label fx:id="shopLabel" layoutX="265.0" layoutY="175.0" text="Sklepy" />
          </children>
       </AnchorPane>
    </center>

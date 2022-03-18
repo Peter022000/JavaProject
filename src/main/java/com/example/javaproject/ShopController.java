@@ -1,39 +1,41 @@
 package com.example.javaproject;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Scanner;
+import java.util.Objects;
 
 public class ShopController {
+
     @FXML
     private Label shopLabel;
 
+    @FXML
+    private BorderPane borderPane;
+
     private String shop;
 
+    @FXML
     public void initialize() throws IOException {
-        readSelectedShop();
-        shopLabel.setText(shop);
+        FXMLLoader loader = new FXMLLoader();
+
+        loader.setLocation(getClass().getResource("navigation-view.fxml"));
+        BorderPane topView = loader.load();
+
+        borderPane.setTop(topView);
     }
 
-    public static void saveSelectedShop(String shop) throws IOException {
-        String fileName = "selectedShop.txt";
-        FileWriter myWriter = new FileWriter(fileName);
-        myWriter.write(shop);
-        myWriter.close();
+    public void setShop(String shop) {
+        this.shop = shop;
+        shopLabel.setText(this.shop);
     }
-
-    private void readSelectedShop() throws IOException {
-        String fileName = "selectedShop.txt";
-        File myObj = new File(fileName);
-        Scanner myReader = new Scanner(myObj);
-
-        this.shop = myReader.nextLine();
-
-        myReader.close();
-    }
-
 }
