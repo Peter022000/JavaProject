@@ -16,20 +16,12 @@ public class ResetEmailController {
 
     @FXML
     private void login(MouseEvent event) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("login-view.fxml")));
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        SwitchScene.switchScene("login-view.fxml", event);
     }
 
     @FXML
     private void resetPassword2(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("resetPassword2-view.fxml")));
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        SwitchScene.switchScene("resetPassword2-view.fxml", event);
     }
 
 }
