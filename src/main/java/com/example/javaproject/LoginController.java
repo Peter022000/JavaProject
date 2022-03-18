@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class LoginController {
+
+
     @FXML
     private void login(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("equipment-view.fxml")));

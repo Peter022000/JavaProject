@@ -1,4 +1,22 @@
 .root{
-    -fx-background-image:url('/bg2.png');
+    -fx-background-image:url('../assets/bg3_opacity70.png');
     -fx-background-size:cover;
+}
+
+.backgroundMain
+{
+    -fx-background-image:url('../assets/bg2.png');
+    -fx-background-size:cover;
+}
+
+.TextField
+{
+    -fx-border-color:  transparent transparent black transparent;
+    -fx-background-color: transparent;
+    -fx-border-width: 2;
+}
+
+.MainButtonStyle
+{
+
 }

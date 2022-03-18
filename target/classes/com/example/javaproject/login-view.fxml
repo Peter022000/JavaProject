@@ -1,11 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="780.0" prefWidth="1280.0" stylesheets="@../../../css/logStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javaproject.LoginController">
    <children>
-      <Label layoutX="527.0" layoutY="244.0" text="Aajajajaja" />
+      <VBox alignment="TOP_CENTER" layoutX="410.0" layoutY="62.0" prefHeight="657.0" prefWidth="460.0" style="-fx-border-color: black;" styleClass="backgroundMain">
+         <children>
+            <ImageView fitHeight="107.0" fitWidth="274.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../assets/transparent%20logo.png" />
+               </image>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </ImageView>
+            <Label prefHeight="0.0" prefWidth="177.0" style="-fx-text-fill: #929292;" text="Virtual Merchant">
+               <font>
+                  <Font name="Berlin Sans FB" size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>

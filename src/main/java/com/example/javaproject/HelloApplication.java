@@ -3,6 +3,8 @@ package com.example.javaproject;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -12,7 +14,9 @@ public class HelloApplication extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("login-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("Hello!");
+        Image icon = new Image("file:src/main/resources/assets/appIcon.png");
+        stage.getIcons().add(icon);
+        stage.setTitle("Virtual Merchant");
         stage.setScene(scene);
         stage.show();
     }
