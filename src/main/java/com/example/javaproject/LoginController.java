@@ -34,12 +34,7 @@ public class LoginController {
     private void login(ActionEvent event) throws IOException {
         if(Validator.loginFieldsCheck(passwordField, usernameField))
         {
-            //SwitchScene.switchScene("equipment-view.fxml", event);
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("equipment-view.fxml")));
-            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
+            SwitchScene.switchScene("equipment-view.fxml", event);
         }
     }
 
