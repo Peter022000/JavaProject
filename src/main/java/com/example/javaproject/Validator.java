@@ -9,8 +9,6 @@ import java.util.regex.Pattern;
 
 public class Validator {
 
-
-
     static boolean loginFieldsCheck(PasswordField passwordField, TextField usernameField)
     {
         if(usernameField.getText().isEmpty() && passwordField.getText().isEmpty())

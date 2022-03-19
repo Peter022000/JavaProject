@@ -27,7 +27,7 @@ public class LoginController {
     @FXML
     public void initialize()
     {
-
+        DriverClass driverClass = new DriverClass();
     }
 
     @FXML
