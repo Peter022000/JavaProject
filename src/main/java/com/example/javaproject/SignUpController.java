@@ -55,7 +55,22 @@ public class SignUpController {
 
     @FXML
     void createAccount(ActionEvent event){
-        Validator.createAccountValidator(passwordField, passwordConfirmField, emailField, usernameField, securityAnswerField);
+        if(passwordField.getText().equals(passwordConfirmField.getText()))
+        {
+            if(Validator.createAccountValidator(passwordField, passwordConfirmField, emailField, usernameField, securityAnswerField))
+            {
+                DatabaseConnection databaseConnection = new DatabaseConnection();
+                databaseConnection.createAccount(usernameField.getText(), emailField.getText(), securityQuestions.getValue(), securityAnswerField.getText(), passwordField.getText());
+            }
+        }
+        else
+        {
+            passwordField.setPromptText("Different passwords!");
+            passwordField.setStyle("-fx-prompt-text-fill: red;");
+
+            passwordConfirmField.setPromptText("Different passwords!");
+            passwordConfirmField.setStyle("-fx-prompt-text-fill: red;");
+        }
     }
 
 

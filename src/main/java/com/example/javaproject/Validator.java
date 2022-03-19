@@ -60,7 +60,7 @@ public class Validator {
         return true;
     }
 
-    static void createAccountValidator(PasswordField passwordField, PasswordField passwordConfirmField, TextField emailField, TextField usernameField, TextField securityAnswerField)
+    static boolean createAccountValidator(PasswordField passwordField, PasswordField passwordConfirmField, TextField emailField, TextField usernameField, TextField securityAnswerField)
     {
         Pattern passwordPattern = Pattern.compile("(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})");
         Matcher passwordMatcher = passwordPattern.matcher(passwordField.getText());
@@ -83,6 +83,7 @@ public class Validator {
                     "Password must contain at least one special character like ! @ # & ( ).\n" +
                     "Password must contain a length of at least 8 characters and a maximum of 20 characters.");
             passwordAlert.showAndWait();
+            return false;
         }
 
         if(emailMatcher.find())
@@ -96,6 +97,7 @@ public class Validator {
             emailAlert.setTitle("Wrong email!");
             emailAlert.setContentText("That's a wrong email. Example email: username@domain.com");
             emailAlert.showAndWait();
+            return false;
         }
 
         if(passwordField.getText().isEmpty() || passwordConfirmField.getText().isEmpty() || usernameField.getText().isEmpty() || emailField.getText().isEmpty() || securityAnswerField.getText().isEmpty())
@@ -105,6 +107,11 @@ public class Validator {
             alert.setTitle("Empty fields!");
             alert.setContentText("Some fields are empty! Fill them out.");
             alert.showAndWait();
+            return false;
+        }
+        else
+        {
+            return true;
         }
     }
 
