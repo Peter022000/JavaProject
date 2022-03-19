@@ -147,9 +147,17 @@
                         <Insets top="10.0" />
                     </VBox.margin>
                 </VBox>
-                <Button mnemonicParsing="false" onAction="#createAccount" prefHeight="28.0" prefWidth="259.0" styleClass="MainButtonStyle" text="Create an account">
+            <Label fx:id="error" prefHeight="28.0" prefWidth="187.0" text="Login or email already taken." textAlignment="CENTER" textFill="RED" visible="false">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="Dubai Medium" size="15.0" />
+               </font>
+            </Label>
+                <Button mnemonicParsing="false" onAction="#createAccount" prefHeight="0.0" prefWidth="259.0" styleClass="MainButtonStyle" text="Create an account">
                     <VBox.margin>
-                        <Insets top="30.0" />
+                        <Insets top="5.0" />
                     </VBox.margin>
                <font>
                   <Font name="Dubai Medium" size="18.0" />

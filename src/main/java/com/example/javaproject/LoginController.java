@@ -34,7 +34,7 @@ public class LoginController {
     private void login(ActionEvent event) throws IOException {
         if(Validator.loginFieldsCheck(passwordField, usernameField))
         {
-            SwitchScene.switchScene("equipment-view.fxml", event);
+            DatabaseConnection.loginCheck(event, usernameField.getText(), passwordField.getText());
         }
     }
 

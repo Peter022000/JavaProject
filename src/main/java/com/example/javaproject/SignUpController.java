@@ -35,6 +35,9 @@ public class SignUpController {
     @FXML
     private PasswordField passwordConfirmField;
 
+    @FXML
+    private Label error;
+
 
     String questions[] = {"What is the name of your favorite pet?", "What primary school did you attend?",
             "In what town or city was your first full time job?", "What is your partner's mother's maiden name?",
@@ -55,22 +58,26 @@ public class SignUpController {
 
     @FXML
     void createAccount(ActionEvent event){
+
+        error.setVisible(false);
+
         if(passwordField.getText().equals(passwordConfirmField.getText()))
         {
-            if(Validator.createAccountValidator(passwordField, passwordConfirmField, emailField, usernameField, securityAnswerField))
-            {
-                DatabaseConnection databaseConnection = new DatabaseConnection();
-                databaseConnection.createAccount(usernameField.getText(), emailField.getText(), securityQuestions.getValue(), securityAnswerField.getText(), passwordField.getText());
-            }
+
         }
         else
         {
-            passwordField.setPromptText("Different passwords!");
-            passwordField.setStyle("-fx-prompt-text-fill: red;");
-
+            passwordConfirmField.clear();
             passwordConfirmField.setPromptText("Different passwords!");
             passwordConfirmField.setStyle("-fx-prompt-text-fill: red;");
         }
+        if(Validator.createAccountValidator(passwordField, passwordConfirmField, emailField, usernameField, securityAnswerField))
+        {
+            DatabaseConnection databaseConnection = new DatabaseConnection();
+            databaseConnection.createAccount(usernameField.getText(), emailField.getText(),
+                    securityQuestions.getValue(), securityAnswerField.getText(), passwordField.getText(), error);
+        }
+
     }
 
 

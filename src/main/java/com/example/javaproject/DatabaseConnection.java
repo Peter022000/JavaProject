@@ -1,7 +1,11 @@
 package com.example.javaproject;
 
+import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 
+import java.io.IOException;
 import java.sql.*;
 
 public class DatabaseConnection {
@@ -19,28 +23,17 @@ public class DatabaseConnection {
             throw new Error("Problem", e);
         }
         Statement st = conn.createStatement();
-
-//        String query = "SELECT * FROM \"VirtualMerchant\".users";
-//
-//        ResultSet rs = st.executeQuery(query);
-//
-//        while (rs.next()) {
-//            System.out.print("Column 1 returned ");
-//            System.out.println(rs.getString(1));
-//        }
-//
-//        rs.close();
-        
         conn.close();
     }
 
+    //TODO: Zmienić wywoływanie alertu
 
-    boolean createAccount(String username, String email, String securityQuestion, String securityAnswer, String password)
+    boolean createAccount(String username, String email, String securityQuestion, String securityAnswer, String password, Label error)
     {
         String query = "INSERT INTO \"VirtualMerchant\".users(login, password, security_question, security_answer, email)\n" +
                 "\tVALUES (?, ?, ?, ?, ?);";
         try {
-            Connection createAcc = DriverManager.getConnection(url, userDB, passwordDB);
+            Connection createAcc = DriverManager.getConnection("jdbc:postgresql://localhost/postgres", userDB, passwordDB);
             PreparedStatement pst = createAcc.prepareCall(query);
             pst.setString(1, username);
             pst.setString(2, password);
@@ -51,14 +44,80 @@ public class DatabaseConnection {
             System.out.println("Account created!");
             return true;
         } catch (SQLException e) {
-            Alert passwordAlert = new Alert(Alert.AlertType.ERROR);
-            passwordAlert.setHeaderText(null);
-            passwordAlert.setTitle("Login or email already exists.");
-            passwordAlert.setContentText("There was an error, cannot create account: "+e);
+            System.out.println(e.getMessage());
+            error.setVisible(true);
             e.printStackTrace();
             return false;
         }
+    }
 
+    public static void loginCheck(ActionEvent event, String username, String password)
+    {
+        PreparedStatement psCheckLogin = null;
+        ResultSet resultSet = null;
+        Connection logIn = null;
+
+        try {
+            logIn = DriverManager.getConnection("jdbc:postgresql://localhost/postgres", "postgres", "admin");
+
+            psCheckLogin = logIn.prepareStatement("SELECT password FROM \"VirtualMerchant\".users WHERE login=?");
+            psCheckLogin.setString(1, username);
+            resultSet = psCheckLogin.executeQuery();
+            if(!resultSet.isBeforeFirst())
+            {
+                System.out.println("User not found in the db!");
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Login is incorrect!");
+                alert.show();
+            }
+            else
+            {
+                while (resultSet!=null && resultSet.next())
+                {
+                    String typedText = resultSet.getString(1);
+
+                    if(typedText.equals(password)){
+                        SwitchScene.switchScene("equipment-view.fxml",event);
+                    }
+                    else
+                    {
+                        System.out.println("Password didn't match.");
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setContentText("Password is incorrect!");
+                        alert.show();
+                    }
+                }
+            }
+
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        }
+        finally {
+            if(resultSet != null)
+            {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(psCheckLogin != null)
+            {
+                try {
+                    psCheckLogin.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (logIn != null)
+            {
+                try {
+                    logIn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
 

@@ -88,15 +88,13 @@ public class Validator {
 
         if(emailMatcher.find())
         {
-            //System.out.println("email matched correct");
+            System.out.println("Email matched");
         }
         else
         {
-            Alert emailAlert = new Alert(Alert.AlertType.ERROR);
-            emailAlert.setHeaderText(null);
-            emailAlert.setTitle("Wrong email!");
-            emailAlert.setContentText("That's a wrong email. Example email: username@domain.com");
-            emailAlert.showAndWait();
+            emailField.clear();
+            emailField.setPromptText("Email not correct.");
+            emailField.setStyle("-fx-prompt-text-fill: red;");
             return false;
         }
 
