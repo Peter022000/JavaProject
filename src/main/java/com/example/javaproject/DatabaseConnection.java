@@ -28,7 +28,7 @@ public class DatabaseConnection {
 
     //TODO: Zmienić wywoływanie alertu
 
-    boolean createAccount(String username, String email, String securityQuestion, String securityAnswer, String password, Label error)
+    boolean createAccount(String username, String email, String securityQuestion, String securityAnswer, String password, Label error, ActionEvent event)
     {
         String query = "INSERT INTO \"VirtualMerchant\".users(login, password, security_question, security_answer, email)\n" +
                 "\tVALUES (?, ?, ?, ?, ?);";
@@ -42,8 +42,9 @@ public class DatabaseConnection {
             pst.setString(5, email);
             pst.executeUpdate();
             System.out.println("Account created!");
+            SwitchScene.switchScene("login-view.fxml",event);
             return true;
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             System.out.println(e.getMessage());
             error.setVisible(true);
             e.printStackTrace();

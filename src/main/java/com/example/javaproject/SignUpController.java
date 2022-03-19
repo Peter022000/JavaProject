@@ -75,7 +75,7 @@ public class SignUpController {
         {
             DatabaseConnection databaseConnection = new DatabaseConnection();
             databaseConnection.createAccount(usernameField.getText(), emailField.getText(),
-                    securityQuestions.getValue(), securityAnswerField.getText(), passwordField.getText(), error);
+                    securityQuestions.getValue(), securityAnswerField.getText(), passwordField.getText(), error, event);
         }
 
     }
