@@ -1,6 +1,7 @@
 package com.example.javaproject;
 
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
@@ -57,6 +58,35 @@ public class Validator {
             return false;
         }
 
+        return true;
+    }
+
+    static boolean resetPasswordValidator(PasswordField newPasswordField, TextField answerField, Label error)
+    {
+        Pattern passwordPattern = Pattern.compile("(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})");
+        Matcher passwordMatcher = passwordPattern.matcher(newPasswordField.getText());
+
+        if(newPasswordField.getText().isEmpty() || newPasswordField.equals(null) || answerField.getText().isEmpty() || answerField.equals(null)) {
+            error.setVisible(true);
+            return false;
+        }
+        else if(passwordMatcher.find())
+        {
+            //System.out.println("password matched correct");
+        }
+        else
+        {
+            Alert passwordAlert = new Alert(Alert.AlertType.ERROR);
+            passwordAlert.setHeaderText(null);
+            passwordAlert.setTitle("Password too weak!");
+            passwordAlert.setContentText("Password must contain at least one digit [0-9].\n" +
+                    "Password must contain at least one lowercase Latin character [a-z].\n" +
+                    "Password must contain at least one uppercase Latin character [A-Z].\n" +
+                    "Password must contain at least one special character like ! @ # & ( ).\n" +
+                    "Password must contain a length of at least 8 characters and a maximum of 20 characters.");
+            passwordAlert.showAndWait();
+            return false;
+        }
         return true;
     }
 

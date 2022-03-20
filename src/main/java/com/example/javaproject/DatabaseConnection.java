@@ -1,9 +1,11 @@
 package com.example.javaproject;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.sql.*;
@@ -28,8 +30,7 @@ public class DatabaseConnection {
 
     //TODO: Zmienić wywoływanie alertu
 
-    boolean createAccount(String username, String email, String securityQuestion, String securityAnswer, String password, Label error, ActionEvent event)
-    {
+    boolean createAccount(String username, String email, String securityQuestion, String securityAnswer, String password, Label error, ActionEvent event) {
         String query = "INSERT INTO \"VirtualMerchant\".users(login, password, security_question, security_answer, email)\n" +
                 "\tVALUES (?, ?, ?, ?, ?);";
         try {
@@ -42,7 +43,7 @@ public class DatabaseConnection {
             pst.setString(5, email);
             pst.executeUpdate();
             System.out.println("Account created!");
-            SwitchScene.switchScene("login-view.fxml",event);
+            SwitchScene.switchScene("login-view.fxml", event);
             return true;
         } catch (SQLException | IOException e) {
             System.out.println(e.getMessage());
@@ -52,8 +53,7 @@ public class DatabaseConnection {
         }
     }
 
-    public static void loginCheck(ActionEvent event, String username, String password)
-    {
+    public static void loginCheck(ActionEvent event, String username, String password) {
         PreparedStatement psCheckLogin = null;
         ResultSet resultSet = null;
         Connection logIn = null;
@@ -64,24 +64,18 @@ public class DatabaseConnection {
             psCheckLogin = logIn.prepareStatement("SELECT password FROM \"VirtualMerchant\".users WHERE login=?");
             psCheckLogin.setString(1, username);
             resultSet = psCheckLogin.executeQuery();
-            if(!resultSet.isBeforeFirst())
-            {
+            if (!resultSet.isBeforeFirst()) {
                 System.out.println("User not found in the db!");
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Login is incorrect!");
                 alert.show();
-            }
-            else
-            {
-                while (resultSet!=null && resultSet.next())
-                {
+            } else {
+                while (resultSet != null && resultSet.next()) {
                     String typedText = resultSet.getString(1);
 
-                    if(typedText.equals(password)){
-                        SwitchScene.switchScene("equipment-view.fxml",event);
-                    }
-                    else
-                    {
+                    if (typedText.equals(password)) {
+                        SwitchScene.switchScene("equipment-view.fxml", event);
+                    } else {
                         System.out.println("Password didn't match.");
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setContentText("Password is incorrect!");
@@ -92,26 +86,22 @@ public class DatabaseConnection {
 
         } catch (SQLException | IOException e) {
             e.printStackTrace();
-        }
-        finally {
-            if(resultSet != null)
-            {
+        } finally {
+            if (resultSet != null) {
                 try {
                     resultSet.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
             }
-            if(psCheckLogin != null)
-            {
+            if (psCheckLogin != null) {
                 try {
                     psCheckLogin.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
             }
-            if (logIn != null)
-            {
+            if (logIn != null) {
                 try {
                     logIn.close();
                 } catch (SQLException e) {
@@ -122,4 +112,73 @@ public class DatabaseConnection {
     }
 
 
+    public static boolean emailCheck(ActionEvent event, String email) {
+        PreparedStatement psCheckEmail = null;
+        ResultSet resultSet = null;
+        Connection emailCheckConnection = null;
+
+        try {
+            emailCheckConnection = DriverManager.getConnection("jdbc:postgresql://localhost/postgres", "postgres", "admin");
+            psCheckEmail = emailCheckConnection.prepareStatement("SELECT email FROM \"VirtualMerchant\".users WHERE email=?");
+            psCheckEmail.setString(1, email);
+            resultSet = psCheckEmail.executeQuery();
+
+            if (!resultSet.isBeforeFirst()) {
+                System.out.println("Email not found in the db!");
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Email is incorrect!");
+                alert.show();
+                return false;
+            }
+            else
+            {
+                while (resultSet != null && resultSet.next()) {
+                    String typedText = resultSet.getString(1);
+                    if (typedText.equals(email)) {
+                        return true;
+                    }
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public static void setSecurityQuestionLabel(ActionEvent event, String email, Label securityQuestion) {
+        PreparedStatement psCheckSecurityQuestion = null;
+        ResultSet resultSet = null;
+        Connection securityQuestionCheckConnection = null;
+        try {
+            securityQuestionCheckConnection = DriverManager.getConnection("jdbc:postgresql://localhost/postgres", "postgres", "admin");
+            psCheckSecurityQuestion = securityQuestionCheckConnection.prepareStatement("SELECT security_question\n" +
+                    "\tFROM \"VirtualMerchant\".users WHERE email=?");
+            psCheckSecurityQuestion.setString(1, email);
+            resultSet = psCheckSecurityQuestion.executeQuery();
+            if (!resultSet.isBeforeFirst()) {
+                System.out.println("Security question not found.");
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Security question not found.");
+                alert.show();
+            }
+            else
+            {
+                while (resultSet != null && resultSet.next()) {
+                    String typedText = resultSet.getString(1);
+                    securityQuestion.setText(typedText);
+                }
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void resetPassword(ActionEvent event, String newPassword, String email) {
+        PreparedStatement psCheckEmail = null;
+        ResultSet resultSet = null;
+        Connection emailCheckConnection = null;
+    }
 }
