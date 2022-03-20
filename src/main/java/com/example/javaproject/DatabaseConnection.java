@@ -111,7 +111,6 @@ public class DatabaseConnection {
         }
     }
 
-
     public static boolean emailCheck(ActionEvent event, String email) {
         PreparedStatement psCheckEmail = null;
         ResultSet resultSet = null;
@@ -147,7 +146,43 @@ public class DatabaseConnection {
         return true;
     }
 
+    public static boolean securityAnswerCheck(String answer, String email) {
+        PreparedStatement psCheckSecurityAnswer = null;
+        ResultSet resultSet = null;
+        Connection securityAnswerCheckConnection = null;
+
+        try {
+            securityAnswerCheckConnection = DriverManager.getConnection("jdbc:postgresql://localhost/postgres", "postgres", "admin");
+            psCheckSecurityAnswer = securityAnswerCheckConnection.prepareStatement("SELECT security_answer FROM \"VirtualMerchant\".users WHERE email=?");
+            psCheckSecurityAnswer.setString(1, email);
+            resultSet = psCheckSecurityAnswer.executeQuery();
+
+            if (!resultSet.isBeforeFirst()) {
+                System.out.println("Security answer doesn't match");
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Security answer doesn't match");
+                alert.show();
+                return false;
+            }
+            else
+            {
+                while (resultSet != null && resultSet.next()) {
+                    String typedText = resultSet.getString(1);
+                    if (typedText.equals(answer)) {
+                        return true;
+                    }
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
     public static void setSecurityQuestionLabel(ActionEvent event, String email, Label securityQuestion) {
+
         PreparedStatement psCheckSecurityQuestion = null;
         ResultSet resultSet = null;
         Connection securityQuestionCheckConnection = null;
@@ -177,8 +212,20 @@ public class DatabaseConnection {
     }
 
     public static void resetPassword(ActionEvent event, String newPassword, String email) {
-        PreparedStatement psCheckEmail = null;
-        ResultSet resultSet = null;
-        Connection emailCheckConnection = null;
+        PreparedStatement psResetPassword = null;
+        //ResultSet resultSet = null;
+        Connection resetPasswordConnection = null;
+        try {
+            resetPasswordConnection = DriverManager.getConnection("jdbc:postgresql://localhost/postgres", "postgres", "admin");
+            psResetPassword = resetPasswordConnection.prepareStatement("UPDATE \"VirtualMerchant\".users\n" +
+                    "\tSET password=?\n" +
+                    "\tWHERE email=?;");
+            psResetPassword.setString(1, newPassword);
+            psResetPassword.setString(2, email);
+            psResetPassword.executeUpdate();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

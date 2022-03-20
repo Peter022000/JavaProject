@@ -19,6 +19,7 @@ public class ResetPasswordController {
     @FXML
     private Label error;
 
+    @FXML
     String email;
 
     @FXML
@@ -29,16 +30,23 @@ public class ResetPasswordController {
 
     @FXML
     public void setFields(ActionEvent event, String email) throws IOException {
-        System.out.println("przed security question");
         DatabaseConnection.setSecurityQuestionLabel(event, email, securityQuestionField);
     }
 
     @FXML
-    private void resetPassword2(ActionEvent event) throws IOException {
-        /*error.setVisible(false);
+    private void resetPassword(ActionEvent event) throws IOException {
+        error.setVisible(false);
         if(Validator.resetPasswordValidator(newPasswordField, securityQuestionAnswerField, error)) {
-            //DatabaseConnection.emailCheck(event,emailField.getText());
-        }*/
+            if(DatabaseConnection.securityAnswerCheck(securityQuestionAnswerField.getText(),email))
+            {
+                DatabaseConnection.resetPassword(event,newPasswordField.getText(),email);
+            }
+        }
+    }
+
+    @FXML
+    public void setEmail(String email) {
+        this.email = email;
     }
 
 }

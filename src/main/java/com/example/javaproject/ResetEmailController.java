@@ -47,6 +47,7 @@ public class ResetEmailController {
                 root = loader.load();
                 ResetPasswordController resetPasswordController = loader.getController();
                 resetPasswordController.setFields(event, emailField.getText());
+                resetPasswordController.setEmail(emailField.getText());
                 Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
