@@ -13,19 +13,28 @@ import java.sql.*;
 public class DatabaseConnection {
 
     String url = "jdbc:postgresql://localhost/postgres";
-    String userDB = "postgres";
-    String passwordDB = "admin";
+    String userDB = "2022_krol_marcin";
+    String passwordDB = "34300";
 
-    public static void main(String[] args) throws SQLException {
-        Connection conn = null;
+    public static void main(String[] args) {
         try {
-            String url = "jdbc:postgresql://localhost/postgres";
-            conn = DriverManager.getConnection(url, "postgres", "admin");
-        } catch (SQLException e) {
-            throw new Error("Problem", e);
+            Class.forName("org.postgresql.Driver");
         }
-        Statement st = conn.createStatement();
-        conn.close();
+        catch (java.lang.ClassNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+
+        String url = "jdbc:postgresql://195.150.230.210:5436/2022_krol_marcin";
+        String username = "2022_krol_marcin";
+        String password = "34300";
+
+        try {
+            Connection db = DriverManager.getConnection(url, username, password);
+            db.close();
+        }
+        catch (java.sql.SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     //TODO: Zmienić wywoływanie alertu
@@ -34,7 +43,7 @@ public class DatabaseConnection {
         String query = "INSERT INTO \"VirtualMerchant\".users(login, password, security_question, security_answer, email)\n" +
                 "\tVALUES (?, ?, ?, ?, ?);";
         try {
-            Connection createAcc = DriverManager.getConnection("jdbc:postgresql://localhost/postgres", userDB, passwordDB);
+            Connection createAcc = DriverManager.getConnection("jdbc:postgresql://195.150.230.210:5436/2022_krol_marcin", userDB, passwordDB);
             PreparedStatement pst = createAcc.prepareCall(query);
             pst.setString(1, username);
             pst.setString(2, password);
@@ -59,7 +68,7 @@ public class DatabaseConnection {
         Connection logIn = null;
 
         try {
-            logIn = DriverManager.getConnection("jdbc:postgresql://localhost/postgres", "postgres", "admin");
+            logIn = DriverManager.getConnection("jdbc:postgresql://195.150.230.210:5436/2022_krol_marcin", "2022_krol_marcin", "34300");
 
             psCheckLogin = logIn.prepareStatement("SELECT password FROM \"VirtualMerchant\".users WHERE login=?");
             psCheckLogin.setString(1, username);
@@ -117,7 +126,7 @@ public class DatabaseConnection {
         Connection emailCheckConnection = null;
 
         try {
-            emailCheckConnection = DriverManager.getConnection("jdbc:postgresql://localhost/postgres", "postgres", "admin");
+            emailCheckConnection = DriverManager.getConnection("jdbc:postgresql://195.150.230.210:5436/2022_krol_marcin", "2022_krol_marcin", "34300");
             psCheckEmail = emailCheckConnection.prepareStatement("SELECT email FROM \"VirtualMerchant\".users WHERE email=?");
             psCheckEmail.setString(1, email);
             resultSet = psCheckEmail.executeQuery();
@@ -152,7 +161,7 @@ public class DatabaseConnection {
         Connection securityAnswerCheckConnection = null;
 
         try {
-            securityAnswerCheckConnection = DriverManager.getConnection("jdbc:postgresql://localhost/postgres", "postgres", "admin");
+            securityAnswerCheckConnection = DriverManager.getConnection("jdbc:postgresql://195.150.230.210:5436/2022_krol_marcin", "2022_krol_marcin", "34300");
             psCheckSecurityAnswer = securityAnswerCheckConnection.prepareStatement("SELECT security_answer FROM \"VirtualMerchant\".users WHERE email=?");
             psCheckSecurityAnswer.setString(1, email);
             resultSet = psCheckSecurityAnswer.executeQuery();
@@ -187,7 +196,7 @@ public class DatabaseConnection {
         ResultSet resultSet = null;
         Connection securityQuestionCheckConnection = null;
         try {
-            securityQuestionCheckConnection = DriverManager.getConnection("jdbc:postgresql://localhost/postgres", "postgres", "admin");
+            securityQuestionCheckConnection = DriverManager.getConnection("jdbc:postgresql://195.150.230.210:5436/2022_krol_marcin", "2022_krol_marcin", "34300");
             psCheckSecurityQuestion = securityQuestionCheckConnection.prepareStatement("SELECT security_question\n" +
                     "\tFROM \"VirtualMerchant\".users WHERE email=?");
             psCheckSecurityQuestion.setString(1, email);
@@ -216,7 +225,7 @@ public class DatabaseConnection {
         //ResultSet resultSet = null;
         Connection resetPasswordConnection = null;
         try {
-            resetPasswordConnection = DriverManager.getConnection("jdbc:postgresql://localhost/postgres", "postgres", "admin");
+            resetPasswordConnection = DriverManager.getConnection("jdbc:postgresql://195.150.230.210:5436/2022_krol_marcin", "2022_krol_marcin", "34300");
             psResetPassword = resetPasswordConnection.prepareStatement("UPDATE \"VirtualMerchant\".users\n" +
                     "\tSET password=?\n" +
                     "\tWHERE email=?;");
