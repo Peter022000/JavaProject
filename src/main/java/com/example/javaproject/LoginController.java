@@ -25,6 +25,9 @@ public class LoginController {
     private PasswordField passwordField;
 
     @FXML
+    private Parent root;
+
+    @FXML
     public void initialize()
     {
         
@@ -34,7 +37,18 @@ public class LoginController {
     private void login(ActionEvent event) throws IOException {
         if(Validator.loginFieldsCheck(passwordField, usernameField))
         {
-            DatabaseConnection.loginCheck(event, usernameField.getText(), passwordField.getText());
+            if(DatabaseConnection.loginCheck(event, usernameField.getText(), passwordField.getText()))
+            {
+                FXMLLoader loader = new FXMLLoader(DatabaseConnection.class.getResource("userProfile-view-view.fxml"));
+                root = loader.load();
+                ProfileController profileController = loader.getController();
+                //TODO: Wywołać returna z danymi w bazie danych i zwracać tutaj
+                profileController.setUsername(usernameField.getText());
+                Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
+            }
         }
     }
 

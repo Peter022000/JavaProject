@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" stylesheets="@../../../css/profileStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javaproject.UserProfileView">
+   <children>
+      <VBox layoutX="35.0" layoutY="42.0" prefHeight="637.0" prefWidth="447.0" styleClass="backgroundMain">
+         <children>
+            <VBox alignment="TOP_CENTER" prefHeight="337.0" prefWidth="447.0">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <VBox prefHeight="66.0" prefWidth="24.0">
+                           <children>
+                              <ImageView fitHeight="52.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../assets/Icons/icons8-change-user-60.png" />
+                                 </image>
+                                 <VBox.margin>
+                                    <Insets left="-120.0" top="30.0" />
+                                 </VBox.margin>
+                              </ImageView>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="85.0" prefWidth="132.0">
+                           <children>
+                              <ImageView fitHeight="68.0" fitWidth="132.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../assets/transparent_logo.png" />
+                                 </image>
+                                 <VBox.margin>
+                                    <Insets left="-10.0" top="30.0" />
+                                 </VBox.margin>
+                              </ImageView>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <Label prefHeight="23.0" prefWidth="81.0" style="-fx-text-fill: #929292;" styleClass="text" text="Virtual Merchant">
+                     <font>
+                        <Font name="Dubai Medium" size="11.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="-10.0" />
+                     </VBox.margin>
+                  </Label>
+                  <StackPane prefHeight="323.0" prefWidth="668.0">
+                     <children>
+                        <ImageView fx:id="profileAvatar" fitHeight="87.0" fitWidth="99.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../assets/Frames/avatar.png" />
+                           </image>
+                           <StackPane.margin>
+                              <Insets top="15.0" />
+                           </StackPane.margin>
+                        </ImageView>
+                        <VBox alignment="CENTER" maxHeight="243.0" maxWidth="229.0" prefHeight="157.0" prefWidth="147.0" styleClass="imageBorder" />
+                     </children>
+                     <VBox.margin>
+                        <Insets top="-20.0" />
+                     </VBox.margin>
+                  </StackPane>
+               </children>
+            </VBox>
+            <HBox alignment="TOP_CENTER" prefHeight="373.0" prefWidth="499.0">
+               <children>
+                  <VBox alignment="TOP_CENTER">
+                     <children>
+                        <VBox alignment="TOP_CENTER" prefHeight="46.0" prefWidth="447.0">
+                           <children>
+                              <Label alignment="TOP_LEFT" prefHeight="13.0" prefWidth="301.0" text="Profile informations:" textFill="#ab0006">
+                                 <font>
+                                    <Font name="Dubai Bold" size="24.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </Label>
+                              <Label alignment="TOP_LEFT" prefHeight="13.0" prefWidth="301.0" text="Username:" textFill="#ec2127">
+                                 <font>
+                                    <Font name="Dubai Medium" size="20.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </Label>
+                              <TextField fx:id="usernameField" alignment="TOP_LEFT" maxWidth="300.0" prefHeight="0.0" prefWidth="300.0" styleClass="TextField">
+                                 <font>
+                                    <Font name="Dubai Regular" size="16.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets top="-10.0" />
+                                 </padding>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </TextField>
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER" prefHeight="0.0" prefWidth="447.0">
+                           <children>
+                              <Label alignment="TOP_LEFT" prefHeight="13.0" prefWidth="301.0" text="Email:" textFill="#ec2127">
+                                 <font>
+                                    <Font name="Dubai Medium" size="20.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </Label>
+                              <TextField fx:id="emailField" alignment="TOP_LEFT" maxWidth="300.0" prefHeight="0.0" prefWidth="300.0" styleClass="TextField">
+                                 <font>
+                                    <Font name="Dubai Regular" size="16.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                                 <padding>
+                                    <Insets top="-10.0" />
+                                 </padding>
+                              </TextField>
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER" prefHeight="39.0" prefWidth="447.0">
+                           <children>
+                              <Label alignment="TOP_LEFT" prefHeight="13.0" prefWidth="301.0" text="Other informations:" textFill="#ec2127">
+                                 <font>
+                                    <Font name="Dubai Medium" size="20.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </Label>
+                              <TextField fx:id="othersField" alignment="TOP_LEFT" maxWidth="300.0" prefHeight="0.0" prefWidth="300.0" styleClass="TextField">
+                                 <font>
+                                    <Font name="Dubai Regular" size="16.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets top="-10.0" />
+                                 </padding>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </TextField>
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

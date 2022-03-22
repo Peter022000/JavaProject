@@ -2,10 +2,14 @@ package com.example.javaproject;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.*;
@@ -62,7 +66,7 @@ public class DatabaseConnection {
         }
     }
 
-    public static void loginCheck(ActionEvent event, String username, String password) {
+    public static boolean loginCheck(ActionEvent event, String username, String password) {
         PreparedStatement psCheckLogin = null;
         ResultSet resultSet = null;
         Connection logIn = null;
@@ -83,24 +87,27 @@ public class DatabaseConnection {
                     String typedText = resultSet.getString(1);
 
                     if (typedText.equals(password)) {
-                        SwitchScene.switchScene("equipment-view.fxml", event);
+                        return true;
                     } else {
                         System.out.println("Password didn't match.");
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setContentText("Password is incorrect!");
                         alert.show();
+                        return false;
                     }
                 }
             }
 
-        } catch (SQLException | IOException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         } finally {
             if (resultSet != null) {
                 try {
                     resultSet.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
+                    return false;
                 }
             }
             if (psCheckLogin != null) {
@@ -108,6 +115,7 @@ public class DatabaseConnection {
                     psCheckLogin.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
+                    return false;
                 }
             }
             if (logIn != null) {
@@ -115,9 +123,11 @@ public class DatabaseConnection {
                     logIn.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
+                    return false;
                 }
             }
         }
+        return true;
     }
 
     public static boolean emailCheck(ActionEvent event, String email) {
