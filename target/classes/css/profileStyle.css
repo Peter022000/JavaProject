@@ -47,3 +47,8 @@
     -fx-background-image:url('../assets/Frames/border5.png');
     -fx-background-size:cover;
 }
+
+.avatarsBG{
+    -fx-background-image:url('../assets/Note_wide.png');
+    -fx-background-size:cover;
+}

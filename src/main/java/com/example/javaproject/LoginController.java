@@ -52,6 +52,7 @@ public class LoginController {
                 profileController.setUsername(String.valueOf(credentials.get(1)));
                 profileController.setEmail(String.valueOf(credentials.get(2)));
                 profileController.setProfileUrl(String.valueOf(credentials.get(6)));
+                System.out.println(credentials.get(6));
                 profileController.setCredentials();
 
                 Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
