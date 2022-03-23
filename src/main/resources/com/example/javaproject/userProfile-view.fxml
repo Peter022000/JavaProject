@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -11,8 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" stylesheets="@../../../css/profileStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javaproject.UserProfileView">
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" stylesheets="@../../../css/profileStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javaproject.ProfileController">
    <children>
       <VBox layoutX="35.0" layoutY="42.0" prefHeight="637.0" prefWidth="447.0" styleClass="backgroundMain">
          <children>
@@ -58,7 +56,7 @@
                      <children>
                         <ImageView fx:id="profileAvatar" fitHeight="87.0" fitWidth="99.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../assets/Frames/avatar.png" />
+                              <Image url="@../../../assets/Avatars/av0.jpg" />
                            </image>
                            <StackPane.margin>
                               <Insets top="15.0" />
@@ -94,17 +92,11 @@
                                     <Insets />
                                  </VBox.margin>
                               </Label>
-                              <TextField fx:id="usernameField" alignment="TOP_LEFT" maxWidth="300.0" prefHeight="0.0" prefWidth="300.0" styleClass="TextField">
+                              <Label fx:id="usernameLabel" maxWidth="300.0" prefHeight="0.0" prefWidth="300.0" styleClass="TextField">
                                  <font>
-                                    <Font name="Dubai Regular" size="16.0" />
+                                    <Font name="Dubai Medium" size="18.0" />
                                  </font>
-                                 <padding>
-                                    <Insets top="-10.0" />
-                                 </padding>
-                                 <VBox.margin>
-                                    <Insets />
-                                 </VBox.margin>
-                              </TextField>
+                              </Label>
                            </children>
                         </VBox>
                         <VBox alignment="CENTER" prefHeight="0.0" prefWidth="447.0">
@@ -117,17 +109,11 @@
                                     <Insets />
                                  </VBox.margin>
                               </Label>
-                              <TextField fx:id="emailField" alignment="TOP_LEFT" maxWidth="300.0" prefHeight="0.0" prefWidth="300.0" styleClass="TextField">
+                              <Label fx:id="emailLabel" maxWidth="300.0" prefWidth="300.0" styleClass="TextField">
                                  <font>
-                                    <Font name="Dubai Regular" size="16.0" />
+                                    <Font name="Dubai Medium" size="18.0" />
                                  </font>
-                                 <VBox.margin>
-                                    <Insets />
-                                 </VBox.margin>
-                                 <padding>
-                                    <Insets top="-10.0" />
-                                 </padding>
-                              </TextField>
+                              </Label>
                            </children>
                         </VBox>
                         <VBox alignment="CENTER" prefHeight="39.0" prefWidth="447.0">
@@ -140,19 +126,13 @@
                                     <Insets />
                                  </VBox.margin>
                               </Label>
-                              <TextField fx:id="othersField" alignment="TOP_LEFT" maxWidth="300.0" prefHeight="0.0" prefWidth="300.0" styleClass="TextField">
-                                 <font>
-                                    <Font name="Dubai Regular" size="16.0" />
-                                 </font>
-                                 <padding>
-                                    <Insets top="-10.0" />
-                                 </padding>
-                                 <VBox.margin>
-                                    <Insets />
-                                 </VBox.margin>
-                              </TextField>
                            </children>
                         </VBox>
+                        <Label fx:id="othersLabel" maxWidth="300.0" prefWidth="300.0" styleClass="TextField">
+                           <font>
+                              <Font name="Dubai Medium" size="18.0" />
+                           </font>
+                        </Label>
                      </children>
                   </VBox>
                </children>

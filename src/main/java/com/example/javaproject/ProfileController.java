@@ -11,18 +11,25 @@ public class ProfileController {
     @FXML
     private ImageView profileAvatar;
     @FXML
-    private TextField usernameField;
+    private Label usernameLabel;
     @FXML
-    private TextField emailField;
+    private Label emailLabel;
 
     String username;
     String email;
+    String profileUrl;
     //TODO: zapis url avatara profilowego użytkowników w bazie danych i odczyt avatara.
 
     @FXML
     public void initialize()
     {
-        usernameField.setText(username);
+
+    }
+
+    public void setCredentials()
+    {
+        usernameLabel.setText(username);
+        emailLabel.setText(email);
     }
 
     public void setUsername(String username) {
@@ -31,5 +38,9 @@ public class ProfileController {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public void setProfileUrl(String profileUrl) {
+        this.profileUrl = profileUrl;
     }
 }

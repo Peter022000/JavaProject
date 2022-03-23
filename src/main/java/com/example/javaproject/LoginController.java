@@ -14,6 +14,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class LoginController {
@@ -39,11 +40,20 @@ public class LoginController {
         {
             if(DatabaseConnection.loginCheck(event, usernameField.getText(), passwordField.getText()))
             {
-                FXMLLoader loader = new FXMLLoader(DatabaseConnection.class.getResource("userProfile-view-view.fxml"));
+                FXMLLoader loader = new FXMLLoader(DatabaseConnection.class.getResource("userProfile-view.fxml"));
                 root = loader.load();
+
                 ProfileController profileController = loader.getController();
-                //TODO: Wywołać returna z danymi w bazie danych i zwracać tutaj
-                profileController.setUsername(usernameField.getText());
+                ArrayList<String> username = new ArrayList<>();
+                ArrayList<String> credentials = new ArrayList<>();
+                username.add(usernameField.getText());
+
+                credentials = DatabaseConnection.setProfileData(username);
+                profileController.setUsername(String.valueOf(credentials.get(1)));
+                profileController.setEmail(String.valueOf(credentials.get(2)));
+                profileController.setProfileUrl(String.valueOf(credentials.get(6)));
+                profileController.setCredentials();
+
                 Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
