@@ -17,32 +17,36 @@
          <children>
             <VBox alignment="TOP_CENTER" prefHeight="337.0" prefWidth="447.0">
                <children>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="90.0">
                      <children>
-                        <VBox prefHeight="66.0" prefWidth="24.0">
-                           <children>
-                              <ImageView fitHeight="52.0" fitWidth="33.0" onMouseClicked="#openAvatarList" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../../assets/Icons/icons8-change-user-60.png" />
-                                 </image>
-                                 <VBox.margin>
-                                    <Insets left="-120.0" top="30.0" />
-                                 </VBox.margin>
-                              </ImageView>
-                           </children>
-                        </VBox>
+                        <ImageView fx:id="changeAvatarImage" fitHeight="39.0" fitWidth="46.0" onMouseClicked="#openAvatarList" pickOnBounds="true" preserveRatio="true" styleClass="imageHover">
+                           <image>
+                              <Image url="@../../../assets/Icons/icons8-change-user-60.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets top="-5.0" />
+                           </HBox.margin>
+                        </ImageView>
                         <VBox prefHeight="85.0" prefWidth="132.0">
                            <children>
-                              <ImageView fitHeight="68.0" fitWidth="132.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="77.0" fitWidth="205.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../../../assets/transparent_logo.png" />
                                  </image>
                                  <VBox.margin>
-                                    <Insets left="-10.0" top="30.0" />
+                                    <Insets top="30.0" />
                                  </VBox.margin>
                               </ImageView>
                            </children>
                         </VBox>
+                        <ImageView fx:id="eqImage" fitHeight="33.0" fitWidth="39.0" onMouseClicked="#switchToEquipment" pickOnBounds="true" preserveRatio="true" styleClass="imageHover">
+                           <image>
+                              <Image url="@../../../assets/Icons/icons8-backpack-60.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </ImageView>
                      </children>
                   </HBox>
                   <Label prefHeight="23.0" prefWidth="81.0" style="-fx-text-fill: #929292;" styleClass="text" text="Virtual Merchant">
@@ -53,17 +57,17 @@
                         <Insets top="-10.0" />
                      </VBox.margin>
                   </Label>
-                  <StackPane prefHeight="323.0" prefWidth="668.0">
+                  <StackPane prefHeight="294.0" prefWidth="447.0">
                      <children>
                         <ImageView fx:id="profileAvatar" fitHeight="87.0" fitWidth="99.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../../assets/Avatars/av0.jpg" />
                            </image>
                            <StackPane.margin>
-                              <Insets top="15.0" />
+                              <Insets top="20.0" />
                            </StackPane.margin>
                         </ImageView>
-                        <VBox alignment="CENTER" maxHeight="243.0" maxWidth="229.0" prefHeight="157.0" prefWidth="147.0" styleClass="imageBorder" />
+                        <VBox alignment="CENTER" maxHeight="243.0" maxWidth="229.0" prefHeight="195.0" prefWidth="201.0" styleClass="imageBorder" />
                      </children>
                      <VBox.margin>
                         <Insets top="-20.0" />
@@ -97,43 +101,60 @@
                                  <font>
                                     <Font name="Dubai Medium" size="18.0" />
                                  </font>
+                                 <VBox.margin>
+                                    <Insets top="-20.0" />
+                                 </VBox.margin>
                               </Label>
                            </children>
                         </VBox>
                         <VBox alignment="CENTER" prefHeight="0.0" prefWidth="447.0">
                            <children>
-                              <Label alignment="TOP_LEFT" prefHeight="13.0" prefWidth="301.0" text="Email:" textFill="#ec2127">
+                              <Label alignment="TOP_LEFT" prefHeight="7.0" prefWidth="301.0" text="Email:" textFill="#ec2127">
                                  <font>
                                     <Font name="Dubai Medium" size="20.0" />
                                  </font>
                                  <VBox.margin>
-                                    <Insets />
+                                    <Insets top="10.0" />
                                  </VBox.margin>
                               </Label>
-                              <Label fx:id="emailLabel" maxWidth="300.0" prefWidth="300.0" styleClass="TextField">
+                              <Label fx:id="emailLabel" maxWidth="300.0" prefHeight="0.0" prefWidth="300.0" styleClass="TextField">
                                  <font>
                                     <Font name="Dubai Medium" size="18.0" />
                                  </font>
+                                 <VBox.margin>
+                                    <Insets top="-20.0" />
+                                 </VBox.margin>
                               </Label>
                            </children>
                         </VBox>
                         <VBox alignment="CENTER" prefHeight="39.0" prefWidth="447.0">
                            <children>
-                              <Label alignment="TOP_LEFT" prefHeight="13.0" prefWidth="301.0" text="Other informations:" textFill="#ec2127">
+                              <Label alignment="TOP_LEFT" prefHeight="124.0" prefWidth="301.0" text="Other informations:" textFill="#ec2127">
                                  <font>
                                     <Font name="Dubai Medium" size="20.0" />
                                  </font>
                                  <VBox.margin>
-                                    <Insets />
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label fx:id="othersLabel" maxWidth="300.0" prefHeight="0.0" prefWidth="300.0" styleClass="TextField">
+                                 <font>
+                                    <Font name="Dubai Medium" size="18.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets top="-20.0" />
                                  </VBox.margin>
                               </Label>
                            </children>
                         </VBox>
-                        <Label fx:id="othersLabel" maxWidth="300.0" prefWidth="300.0" styleClass="TextField">
+                        <Button mnemonicParsing="false" onAction="#logout" prefHeight="22.0" prefWidth="113.0" styleClass="MainButtonStyle" text="Logout">
+                           <VBox.margin>
+                              <Insets top="50.0" />
+                           </VBox.margin>
                            <font>
-                              <Font name="Dubai Medium" size="18.0" />
+                              <Font name="Dubai Medium" size="14.0" />
                            </font>
-                        </Label>
+                        </Button>
                      </children>
                   </VBox>
                </children>
