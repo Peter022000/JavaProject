@@ -23,6 +23,13 @@
     -fx-background-radius: 10;
 }
 
+.MainButtonStyle:hover
+{
+    -fx-background-color: #f15b60;
+    -fx-text-fill: white;
+    -fx-background-radius: 10;
+}
+
 .labelGrey
 {
     -fx-text-fill: #929292;
@@ -46,4 +53,14 @@
 .imageBorder {
     -fx-background-image:url('../assets/Frames/border5.png');
     -fx-background-size:cover;
+}
+
+.avatarsBG{
+    -fx-background-image:url('../assets/Note_wide.png');
+    -fx-background-size:cover;
+}
+
+.imageHover:hover
+{
+    -fx-opacity: 0.8;
 }

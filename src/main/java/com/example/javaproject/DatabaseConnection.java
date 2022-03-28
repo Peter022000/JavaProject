@@ -186,6 +186,23 @@ public class DatabaseConnection {
         return credentials;
     }
 
+    public static void setNewAvatar(String avatarUrl, String username) {
+        PreparedStatement psResetPassword = null;
+        Connection resetPasswordConnection = null;
+        try {
+            resetPasswordConnection = DriverManager.getConnection(url, userDB, passwordDB);
+            psResetPassword = resetPasswordConnection.prepareStatement("UPDATE \"VirtualMerchant\".users\n" +
+                    "\tSET profile_image_url=?\n" +
+                    "\tWHERE login=?;");
+            psResetPassword.setString(1, avatarUrl);
+            psResetPassword.setString(2, username);
+            psResetPassword.executeUpdate();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static boolean emailCheck(ActionEvent event, String email) {
         PreparedStatement psCheckEmail = null;
         ResultSet resultSet = null;

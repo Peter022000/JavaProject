@@ -23,6 +23,13 @@
     -fx-background-radius: 10;
 }
 
+.MainButtonStyle:hover
+{
+    -fx-background-color: #f15b60;
+    -fx-text-fill: white;
+    -fx-background-radius: 10;
+}
+
 .labelGrey
 {
     -fx-text-fill: #929292;
