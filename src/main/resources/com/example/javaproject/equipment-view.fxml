@@ -4,11 +4,23 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javaproject.EquipmentController">
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="780.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javaproject.EquipmentController">
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="245.0" layoutY="175.0" text="equipment" />
+            <Label layoutX="31.0" layoutY="76.0" text="equipment" />
+            <TableView fx:id="tableView" layoutX="359.0" layoutY="168.0" prefHeight="421.0" prefWidth="626.0">
+               <columns>
+                  <TableColumn fx:id="tableName" maxWidth="1.7976931348623157E308" prefWidth="76.0" text="name" />
+                  <TableColumn fx:id="tableWeight" maxWidth="1.7976931348623157E308" prefWidth="87.0" text="weight" />
+                  <TableColumn fx:id="tableValue" maxWidth="1.7976931348623157E308" prefWidth="71.0" text="value" />
+                  <TableColumn fx:id="tableDescription" maxWidth="1.7976931348623157E308" prefWidth="90.0" text="description" />
+                  <TableColumn fx:id="tableAmount" prefWidth="75.0" text="amount" />
+                  <TableColumn fx:id="TableAction" prefWidth="112.0" text="Action" />
+               </columns>
+            </TableView>
          </children>
       </AnchorPane>
    </center>
