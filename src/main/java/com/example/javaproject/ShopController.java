@@ -30,7 +30,7 @@ public class ShopController {
 
         loader.setLocation(getClass().getResource("navigation-view.fxml"));
         BorderPane topView = loader.load();
-        
+
         borderPane.setTop(topView);
     }
 
