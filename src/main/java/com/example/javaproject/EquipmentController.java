@@ -50,50 +50,6 @@ public class EquipmentController {
         borderPane.setTop(topView);
 
         loadTable();
-<<<<<<< HEAD
-    }
-
-    private void loadTable() throws SQLException {
-        ObservableList<Item> item = DatabaseConnection.getItems(3);
-        tableName.setCellValueFactory(new PropertyValueFactory<Item,String>("name"));
-        tableValue.setCellValueFactory(new PropertyValueFactory<Item,String>("value"));
-        tableWeight.setCellValueFactory(new PropertyValueFactory<Item,String>("weight"));
-        tableDescription.setCellValueFactory(new PropertyValueFactory<Item,String>("description"));
-        tableAmount.setCellValueFactory(new PropertyValueFactory<Item,String>("amount"));
-
-        Callback<TableColumn<Item, String>, TableCell<Item, String>> cellFactory
-                = //
-                new Callback<TableColumn<Item, String>, TableCell<Item, String>>() {
-                    @Override
-                    public TableCell call(final TableColumn<Item, String> param) {
-                        final TableCell<Item, String> cell = new TableCell<Item, String>() {
-
-                            final Button btn = new Button("Usuń");
-
-                            @Override
-                            public void updateItem(String item, boolean empty) {
-                                super.updateItem(item, empty);
-                                if (empty) {
-                                    setGraphic(null);
-                                    setText(null);
-                                } else {
-                                    btn.setOnAction(event -> {
-                                        Item item1 = getTableView().getItems().get(getIndex());
-                                        System.out.println(item1);
-                                    });
-                                    setGraphic(btn);
-                                    setText(null);
-                                }
-                            }
-                        };
-                        return cell;
-                    }
-                };
-
-        TableAction.setCellFactory(cellFactory);
-        tableView.setItems(item);
-=======
->>>>>>> control-point
     }
 
     private void loadTable() throws SQLException {
