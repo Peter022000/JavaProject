@@ -7,7 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -15,8 +15,6 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class NavigationController {
-    @FXML
-    private BorderPane borderPane;
 
     @FXML
     private ComboBox<String> menu;
@@ -24,14 +22,8 @@ public class NavigationController {
     @FXML
     private ComboBox<String> shopMenu;
 
-
     @FXML
-    private AnchorPane navBody;
-
-    @FXML
-    private AnchorPane sceneChange;
-
-    private FXMLLoader loader;
+    private BorderPane borderPane;
 
     @FXML
     public void initialize() throws IOException {
@@ -42,43 +34,38 @@ public class NavigationController {
         shopMenu.getItems().add("Kowal");
         shopMenu.getItems().add("Zaopatrzenie");
         shopMenu.getItems().add("Krawiec");
-
-
-        loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("equipment-view.fxml"));
-
-        BorderPane centerView1 = loader.load();
-
-        borderPane.setCenter(centerView1);
     }
 
     @FXML
-    void menuAction(ActionEvent event) throws IOException {
+    private void menuAction(ActionEvent event) throws IOException {
         int selectedIndex = menu.getSelectionModel().getSelectedIndex();
 
         if(selectedIndex == 0) {
-            loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("equipment-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("equipment-view.fxml"));
+            Parent root = loader.load();
 
-            BorderPane centerView1 = loader.load();
+            EquipmentController equipmentController = loader.getController();
 
-            borderPane.setCenter(centerView1);
-
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
         } else if(selectedIndex == 1) {
-            loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("user-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("user-view.fxml"));
+            Parent root = loader.load();
 
-            BorderPane centerView1 = loader.load();
+            UserController userController = loader.getController();
 
-            borderPane.setCenter(centerView1);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
         } else if(selectedIndex == 2) {
-            loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("login-view.fxml"));
-
-            BorderPane centerView1 = loader.load();
-
-            borderPane.setTop(null);
-            borderPane.setCenter(centerView1);
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("login-view.fxml")));
+            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
         }
     }
 
@@ -86,19 +73,22 @@ public class NavigationController {
     void shopMenuAction(ActionEvent event) throws IOException {
         int selectedIndex = shopMenu.getSelectionModel().getSelectedIndex();
 
-        loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("shop-view.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("shop-view.fxml"));
+        Parent root = loader.load();
 
+        ShopController shopController = loader.getController();
 
         if(selectedIndex == 0) {
-            ShopController.saveSelectedShop("Kowal");
+            shopController.setShop("Kowal");
         } else if(selectedIndex == 1) {
-            ShopController.saveSelectedShop("Zaopatrzenie");
+            shopController.setShop("Zaopatrzenie");
         } else if(selectedIndex == 2) {
-            ShopController.saveSelectedShop("Krawiec");
+            shopController.setShop("Krawiec");
         }
 
-        BorderPane centerView1 = loader.load();
-        borderPane.setCenter(centerView1);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 }

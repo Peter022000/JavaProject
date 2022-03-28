@@ -1,0 +1,44 @@
+.root{
+    -fx-background-image:url('../assets/bg3_opacity70.png');
+    -fx-background-size:cover;
+}
+
+.backgroundMain
+{
+    -fx-background-image:url('../assets/bg2.png');
+    -fx-background-size:cover;
+}
+
+.TextField
+{
+    -fx-border-color:  transparent transparent black transparent;
+    -fx-background-color: transparent;
+    -fx-border-width: 2;
+}
+
+.MainButtonStyle
+{
+    -fx-background-color: #ec2127;
+    -fx-text-fill: white;
+    -fx-background-radius: 10;
+}
+
+.labelGrey
+{
+    -fx-text-fill: #929292;
+}
+
+.labelLightRed
+{
+    -fx-text-fill: #f15b60;
+}
+
+.labelGrey:hover
+{
+    -fx-text-fill: #4d4d4d;
+}
+
+.labelLightRed:hover
+{
+    -fx-text-fill: #d31219;
+}
