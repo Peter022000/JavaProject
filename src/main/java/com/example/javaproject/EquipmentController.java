@@ -1,26 +1,19 @@
 package com.example.javaproject;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.BorderPane;
 import javafx.util.Callback;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.List;
 
 public class EquipmentController {
-    @FXML
-    private BorderPane borderPane;
-
     @FXML
     private TableView<Item> tableView;
 
@@ -42,18 +35,21 @@ public class EquipmentController {
     @FXML
     private TableColumn<Item, String> tableAmount;
 
-    public void initialize() throws IOException, SQLException {
-        FXMLLoader loader = new FXMLLoader();
+    private int uid;
 
-        loader.setLocation(getClass().getResource("navigation-view.fxml"));
-        BorderPane topView = loader.load();
-        borderPane.setTop(topView);
+    public void setUid(int uid) throws IOException, SQLException {
+        this.uid = uid;
+        System.out.println("Equipment: " + uid);
+        loadTable();
+    }
 
+    @FXML
+    private void goBackToMenu(ActionEvent event) throws IOException, SQLException {
         loadTable();
     }
 
     private void loadTable() throws SQLException {
-        ObservableList<Item> item = DatabaseConnectv2.getItems(3);
+        ObservableList<Item> item = DatabaseConnectv2.getItems(uid);
         tableName.setCellValueFactory(new PropertyValueFactory<Item,String>("name"));
         tableValue.setCellValueFactory(new PropertyValueFactory<Item,String>("value"));
         tableWeight.setCellValueFactory(new PropertyValueFactory<Item,String>("weight"));

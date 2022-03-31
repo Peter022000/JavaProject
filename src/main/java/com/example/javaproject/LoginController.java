@@ -61,7 +61,20 @@ public class LoginController {
 //                stage.show();
 //            }
 //        }
-        SwitchScene.switchScene("equipment-view.fxml", event);
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("menu-view.fxml"));
+        Parent root = loader.load();
+
+        MenuController menuController = loader.getController();
+
+        menuController.setUid(3);
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+
+        //SwitchScene.switchScene("equipment-view.fxml", event);
     }
 
     @FXML

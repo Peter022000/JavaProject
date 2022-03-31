@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="633.0" prefWidth="829.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javaproject.MenuController">
+   <children>
+      <Label layoutX="271.0" layoutY="96.0" prefHeight="77.0" prefWidth="236.0" text="Menu">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
+      <Button layoutX="271.0" layoutY="208.0" mnemonicParsing="false" onAction="#goToEquipment" prefHeight="38.0" prefWidth="164.0" text="Ekwipunek" />
+      <Button layoutX="271.0" layoutY="267.0" mnemonicParsing="false" onAction="#goToShop" prefHeight="38.0" prefWidth="164.0" text="Sklepy" />
+      <Button layoutX="271.0" layoutY="328.0" mnemonicParsing="false" onAction="#GoToUserProfile" prefHeight="38.0" prefWidth="164.0" text="Profil użytkownika" />
+      <Button layoutX="271.0" layoutY="387.0" mnemonicParsing="false" onAction="#goToLoginMenu" prefHeight="38.0" prefWidth="164.0" text="Wyloguj się" />
+   </children>
+</AnchorPane>
