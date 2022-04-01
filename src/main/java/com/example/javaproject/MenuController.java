@@ -17,7 +17,6 @@ public class MenuController {
 
     public void setUid(int uid) {
         this.uid = uid;
-        System.out.println("Menu: " + uid);
     }
 
     @FXML

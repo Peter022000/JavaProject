@@ -5,7 +5,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="633.0" prefWidth="829.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javaproject.MenuController">
    <children>
       <Label layoutX="271.0" layoutY="96.0" prefHeight="77.0" prefWidth="236.0" text="Menu">
