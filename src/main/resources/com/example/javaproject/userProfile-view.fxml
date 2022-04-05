@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" stylesheets="@../../../css/profileStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javaproject.ProfileController">
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" stylesheets="@../../../css/profileStyle.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javaproject.ProfileController">
    <children>
       <VBox layoutX="35.0" layoutY="42.0" prefHeight="637.0" prefWidth="447.0" styleClass="backgroundMain">
          <children>
@@ -147,7 +147,7 @@
                               </Label>
                            </children>
                         </VBox>
-                        <Button mnemonicParsing="false" onAction="#logout" prefHeight="22.0" prefWidth="113.0" styleClass="MainButtonStyle" text="Logout">
+                        <Button mnemonicParsing="false" onAction="#goBackToMenu" prefHeight="22.0" prefWidth="113.0" styleClass="MainButtonStyle" text="Menu">
                            <VBox.margin>
                               <Insets top="50.0" />
                            </VBox.margin>

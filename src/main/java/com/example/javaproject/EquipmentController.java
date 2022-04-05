@@ -60,7 +60,6 @@ public class EquipmentController {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-
     }
 
     private void loadTable() throws SQLException {

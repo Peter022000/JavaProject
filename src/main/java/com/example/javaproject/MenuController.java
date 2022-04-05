@@ -20,7 +20,18 @@ public class MenuController {
     }
 
     @FXML
-    void GoToUserProfile(ActionEvent event) {
+    void GoToUserProfile(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("userProfile-view.fxml"));
+        Parent root = loader.load();
+
+        ProfileController profileController = loader.getController();
+
+        profileController.setUserData(userData);
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
 
     }
 
