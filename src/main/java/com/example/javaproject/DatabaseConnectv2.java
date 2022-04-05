@@ -2,10 +2,16 @@ package com.example.javaproject;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 
 import java.sql.*;
 
 public class DatabaseConnectv2 {
+    static String url = "jdbc:postgresql://195.150.230.210:5436/2022_krol_marcin";
+    static String userDB = "2022_krol_marcin";
+    static String passwordDB = "34300";
+
+
     public static ObservableList<Item> getItems(int uid) throws SQLException {
         Statement statement = null;
         ResultSet resultSet = null;
@@ -13,8 +19,7 @@ public class DatabaseConnectv2 {
         ObservableList<Item> items = FXCollections.observableArrayList();
 
         try {
-            //connection = DriverManager.getConnection(url, userDB, passwordDB);
-            connection = DriverManager.getConnection("jdbc:postgresql://localhost/postgres", "postgres", "admin");
+            connection = DriverManager.getConnection(url, userDB, passwordDB);
             statement = connection.createStatement();
 
             resultSet = statement.executeQuery( "SELECT\n" +
@@ -61,8 +66,7 @@ public class DatabaseConnectv2 {
         ObservableList<Item> items = FXCollections.observableArrayList();
 
         try {
-            //connection = DriverManager.getConnection(url, userDB, passwordDB);
-            connection = DriverManager.getConnection("jdbc:postgresql://localhost/postgres", "postgres", "admin");
+            connection = DriverManager.getConnection(url, userDB, passwordDB);
             statement = connection.createStatement();
 
             resultSet = statement.executeQuery( "SELECT s.sid, i.*, s.amount\n" +
@@ -103,8 +107,7 @@ public class DatabaseConnectv2 {
         Connection connection = null;
 
         try {
-            //connection = DriverManager.getConnection(url, userDB, passwordDB);
-            connection = DriverManager.getConnection("jdbc:postgresql://localhost/postgres", "postgres", "admin");
+            connection = DriverManager.getConnection(url, userDB, passwordDB);
             statement = connection.createStatement();
 
             statement.executeUpdate( "UPDATE \"VirtualMerchant\".equipments\n" +
@@ -120,30 +123,50 @@ public class DatabaseConnectv2 {
         }
     }
 
-    public static void buyItemFromEquipment(int sid, int uid, int iid) throws SQLException {
+    public static float buyItemFromEquipment(int sid, int uid, int iid, float money) throws SQLException {
         Statement statement = null;
         Connection connection = null;
         ResultSet resultSet = null;
 
         try {
-            connection = DriverManager.getConnection("jdbc:postgresql://localhost/postgres", "postgres", "admin");
+            connection = DriverManager.getConnection(url, userDB, passwordDB);
             statement = connection.createStatement();
 
-            resultSet = statement.executeQuery( "Select * FROM \"VirtualMerchant\".equipments\n" +
-                    "WHERE uid = " + uid + " AND iid = " + iid + ";");
+            ResultSet resultSet2 = statement.executeQuery( "SELECT value\n" +
+                    "\tFROM \"VirtualMerchant\".items\n" +
+                    "\tWHERE iid = " + iid + ";");
 
-            if (!resultSet.next()) {
-                statement.executeQuery("INSERT INTO \"VirtualMerchant\".equipments(\n" +
-                        "\tuid, iid, amount)\n" +
-                        "\tVALUES (" + uid + ", " + iid + ", 1);");
-            } else {
-                statement.executeUpdate( "UPDATE \"VirtualMerchant\".equipments\n" +
-                        "\tSET amount=amount+1\n" +
-                        "\tWHERE uid = " + uid + " AND iid = " + iid + ";");
+            resultSet2.next();
+            float cost = resultSet2.getFloat("value");
+
+            if(money >= cost)
+            {
+                resultSet = statement.executeQuery( "Select * FROM \"VirtualMerchant\".equipments\n" +
+                        "WHERE uid = " + uid + " AND iid = " + iid + ";");
+
+                if (!resultSet.next()) {
+                    statement.executeUpdate("INSERT INTO \"VirtualMerchant\".equipments(\n" +
+                            "\tuid, iid, amount)\n" +
+                            "\tVALUES (" + uid + ", " + iid + ", 1);");
+                } else {
+                    statement.executeUpdate( "UPDATE \"VirtualMerchant\".equipments\n" +
+                            "\tSET amount=amount+1\n" +
+                            "\tWHERE uid = " + uid + " AND iid = " + iid + ";");
+                }
+                statement.executeUpdate( "UPDATE \"VirtualMerchant\".shops\n" +
+                        "SET amount=amount-1\n" +
+                        "WHERE sid = " + sid + " AND iid = " + iid + ";");
+                statement.executeUpdate( "UPDATE \"VirtualMerchant\".users\n" +
+                        "\tSET money=money-" + cost + "\n" +
+                        "\tWHERE uid = " + uid + ";");
+                money=money-cost;
             }
-            statement.executeUpdate( "UPDATE \"VirtualMerchant\".shops\n" +
-                    "SET amount=amount-1\n" +
-                    "WHERE sid = " + sid + " AND iid = " + iid + ";");
+            else
+            {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("You dont have enough money");
+                alert.show();
+            }
         }
         catch (SQLException e) {
             e.printStackTrace();
@@ -152,5 +175,6 @@ public class DatabaseConnectv2 {
             assert connection != null;
             connection.close();
         }
+        return money;
     }
 }

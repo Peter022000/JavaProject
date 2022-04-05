@@ -7,10 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -40,10 +37,13 @@ public class EquipmentController {
     @FXML
     private TableColumn<Item, String> tableAmount;
 
-    private int uid;
+    @FXML
+    private Label moneyLabel;
 
-    public void setUid(int uid) throws IOException, SQLException {
-        this.uid = uid;
+    private UserData userData;
+
+    public void setUserData(UserData userData) throws SQLException {
+        this.userData = userData;
         loadTable();
     }
 
@@ -54,7 +54,7 @@ public class EquipmentController {
 
         MenuController menuController = loader.getController();
 
-        menuController.setUid(uid);
+        menuController.setUserData(userData);
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
@@ -64,13 +64,15 @@ public class EquipmentController {
     }
 
     private void loadTable() throws SQLException {
-        ObservableList<Item> item = DatabaseConnectv2.getItems(uid);
+        ObservableList<Item> item = DatabaseConnectv2.getItems(userData.getUid());
         tableName.setCellValueFactory(new PropertyValueFactory<Item,String>("name"));
         tableValue.setCellValueFactory(new PropertyValueFactory<Item,String>("value"));
         tableWeight.setCellValueFactory(new PropertyValueFactory<Item,String>("weight"));
         tableDescription.setCellValueFactory(new PropertyValueFactory<Item,String>("description"));
         tableAmount.setCellValueFactory(new PropertyValueFactory<Item,String>("amount"));
         TableAction.setCellFactory(cellFactory);
+
+        moneyLabel.setText(String.format("%.2f", userData.getMoney()));
 
         tableView.setItems(item);
     }
@@ -94,7 +96,7 @@ public class EquipmentController {
                                 btn.setOnAction(event -> {
                                     int iid = getTableView().getItems().get(getIndex()).getIid();
                                     try {
-                                        DatabaseConnectv2.deleteItemFromEquipment(uid,iid);
+                                        DatabaseConnectv2.deleteItemFromEquipment(userData.getUid(),iid);
                                         loadTable();
                                     } catch (SQLException e) {
                                         e.printStackTrace();

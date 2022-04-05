@@ -13,10 +13,10 @@ import java.sql.SQLException;
 
 public class MenuController {
 
-    private int uid;
+    private UserData userData;
 
-    public void setUid(int uid) {
-        this.uid = uid;
+    public void setUserData(UserData userData) {
+        this.userData = userData;
     }
 
     @FXML
@@ -31,7 +31,7 @@ public class MenuController {
 
         EquipmentController equipmentController = loader.getController();
 
-        equipmentController.setUid(uid);
+        equipmentController.setUserData(userData);
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
@@ -45,13 +45,13 @@ public class MenuController {
     }
 
     @FXML
-    void goToShop(ActionEvent event) throws IOException {
+    void goToShop(ActionEvent event) throws IOException, SQLException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("shop-view.fxml"));
         Parent root = loader.load();
 
         ShopController shopController = loader.getController();
 
-        shopController.setUid(uid);
+        shopController.setUserData(userData);
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
