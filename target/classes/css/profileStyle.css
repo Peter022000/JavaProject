@@ -30,6 +30,26 @@
     -fx-background-radius: 10;
 }
 
+.MainButtonSecondStyle
+{
+    -fx-background-color: #ec2127;
+    -fx-text-fill: white;
+    -fx-background-radius: 10;
+    -fx-font-size: 20;
+    -fx-font-family: Dubai;
+    -fx-font-weight: bold;
+}
+
+.MainButtonSecondStyle:hover
+{
+    -fx-background-color: #f15b60;
+    -fx-text-fill: white;
+    -fx-background-radius: 10;
+    -fx-font-size: 20;
+    -fx-font-family: Dubai;
+    -fx-font-weight: bold;
+}
+
 .labelGrey
 {
     -fx-text-fill: #929292;

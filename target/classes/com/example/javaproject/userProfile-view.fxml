@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" stylesheets="@../../../css/profileStyle.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javaproject.ProfileController">
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" stylesheets="@../../../css/profileStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javaproject.ProfileController">
    <children>
       <VBox layoutX="35.0" layoutY="42.0" prefHeight="637.0" prefWidth="447.0" styleClass="backgroundMain">
          <children>
@@ -129,27 +129,19 @@
                         </VBox>
                         <VBox alignment="CENTER" prefHeight="39.0" prefWidth="447.0">
                            <children>
-                              <Label alignment="TOP_LEFT" prefHeight="124.0" prefWidth="301.0" text="Other informations:" textFill="#ec2127">
+                              <Button mnemonicParsing="false" onAction="#openSettings" prefHeight="35.0" prefWidth="143.0" styleClass="MainButtonStyle" text="Other settings">
                                  <font>
-                                    <Font name="Dubai Medium" size="20.0" />
+                                    <Font name="Dubai Medium" size="14.0" />
                                  </font>
                                  <VBox.margin>
-                                    <Insets top="10.0" />
+                                    <Insets top="20.0" />
                                  </VBox.margin>
-                              </Label>
-                              <Label fx:id="othersLabel" maxWidth="300.0" prefHeight="0.0" prefWidth="300.0" styleClass="TextField">
-                                 <font>
-                                    <Font name="Dubai Medium" size="18.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets top="-20.0" />
-                                 </VBox.margin>
-                              </Label>
+                              </Button>
                            </children>
                         </VBox>
                         <Button mnemonicParsing="false" onAction="#goBackToMenu" prefHeight="22.0" prefWidth="113.0" styleClass="MainButtonStyle" text="Menu">
                            <VBox.margin>
-                              <Insets top="50.0" />
+                              <Insets top="40.0" />
                            </VBox.margin>
                            <font>
                               <Font name="Dubai Medium" size="14.0" />
@@ -305,6 +297,57 @@
                   </Button>
                </children>
             </HBox>
+         </children>
+      </VBox>
+      <VBox fx:id="otherSettingsVbox" layoutX="456.0" layoutY="42.0" prefHeight="637.0" prefWidth="447.0" styleClass="backgroundMain" visible="false">
+         <children>
+            <VBox alignment="TOP_CENTER" prefHeight="132.0" prefWidth="447.0" spacing="20.0">
+               <children>
+                  <HBox prefHeight="38.0" prefWidth="44.0">
+                     <children>
+                        <ImageView fitHeight="38.0" fitWidth="42.0" onMouseClicked="#closeSettings" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../assets/Icons/icons8-close-48-2.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets left="380.0" />
+                           </HBox.margin>
+                        </ImageView>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="40.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <Label alignment="TOP_LEFT" prefHeight="44.0" prefWidth="161.0" text="Other settings:" textFill="#ab0006">
+                     <font>
+                        <Font name="Dubai Bold" size="24.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="-30.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Button mnemonicParsing="false" onAction="#goBackToMenu" prefHeight="35.0" prefWidth="173.0" styleClass="MainButtonStyle" text="Change password">
+                     <font>
+                        <Font name="Dubai Medium" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#goBackToMenu" prefHeight="35.0" prefWidth="173.0" styleClass="MainButtonStyle" text="Change security password">
+                     <font>
+                        <Font name="Dubai Medium" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#goBackToMenu" prefHeight="35.0" prefWidth="173.0" styleClass="MainButtonStyle" text="Change login">
+                     <font>
+                        <Font name="Dubai Medium" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#goBackToMenu" prefHeight="35.0" prefWidth="173.0" styleClass="MainButtonStyle" text="Change email">
+                     <font>
+                        <Font name="Dubai Medium" size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+            </VBox>
          </children>
       </VBox>
    </children>
