@@ -42,6 +42,8 @@ public class ProfileController {
 
     public void setUserData(UserData userData) {
         this.userData = userData;
+
+        this.setCredentials();
     }
 
     @FXML
@@ -61,6 +63,15 @@ public class ProfileController {
 
     public void setCredentials()
     {
+        ArrayList<Integer> uid = new ArrayList<>();
+        uid.add(userData.getUid());
+        ArrayList<String> credentials = new ArrayList<>();
+
+        credentials = DatabaseConnection.setProfileData(uid);
+        this.username=String.valueOf(credentials.get(1));
+        this.email = String.valueOf(credentials.get(2));
+        this.profileUrl =String.valueOf(credentials.get(6));
+        
         /*//INFO: nie da sie zrobić tak V wyskakuje błąd
         String url = "\""+profileUrl+"\"";
         System.out.println(url);
