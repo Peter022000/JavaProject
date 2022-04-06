@@ -10,10 +10,17 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class MenuController {
 
     private UserData userData;
+
+    @FXML
+    void initialize()
+    {
+
+    }
 
     public void setUserData(UserData userData) {
         this.userData = userData;
@@ -25,8 +32,17 @@ public class MenuController {
         Parent root = loader.load();
 
         ProfileController profileController = loader.getController();
+        ArrayList<Integer> uid = new ArrayList<>();
+        ArrayList<String> credentials = new ArrayList<>();
 
+        uid.add(userData.getUid());
         profileController.setUserData(userData);
+
+        credentials = DatabaseConnection.setProfileData(uid);
+        profileController.setUsername(String.valueOf(credentials.get(1)));
+        profileController.setEmail(String.valueOf(credentials.get(2)));
+        profileController.setProfileUrl(String.valueOf(credentials.get(6)));
+        profileController.setCredentials();
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);

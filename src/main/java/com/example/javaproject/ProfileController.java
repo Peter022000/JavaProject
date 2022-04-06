@@ -14,6 +14,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class ProfileController {
 
@@ -25,6 +26,8 @@ public class ProfileController {
     private Label emailLabel;
     @FXML
     private VBox avatarVbox;
+    @FXML
+    private VBox otherSettingsVbox;
 
     private UserData userData;
 
@@ -32,12 +35,9 @@ public class ProfileController {
     String email;
     String profileUrl;
 
-
-
     @FXML
     public void initialize()
     {
-
     }
 
     public void setUserData(UserData userData) {
@@ -111,7 +111,7 @@ public class ProfileController {
         Image avatarUrl = new Image("file:src/main/resources/assets/Avatars/av1.png");
         profileAvatar.setImage(avatarUrl);
         //DatabaseConnection.setNewAvatar("file:src/main/resources/assets/Avatars/av1.png",username);
-        DatabaseConnection.setNewAvatar("1",username);
+        DatabaseConnection.setNewAvatar("1",userData.getUid());
 
     }
 
@@ -120,7 +120,7 @@ public class ProfileController {
         Image avatarUrl = new Image("file:src/main/resources/assets/Avatars/av2.png");
         profileAvatar.setImage(avatarUrl);
         //DatabaseConnection.setNewAvatar("file:src/main/resources/assets/Avatars/av2.png",username);
-        DatabaseConnection.setNewAvatar("2",username);
+        DatabaseConnection.setNewAvatar("2",userData.getUid());
     }
 
     public void setAvatar3(ActionEvent event)
@@ -128,7 +128,7 @@ public class ProfileController {
         Image avatarUrl = new Image("file:src/main/resources/assets/Avatars/av3.png");
         profileAvatar.setImage(avatarUrl);
         //DatabaseConnection.setNewAvatar("file:src/main/resources/assets/Avatars/av3.png",username);
-        DatabaseConnection.setNewAvatar("3",username);
+        DatabaseConnection.setNewAvatar("3",userData.getUid());
     }
 
     public void setAvatar4(ActionEvent event)
@@ -136,7 +136,7 @@ public class ProfileController {
         Image avatarUrl = new Image("file:src/main/resources/assets/Avatars/av4.png");
         profileAvatar.setImage(avatarUrl);
         //DatabaseConnection.setNewAvatar("file:src/main/resources/assets/Avatars/av4.png",username);
-        DatabaseConnection.setNewAvatar("4",username);
+        DatabaseConnection.setNewAvatar("4",userData.getUid());
     }
 
     public void setAvatar5(ActionEvent event)
@@ -144,7 +144,7 @@ public class ProfileController {
         Image avatarUrl = new Image("file:src/main/resources/assets/Avatars/av5.png");
         profileAvatar.setImage(avatarUrl);
         //DatabaseConnection.setNewAvatar("file:src/main/resources/assets/Avatars/av5.png",username);
-        DatabaseConnection.setNewAvatar("5",username);
+        DatabaseConnection.setNewAvatar("5",userData.getUid());
     }
 
     public void setAvatar6(ActionEvent event)
@@ -152,7 +152,7 @@ public class ProfileController {
         Image avatarUrl = new Image("file:src/main/resources/assets/Avatars/av6.png");
         profileAvatar.setImage(avatarUrl);
         //DatabaseConnection.setNewAvatar("file:src/main/resources/assets/Avatars/av6.png",username);
-        DatabaseConnection.setNewAvatar("6",username);
+        DatabaseConnection.setNewAvatar("6",userData.getUid());
     }
 
     public void openAvatarList(MouseEvent event)
@@ -163,6 +163,16 @@ public class ProfileController {
     public void closeAvatarList(MouseEvent event)
     {
         avatarVbox.setVisible(false);
+    }
+
+    public void openSettings(ActionEvent event)
+    {
+        otherSettingsVbox.setVisible(true);
+    }
+
+    public void closeSettings(MouseEvent event)
+    {
+        otherSettingsVbox.setVisible(false);
     }
 
     public void setUsername(String username) {

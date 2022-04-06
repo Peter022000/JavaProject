@@ -128,63 +128,63 @@ public class DatabaseConnection {
         return true;
     }
 
-//    public static ArrayList<String> setProfileData(ArrayList<String> username) {
-//        PreparedStatement psCheckProfilData = null;
-//        ResultSet resultSet = null;
-//        Connection emailCheckConnection = null;
-//        String uid = null;
-//        String login = null;
-//        String email = null;
-//        String password = null;
-//        String securityQuestion = null;
-//        String securityAnswer = null;
-//        String profileImageUrl = null;
-//        ArrayList<String> credentials = new ArrayList<String>();
-//
-//        try {
-//            emailCheckConnection = DriverManager.getConnection(url, userDB, passwordDB);
-//            psCheckProfilData = emailCheckConnection.prepareStatement("SELECT uid, login, email, password, security_question, security_answer, profile_image_url\n" +
-//                    "\tFROM \"VirtualMerchant\".users WHERE login=?");
-//            psCheckProfilData.setString(1, username.get(0));
-//            resultSet = psCheckProfilData.executeQuery();
-//
-//            if (!resultSet.isBeforeFirst()) {
-//                System.out.println("Login not found");
-//                Alert alert = new Alert(Alert.AlertType.ERROR);
-//                alert.setContentText("Login not found!");
-//                alert.show();
-//                return credentials;
-//            }
-//            else
-//            {
-//                while (resultSet != null && resultSet.next()) {
-//                    uid = resultSet.getString(1);
-//                    login = resultSet.getString(2);
-//                    email = resultSet.getString(3);
-//                    password = resultSet.getString(4);
-//                    securityQuestion = resultSet.getString(5);
-//                    securityAnswer = resultSet.getString(6);
-//                    profileImageUrl = resultSet.getString(7);
-//                    //TODO: chyba do poprawy, rozwiązanie tymczasowe
-//                    credentials.add(uid);
-//                    credentials.add(login);
-//                    credentials.add(email);
-//                    credentials.add(password);
-//                    credentials.add(securityQuestion);
-//                    credentials.add(securityAnswer);
-//                    credentials.add(profileImageUrl);
-//                    System.out.println("Uid: "+uid+" Login: "+login+" Email: "+email+" Password: "+password+" SecurityQ: "+
-//                            securityQuestion+" SecurityA: "+securityAnswer+" ProfileImageUrl: "+profileImageUrl);
-//                    return credentials;
-//                }
-//            }
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            return credentials;
-//        }
-//        return credentials;
-//    }
+    public static ArrayList<String> setProfileData(ArrayList<Integer> UID) {
+        PreparedStatement psCheckProfilData = null;
+        ResultSet resultSet = null;
+        Connection emailCheckConnection = null;
+        String uid = null;
+        String login = null;
+        String email = null;
+        String password = null;
+        String securityQuestion = null;
+        String securityAnswer = null;
+        String profileImageUrl = null;
+        ArrayList<String> credentials = new ArrayList<String>();
+
+        try {
+            emailCheckConnection = DriverManager.getConnection(url, userDB, passwordDB);
+            psCheckProfilData = emailCheckConnection.prepareStatement("SELECT uid, login, email, password, security_question, security_answer, profile_image_url\n" +
+                    "\tFROM \"VirtualMerchant\".users WHERE uid=?");
+            psCheckProfilData.setInt(1, UID.get(0));
+            resultSet = psCheckProfilData.executeQuery();
+
+            if (!resultSet.isBeforeFirst()) {
+                System.out.println("Uid not found");
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Error!");
+                alert.show();
+                return credentials;
+            }
+            else
+            {
+                while (resultSet != null && resultSet.next()) {
+                    uid = resultSet.getString(1);
+                    login = resultSet.getString(2);
+                    email = resultSet.getString(3);
+                    password = resultSet.getString(4);
+                    securityQuestion = resultSet.getString(5);
+                    securityAnswer = resultSet.getString(6);
+                    profileImageUrl = resultSet.getString(7);
+                    //TODO: chyba do poprawy, rozwiązanie tymczasowe
+                    credentials.add(uid);
+                    credentials.add(login);
+                    credentials.add(email);
+                    credentials.add(password);
+                    credentials.add(securityQuestion);
+                    credentials.add(securityAnswer);
+                    credentials.add(profileImageUrl);
+                    System.out.println("Uid: "+uid+" Login: "+login+" Email: "+email+" Password: "+password+" SecurityQ: "+
+                            securityQuestion+" SecurityA: "+securityAnswer+" ProfileImageUrl: "+profileImageUrl);
+                    return credentials;
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return credentials;
+        }
+        return credentials;
+    }
 
         public static UserData setProfileData(String username) {
         PreparedStatement psCheckProfilData = null;
@@ -223,16 +223,16 @@ public class DatabaseConnection {
     }
 
 
-    public static void setNewAvatar(String avatarUrl, String username) {
+    public static void setNewAvatar(String avatarUrl, int uid) {
         PreparedStatement psResetPassword = null;
         Connection resetPasswordConnection = null;
         try {
             resetPasswordConnection = DriverManager.getConnection(url, userDB, passwordDB);
             psResetPassword = resetPasswordConnection.prepareStatement("UPDATE \"VirtualMerchant\".users\n" +
                     "\tSET profile_image_url=?\n" +
-                    "\tWHERE login=?;");
+                    "\tWHERE uid=?;");
             psResetPassword.setString(1, avatarUrl);
-            psResetPassword.setString(2, username);
+            psResetPassword.setString(2, String.valueOf(uid));
             psResetPassword.executeUpdate();
         }
         catch (SQLException e) {
