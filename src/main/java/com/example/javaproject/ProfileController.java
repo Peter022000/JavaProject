@@ -236,13 +236,7 @@ public class ProfileController {
         changeLabel.setText("Change your password:");
         changeLabel2.setText("New password");
         changeLabel3.setText("Confirm new password");
-
-        changeLabel.setVisible(true);
-        changeLabel2.setVisible(true);
-        changeLabel3.setVisible(true);
-        textField1.setVisible(true);
-        textField2.setVisible(true);
-        confirmButton.setVisible(true);
+        enableChange();
 
         type.setText("password");
     }
@@ -252,13 +246,7 @@ public class ProfileController {
         changeLabel.setText("Change your login:");
         changeLabel2.setText("New login");
         changeLabel3.setText("Confirm new login");
-
-        changeLabel.setVisible(true);
-        changeLabel2.setVisible(true);
-        changeLabel3.setVisible(true);
-        textField1.setVisible(true);
-        textField2.setVisible(true);
-        confirmButton.setVisible(true);
+        enableChange();
 
         type.setText("login");
     }
@@ -268,13 +256,7 @@ public class ProfileController {
         changeLabel.setText("Change your email:");
         changeLabel2.setText("New email");
         changeLabel3.setText("Confirm new email password");
-
-        changeLabel.setVisible(true);
-        changeLabel2.setVisible(true);
-        changeLabel3.setVisible(true);
-        textField1.setVisible(true);
-        textField2.setVisible(true);
-        confirmButton.setVisible(true);
+        enableChange();
 
         type.setText("email");
     }
@@ -291,14 +273,25 @@ public class ProfileController {
                 }
                 else
                 {
-                    if(DatabaseConnection.checkIfLoginExist(textField1.getText()))
+                    if(textField1.getText().equals(textField2.getText()))
                     {
-                        DatabaseConnection.changeLogin(textField1.getText(), username);
-                        System.out.println("Login changed successfully");
+                        if (DatabaseConnection.checkIfLoginExist(textField1.getText())) {
+                            DatabaseConnection.changeLogin(textField1.getText(), username);
+                            Alert passwordAlert = new Alert(Alert.AlertType.CONFIRMATION);
+                            passwordAlert.setHeaderText(null);
+                            passwordAlert.setTitle("Success");
+                            passwordAlert.setContentText("Login changed successfully");
+                            passwordAlert.showAndWait();
+                            usernameLabel.setText(textField1.getText());
+                            disableChange();
+                        } else {
+                            error.setText("Login already taken.");
+                            error.setVisible(true);
+                        }
                     }
                     else
                     {
-                        error.setText("Login already taken.");
+                        error.setText("Logins doesn't match each other.");
                         error.setVisible(true);
                     }
                 }
@@ -318,8 +311,10 @@ public class ProfileController {
                             DatabaseConnection.resetPassword(event,textField1.getText(),email);
                             Alert passwordAlert = new Alert(Alert.AlertType.CONFIRMATION);
                             passwordAlert.setHeaderText(null);
-                            passwordAlert.setTitle("Password changed successfully");
+                            passwordAlert.setTitle("Success");
+                            passwordAlert.setContentText("Password changed successfully");
                             passwordAlert.showAndWait();
+                            disableChange();
                         }
                     }
                     else
@@ -330,12 +325,61 @@ public class ProfileController {
                 }
                 break;
             case "email":
-                //TODO: zmiana emailu
-                System.out.println("Change email");
+                if (textField1.getText().isEmpty() || textField1.equals(null) || textField2.getText().isEmpty() || textField2.equals(null))
+                {
+                    error.setText("Some fields are empty!");
+                    error.setVisible(true);
+                }
+                else
+                {
+                    if(textField1.getText().equals(textField2.getText()))
+                    {
+                        if(Validator.emailValidator(textField1))
+                        {
+                            if (DatabaseConnection.emailCheck(event, email)) {
+                                DatabaseConnection.changeEmail(textField1.getText(), email);
+                                Alert passwordAlert = new Alert(Alert.AlertType.CONFIRMATION);
+                                passwordAlert.setHeaderText(null);
+                                passwordAlert.setTitle("Success");
+                                passwordAlert.setContentText("Email changed successfully");
+                                passwordAlert.showAndWait();
+                                emailLabel.setText(textField1.getText());
+                                disableChange();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        error.setText("Emails doesn't match each other.");
+                        error.setVisible(true);
+                    }
+                }
                 break;
             default:
                 System.out.println("Error!");
                 break;
         }
+    }
+
+    public void enableChange()
+    {
+        changeLabel.setVisible(true);
+        changeLabel2.setVisible(true);
+        changeLabel3.setVisible(true);
+        textField1.setVisible(true);
+        textField2.setVisible(true);
+        confirmButton.setVisible(true);
+    }
+
+    public void disableChange()
+    {
+        changeLabel.setVisible(false);
+        changeLabel2.setVisible(false);
+        changeLabel3.setVisible(false);
+        textField1.setVisible(false);
+        textField2.setVisible(false);
+        confirmButton.setVisible(false);
+        textField1.clear();
+        textField2.clear();
     }
 }

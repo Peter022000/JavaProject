@@ -197,6 +197,22 @@ public class DatabaseConnection {
         }
     }
 
+    public static void changeEmail(String newEmail, String oldEmail) {
+        PreparedStatement psResetLogin = null;
+        Connection resetLoginConnection = null;
+        try {
+            resetLoginConnection = DriverManager.getConnection(url, userDB, passwordDB);
+            psResetLogin = resetLoginConnection.prepareStatement("UPDATE \"VirtualMerchant\".users\n" +
+                    "\tSET email=?\n" +
+                    "\tWHERE email=?;");
+            psResetLogin.setString(1, newEmail);
+            psResetLogin.setString(2, oldEmail);
+            psResetLogin.executeUpdate();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static ArrayList<String> setProfileData(ArrayList<Integer> UID) {
         PreparedStatement psCheckProfilData = null;
