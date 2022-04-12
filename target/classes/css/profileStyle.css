@@ -18,21 +18,26 @@
 
 .MainButtonStyle
 {
-    -fx-background-color: #ec2127;
+    -fx-background-color:
+                        #750a0e,
+                        linear-gradient(#ec2127, #bc1016);
     -fx-text-fill: white;
     -fx-background-radius: 10;
 }
-
 .MainButtonStyle:hover
 {
-    -fx-background-color: #f15b60;
+    -fx-background-color:
+                    #750a0e,
+                    linear-gradient(#8d0c11, #bc1016);
     -fx-text-fill: white;
     -fx-background-radius: 10;
 }
 
 .MainButtonSecondStyle
 {
-    -fx-background-color: #ec2127;
+    -fx-background-color:
+                   #750a0e,
+                   linear-gradient(#ec2127, #bc1016);
     -fx-text-fill: white;
     -fx-background-radius: 10;
     -fx-font-size: 20;
@@ -42,7 +47,9 @@
 
 .MainButtonSecondStyle:hover
 {
-    -fx-background-color: #f15b60;
+    -fx-background-color:
+                   #750a0e,
+                   linear-gradient(#8d0c11, #bc1016);
     -fx-text-fill: white;
     -fx-background-radius: 10;
     -fx-font-size: 20;

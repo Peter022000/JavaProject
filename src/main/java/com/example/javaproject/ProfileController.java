@@ -29,11 +29,36 @@ public class ProfileController {
     @FXML
     private VBox otherSettingsVbox;
 
+    @FXML
+    private Button changePassword;
+    @FXML
+    private Button changeLogin;
+    @FXML
+    private Button changeEmail;
+    @FXML
+    private Button confirmButton;
+
+    @FXML
+    private Label changeLabel;
+    @FXML
+    private Label changeLabel2;
+    @FXML
+    private Label changeLabel3;
+    @FXML
+    private TextField textField1;
+    @FXML
+    private TextField textField2;
+    @FXML
+    private Label type;
+    @FXML
+    private Label error;
+
     private UserData userData;
 
     String username;
     String email;
     String profileUrl;
+
 
     @FXML
     public void initialize()
@@ -204,5 +229,113 @@ public class ProfileController {
 
     public void logout(ActionEvent event) throws IOException {
         SwitchScene.switchScene("login-view.fxml", event);
+    }
+
+    public void changePassword(ActionEvent event)
+    {
+        changeLabel.setText("Change your password:");
+        changeLabel2.setText("New password");
+        changeLabel3.setText("Confirm new password");
+
+        changeLabel.setVisible(true);
+        changeLabel2.setVisible(true);
+        changeLabel3.setVisible(true);
+        textField1.setVisible(true);
+        textField2.setVisible(true);
+        confirmButton.setVisible(true);
+
+        type.setText("password");
+    }
+
+    public void changeLogin(ActionEvent event)
+    {
+        changeLabel.setText("Change your login:");
+        changeLabel2.setText("New login");
+        changeLabel3.setText("Confirm new login");
+
+        changeLabel.setVisible(true);
+        changeLabel2.setVisible(true);
+        changeLabel3.setVisible(true);
+        textField1.setVisible(true);
+        textField2.setVisible(true);
+        confirmButton.setVisible(true);
+
+        type.setText("login");
+    }
+
+    public void changeEmail(ActionEvent event)
+    {
+        changeLabel.setText("Change your email:");
+        changeLabel2.setText("New email");
+        changeLabel3.setText("Confirm new email password");
+
+        changeLabel.setVisible(true);
+        changeLabel2.setVisible(true);
+        changeLabel3.setVisible(true);
+        textField1.setVisible(true);
+        textField2.setVisible(true);
+        confirmButton.setVisible(true);
+
+        type.setText("email");
+    }
+
+    public void confirmChanges(ActionEvent event)
+    {
+        switch (type.getText())
+        {
+            case "login":
+                if (textField1.getText().isEmpty() || textField1.equals(null) || textField2.getText().isEmpty() || textField2.equals(null))
+                {
+                    error.setText("Some fields are empty!");
+                    error.setVisible(true);
+                }
+                else
+                {
+                    if(DatabaseConnection.checkIfLoginExist(textField1.getText()))
+                    {
+                        DatabaseConnection.changeLogin(textField1.getText(), username);
+                        System.out.println("Login changed successfully");
+                    }
+                    else
+                    {
+                        error.setText("Login already taken.");
+                        error.setVisible(true);
+                    }
+                }
+                break;
+            case "password":
+                if (textField1.getText().isEmpty() || textField1.equals(null) || textField2.getText().isEmpty() || textField2.equals(null))
+                {
+                    error.setText("Some fields are empty!");
+                    error.setVisible(true);
+                }
+                else
+                {
+                    if(textField1.getText().equals(textField2.getText()))
+                    {
+                        if(Validator.changePasswordValidator(textField1))
+                        {
+                            DatabaseConnection.resetPassword(event,textField1.getText(),email);
+                            Alert passwordAlert = new Alert(Alert.AlertType.CONFIRMATION);
+                            passwordAlert.setHeaderText(null);
+                            passwordAlert.setTitle("Password changed successfully");
+                            passwordAlert.showAndWait();
+                        }
+                    }
+                    else
+                    {
+                        error.setText("Passwords doesn't match each other.");
+                        error.setVisible(true);
+                    }
+                }
+                break;
+            case "email":
+                //TODO: zmiana emailu
+                System.out.println("Change email");
+                break;
+            default:
+                System.out.println("Error!");
+                break;
+        }
     }
 }

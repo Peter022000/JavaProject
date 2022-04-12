@@ -18,17 +18,43 @@
 
 .MainButtonStyle
 {
-    -fx-background-color: #ec2127;
+    -fx-background-color:
+                        #750a0e,
+                        linear-gradient(#ec2127, #bc1016);
+    -fx-text-fill: white;
+    -fx-background-radius: 10;
+}
+.MainButtonStyle:hover
+{
+    -fx-background-color:
+                    #750a0e,
+                    linear-gradient(#8d0c11, #bc1016);
     -fx-text-fill: white;
     -fx-background-radius: 10;
 }
 
+/*
 .MainButtonStyle:hover
 {
-    -fx-background-color: #f15b60;
+    -fx-background-color:
+                    #cccc00,
+                    linear-gradient(#5e080b, #8d0c11),
+                    linear-gradient(#5e080b, #8d0c11),
+                    linear-gradient(#ec2127, #bc1016);
     -fx-text-fill: white;
     -fx-background-radius: 10;
 }
+
+.MainButtonStyle:focused
+{
+    -fx-background-color:
+                    #cccc00,
+                    linear-gradient(#5e080b, #8d0c11),
+                    linear-gradient(#5e080b, #8d0c11),
+                    linear-gradient(#8d0c11, #bc1016);
+    -fx-text-fill: white;
+    -fx-background-radius: 10;
+}*/
 
 .labelGrey
 {

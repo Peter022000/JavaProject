@@ -55,6 +55,7 @@ public class LoginController {
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
                 stage.show();
+                root.requestFocus(); //Żeby nie oznaczało pierwszego buttona jako selected
             }
         }
     }

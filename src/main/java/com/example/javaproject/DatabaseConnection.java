@@ -128,6 +128,76 @@ public class DatabaseConnection {
         return true;
     }
 
+    public static boolean checkIfLoginExist(String username) {
+        PreparedStatement psCheckLogin = null;
+        ResultSet resultSet = null;
+        Connection logIn = null;
+
+        try {
+            logIn = DriverManager.getConnection(url, userDB, passwordDB);
+
+            psCheckLogin = logIn.prepareStatement("SELECT password FROM \"VirtualMerchant\".users WHERE login=?");
+            psCheckLogin.setString(1, username);
+            resultSet = psCheckLogin.executeQuery();
+            if (!resultSet.isBeforeFirst()) {
+                //Nie ma takiego loginu, login nie jest zajęty
+                return true;
+            }
+            else
+            {
+                System.out.println("Error, login already taken.");
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    return false;
+                }
+            }
+            if (psCheckLogin != null) {
+                try {
+                    psCheckLogin.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    return false;
+                }
+            }
+            if (logIn != null) {
+                try {
+                    logIn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    return false;
+                }
+            }
+        }
+    }
+
+    public static void changeLogin(String newLogin, String oldLogin) {
+        PreparedStatement psResetLogin = null;
+        Connection resetLoginConnection = null;
+        try {
+            resetLoginConnection = DriverManager.getConnection(url, userDB, passwordDB);
+            psResetLogin = resetLoginConnection.prepareStatement("UPDATE \"VirtualMerchant\".users\n" +
+                    "\tSET login=?\n" +
+                    "\tWHERE login=?;");
+            psResetLogin.setString(1, newLogin);
+            psResetLogin.setString(2, oldLogin);
+            psResetLogin.executeUpdate();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     public static ArrayList<String> setProfileData(ArrayList<Integer> UID) {
         PreparedStatement psCheckProfilData = null;
         ResultSet resultSet = null;
@@ -232,7 +302,7 @@ public class DatabaseConnection {
                     "\tSET profile_image_url=?\n" +
                     "\tWHERE uid=?;");
             psResetPassword.setString(1, avatarUrl);
-            psResetPassword.setString(2, String.valueOf(uid));
+            psResetPassword.setInt(2, uid);
             psResetPassword.executeUpdate();
         }
         catch (SQLException e) {
