@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<<<<<<< Updated upstream
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -13,3 +14,185 @@
       </AnchorPane>
    </center>
 </BorderPane>
+=======
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../../../css/shopsStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javaproject.ShopController">
+   <children>
+      <TableView fx:id="tableView" layoutX="14.0" layoutY="77.0" prefHeight="610.0" prefWidth="800.0">
+         <columns>
+            <TableColumn fx:id="tableName" maxWidth="1.7976931348623157E308" prefWidth="130.0" text="Name" />
+            <TableColumn fx:id="tableWeight" maxWidth="1.7976931348623157E308" prefWidth="130.0" text="Weight" />
+            <TableColumn fx:id="tableValue" maxWidth="1.7976931348623157E308" prefWidth="130.0" text="Value" />
+            <TableColumn fx:id="tableDescription" maxWidth="1.7976931348623157E308" prefWidth="130.0" text="Description" />
+            <TableColumn fx:id="tableAmount" prefWidth="130.0" text="Amount" />
+            <TableColumn fx:id="TableAction" prefWidth="130.0" text="Action" />
+         </columns>
+      </TableView>
+      <VBox layoutX="848.0" layoutY="77.0" prefHeight="610.0" prefWidth="418.0" style="-fx-background-color: rgba(49,55,57,0.8); -fx-border-insets: 4; -fx-border-color: #bc1016;">
+         <children>
+            <StackPane prefHeight="82.0" prefWidth="408.0">
+               <children>
+                  <ImageView fitHeight="97.0" fitWidth="279.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../assets/parchement.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="loginLabel" text="Username" textFill="#a10000">
+                     <StackPane.margin>
+                        <Insets top="-10.0" />
+                     </StackPane.margin>
+                     <font>
+                        <Font name="Dubai Medium" size="25.0" />
+                     </font>
+                  </Label>
+               </children>
+            </StackPane>
+            <Label alignment="CENTER" prefHeight="31.0" prefWidth="408.0" style="-fx-border-insets: 0 30 0 30;" styleClass="UnderLinedRed" text="My coins" textFill="WHITE">
+               <font>
+                  <Font name="Dubai Medium" size="16.0" />
+               </font>
+            </Label>
+            <HBox alignment="TOP_CENTER" prefHeight="103.0" prefWidth="359.0" spacing="25.0">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Label text="EP" textFill="WHITE" />
+                        <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="38.0" styleClass="elektrum" textFill="#460000">
+                           <font>
+                              <Font name="Dubai Medium" size="14.0" />
+                           </font>
+                        </Button>
+                        <Label fx:id="moneyLabel2" alignment="CENTER" prefHeight="35.0" prefWidth="93.0" textFill="WHITE">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Label text="PP" textFill="WHITE" />
+                        <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="38.0" styleClass="platinum" textFill="#460000">
+                           <font>
+                              <Font name="Dubai Medium" size="14.0" />
+                           </font>
+                        </Button>
+                        <Label fx:id="moneyLabel1" alignment="CENTER" prefHeight="35.0" prefWidth="93.0" textFill="WHITE">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Label text="GP" textFill="WHITE" />
+                        <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="38.0" styleClass="gold" textFill="#460000">
+                           <font>
+                              <Font name="Dubai Medium" size="14.0" />
+                           </font>
+                        </Button>
+                        <Label fx:id="moneyLabel" alignment="CENTER" prefHeight="35.0" prefWidth="93.0" textFill="WHITE">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Label text="SP" textFill="WHITE" />
+                        <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="38.0" styleClass="silver" textAlignment="CENTER" textFill="#460000">
+                           <font>
+                              <Font name="Dubai Medium" size="8.0" />
+                           </font>
+                        </Button>
+                        <Label fx:id="moneyLabel3" alignment="CENTER" prefHeight="35.0" prefWidth="93.0" textFill="WHITE">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Label text="CP" textFill="WHITE" />
+                        <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="38.0" styleClass="cooper" textFill="#460000">
+                           <font>
+                              <Font name="Dubai Medium" size="14.0" />
+                           </font>
+                        </Button>
+                        <Label fx:id="moneyLabel4" alignment="CENTER" prefHeight="35.0" prefWidth="93.0" textFill="WHITE">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <VBox maxHeight="200.0" maxWidth="400.0" prefHeight="186.0" prefWidth="365.0" style="-fx-background-color: rgba(49,55,57,0.8); -fx-border-insets: 4; -fx-border-color: #bc1016;">
+               <VBox.margin>
+                  <Insets left="4.0" top="60.0" />
+               </VBox.margin>
+               <children>
+                  <Label alignment="CENTER" prefWidth="396.0" text="Item description" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font name="Dubai Medium" size="18.0" />
+                     </font>
+                  </Label>
+                  <TextArea prefHeight="200.0" prefWidth="200.0" />
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+      <HBox prefHeight="52.0" prefWidth="1280.0" spacing="20.0" style="-fx-background-color: rgba(38,38,37,1); -fx-border-color: #bc1016; -fx-border-insets: 4;">
+         <children>
+            <VBox alignment="CENTER" prefHeight="52.0" prefWidth="70.0">
+               <children>
+                  <ImageView fitHeight="33.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../assets/transparent_logo.png" />
+                     </image>
+                  </ImageView>
+                  <Label prefHeight="12.0" prefWidth="66.0" style="-fx-font-weight: bold; -fx-font-size: 8;" styleClass="labelGrey" text="Virtual Merchant" textFill="WHITE" />
+               </children>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </VBox>
+            <Button mnemonicParsing="false" onAction="#goBackToMenu" prefHeight="30.0" prefWidth="85.0" styleClass="MainButtonStyle" text="Menu">
+               <font>
+                  <Font name="Dubai Medium" size="12.0" />
+               </font>
+               <HBox.margin>
+                  <Insets top="6.0" />
+               </HBox.margin>
+            </Button>
+            <ComboBox fx:id="shopMenu" maxHeight="30.0" minHeight="25.0" onAction="#shopMenuAction" prefHeight="30.0" prefWidth="150.0" promptText="Wybierz sklep">
+               <HBox.margin>
+                  <Insets top="6.0" />
+               </HBox.margin>
+            </ComboBox>
+         </children>
+         <padding>
+            <Insets left="20.0" />
+         </padding>
+      </HBox>
+   </children>
+</AnchorPane>
+>>>>>>> Stashed changes
