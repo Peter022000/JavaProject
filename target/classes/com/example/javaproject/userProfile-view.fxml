@@ -95,7 +95,7 @@
                                     <Font name="Dubai Medium" size="18.0" />
                                  </font>
                                  <VBox.margin>
-                                    <Insets top="-20.0" />
+                                    <Insets top="-10.0" />
                                  </VBox.margin>
                               </Label>
                            </children>
@@ -115,7 +115,7 @@
                                     <Font name="Dubai Medium" size="18.0" />
                                  </font>
                                  <VBox.margin>
-                                    <Insets top="-20.0" />
+                                    <Insets top="-10.0" />
                                  </VBox.margin>
                               </Label>
                            </children>

@@ -132,6 +132,11 @@ public class ShopController {
                                 });
                                 setGraphic(btn);
                                 setText(null);
+                                btn.setStyle("-fx-background-color:\n" +
+                                        "                        #750a0e,\n" +
+                                        "                        linear-gradient(#ec2127, #bc1016);\n" +
+                                        "    -fx-text-fill: white;\n" +
+                                        "    -fx-background-radius: 10; -fx-font-size: 10;");
                             }
                         }
                     };
