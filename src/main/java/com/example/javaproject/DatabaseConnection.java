@@ -180,6 +180,52 @@ public class DatabaseConnection {
         }
     }
 
+    public static String getLogin(int UID) {
+        PreparedStatement psCheckLogin = null;
+        ResultSet resultSet = null;
+        Connection logIn = null;
+
+        try {
+            logIn = DriverManager.getConnection(url, userDB, passwordDB);
+
+            psCheckLogin = logIn.prepareStatement("SELECT login FROM \"VirtualMerchant\".users WHERE uid=?");
+            psCheckLogin.setInt(1, UID);
+            resultSet = psCheckLogin.executeQuery();
+            if (!resultSet.isBeforeFirst()) {
+                System.out.println("Error, no such uid");
+            } else {
+                resultSet.next();
+                return resultSet.getString(1);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (psCheckLogin != null) {
+                try {
+                    psCheckLogin.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (logIn != null) {
+                try {
+                    logIn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return "Error";
+    }
+
     public static void changeLogin(String newLogin, String oldLogin) {
         PreparedStatement psResetLogin = null;
         Connection resetLoginConnection = null;

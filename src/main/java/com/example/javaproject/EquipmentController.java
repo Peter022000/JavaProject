@@ -42,8 +42,12 @@ public class EquipmentController {
 
     private UserData userData;
 
+    @FXML
+    private Label loginLabel;
+
     public void setUserData(UserData userData) throws SQLException {
         this.userData = userData;
+        loginLabel.setText(DatabaseConnection.getLogin(userData.getUid()));
         loadTable();
     }
 

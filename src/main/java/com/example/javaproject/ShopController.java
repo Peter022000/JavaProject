@@ -49,11 +49,22 @@ public class ShopController {
 
     private UserData userData;
 
+    @FXML
+    private Label loginLabel;
+
+    @FXML
+    void initialize()
+    {
+
+    }
+
     public void setUserData(UserData userData) throws SQLException {
         this.userData = userData;
         shopMenu.getItems().add("Kowal");
         shopMenu.getItems().add("Zaopatrzenie");
         shopMenu.getItems().add("Krawiec");
+        //Login
+        loginLabel.setText(DatabaseConnection.getLogin(userData.getUid()));
         setShop(1);
     }
 
