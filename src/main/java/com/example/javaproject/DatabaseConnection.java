@@ -1,19 +1,15 @@
 package com.example.javaproject;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class DatabaseConnection {
 
@@ -35,6 +31,7 @@ public class DatabaseConnection {
 
         try {
             Connection db = DriverManager.getConnection(url, username, password);
+            //Connection db = DriverManager.getConnection("jdbc:postgresql://localhost/postgres", "postgres", "admin");
             db.close();
         }
         catch (java.sql.SQLException e) {
@@ -131,7 +128,139 @@ public class DatabaseConnection {
         return true;
     }
 
-    public static ArrayList<String> setProfileData(ArrayList<String> username) {
+    public static boolean checkIfLoginExist(String username) {
+        PreparedStatement psCheckLogin = null;
+        ResultSet resultSet = null;
+        Connection logIn = null;
+
+        try {
+            logIn = DriverManager.getConnection(url, userDB, passwordDB);
+
+            psCheckLogin = logIn.prepareStatement("SELECT password FROM \"VirtualMerchant\".users WHERE login=?");
+            psCheckLogin.setString(1, username);
+            resultSet = psCheckLogin.executeQuery();
+            if (!resultSet.isBeforeFirst()) {
+                //Nie ma takiego loginu, login nie jest zajęty
+                return true;
+            }
+            else
+            {
+                System.out.println("Error, login already taken.");
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    return false;
+                }
+            }
+            if (psCheckLogin != null) {
+                try {
+                    psCheckLogin.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    return false;
+                }
+            }
+            if (logIn != null) {
+                try {
+                    logIn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    return false;
+                }
+            }
+        }
+    }
+
+    public static String getLogin(int UID) {
+        PreparedStatement psCheckLogin = null;
+        ResultSet resultSet = null;
+        Connection logIn = null;
+
+        try {
+            logIn = DriverManager.getConnection(url, userDB, passwordDB);
+
+            psCheckLogin = logIn.prepareStatement("SELECT login FROM \"VirtualMerchant\".users WHERE uid=?");
+            psCheckLogin.setInt(1, UID);
+            resultSet = psCheckLogin.executeQuery();
+            if (!resultSet.isBeforeFirst()) {
+                System.out.println("Error, no such uid");
+            } else {
+                resultSet.next();
+                return resultSet.getString(1);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (psCheckLogin != null) {
+                try {
+                    psCheckLogin.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (logIn != null) {
+                try {
+                    logIn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return "Error";
+    }
+
+    public static void changeLogin(String newLogin, String oldLogin) {
+        PreparedStatement psResetLogin = null;
+        Connection resetLoginConnection = null;
+        try {
+            resetLoginConnection = DriverManager.getConnection(url, userDB, passwordDB);
+            psResetLogin = resetLoginConnection.prepareStatement("UPDATE \"VirtualMerchant\".users\n" +
+                    "\tSET login=?\n" +
+                    "\tWHERE login=?;");
+            psResetLogin.setString(1, newLogin);
+            psResetLogin.setString(2, oldLogin);
+            psResetLogin.executeUpdate();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void changeEmail(String newEmail, String oldEmail) {
+        PreparedStatement psResetLogin = null;
+        Connection resetLoginConnection = null;
+        try {
+            resetLoginConnection = DriverManager.getConnection(url, userDB, passwordDB);
+            psResetLogin = resetLoginConnection.prepareStatement("UPDATE \"VirtualMerchant\".users\n" +
+                    "\tSET email=?\n" +
+                    "\tWHERE email=?;");
+            psResetLogin.setString(1, newEmail);
+            psResetLogin.setString(2, oldEmail);
+            psResetLogin.executeUpdate();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static ArrayList<String> setProfileData(ArrayList<Integer> UID) {
         PreparedStatement psCheckProfilData = null;
         ResultSet resultSet = null;
         Connection emailCheckConnection = null;
@@ -147,14 +276,14 @@ public class DatabaseConnection {
         try {
             emailCheckConnection = DriverManager.getConnection(url, userDB, passwordDB);
             psCheckProfilData = emailCheckConnection.prepareStatement("SELECT uid, login, email, password, security_question, security_answer, profile_image_url\n" +
-                    "\tFROM \"VirtualMerchant\".users WHERE login=?");
-            psCheckProfilData.setString(1, username.get(0));
+                    "\tFROM \"VirtualMerchant\".users WHERE uid=?");
+            psCheckProfilData.setInt(1, UID.get(0));
             resultSet = psCheckProfilData.executeQuery();
 
             if (!resultSet.isBeforeFirst()) {
-                System.out.println("Login not found");
+                System.out.println("Uid not found");
                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("Login not found!");
+                alert.setContentText("Error!");
                 alert.show();
                 return credentials;
             }
@@ -189,16 +318,53 @@ public class DatabaseConnection {
         return credentials;
     }
 
-    public static void setNewAvatar(String avatarUrl, String username) {
+        public static UserData setProfileData(String username) {
+        PreparedStatement psCheckProfilData = null;
+        ResultSet resultSet = null;
+        Connection emailCheckConnection = null;
+        int uid;
+        float money;
+        UserData userData = null;
+
+        try {
+            emailCheckConnection = DriverManager.getConnection(url, userDB, passwordDB);
+            psCheckProfilData = emailCheckConnection.prepareStatement("SELECT uid, money\n" +
+                    "\tFROM \"VirtualMerchant\".users WHERE login=?");
+            psCheckProfilData.setString(1, username);
+            resultSet = psCheckProfilData.executeQuery();
+
+            if (!resultSet.isBeforeFirst()) {
+                System.out.println("Login not found");
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Login not found!");
+                alert.show();
+                return userData;
+            }
+            else
+            {
+                resultSet.next();
+                uid = resultSet.getInt("uid");
+                money = resultSet.getFloat("money");
+                userData = new UserData(uid, money);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return userData;
+    }
+
+
+    public static void setNewAvatar(String avatarUrl, int uid) {
         PreparedStatement psResetPassword = null;
         Connection resetPasswordConnection = null;
         try {
             resetPasswordConnection = DriverManager.getConnection(url, userDB, passwordDB);
             psResetPassword = resetPasswordConnection.prepareStatement("UPDATE \"VirtualMerchant\".users\n" +
                     "\tSET profile_image_url=?\n" +
-                    "\tWHERE login=?;");
+                    "\tWHERE uid=?;");
             psResetPassword.setString(1, avatarUrl);
-            psResetPassword.setString(2, username);
+            psResetPassword.setInt(2, uid);
             psResetPassword.executeUpdate();
         }
         catch (SQLException e) {
@@ -322,5 +488,51 @@ public class DatabaseConnection {
         catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    //---------------------------------------------Equipment&Shop-----------------------------------//
+
+    public static ObservableList<Item> getItems(int uid) throws SQLException {
+        Statement statement = null;
+        ResultSet resultSet = null;
+        Connection connection = null;
+        //List<Item> items=new ArrayList<Item>();
+        ObservableList<Item> items = FXCollections.observableArrayList();
+
+        try {
+            //connection = DriverManager.getConnection(url, userDB, passwordDB);
+            connection = DriverManager.getConnection("jdbc:postgresql://localhost/postgres", "postgres", "admin");
+            statement = connection.createStatement();
+
+            resultSet = statement.executeQuery( "SELECT\n" +
+                    "\ti.*, e.amount\n" +
+                    "FROM\n" +
+                    "\t\"VirtualMerchant\".equipments as e\n" +
+                    "INNER JOIN \"VirtualMerchant\".users as u\n" +
+                    "    ON e.uid = u.uid\n" +
+                    "INNER JOIN \"VirtualMerchant\".items as i\n" +
+                    "    ON e.iid = i.iid\n" +
+                    "WHERE u.uid = "+uid+";");
+
+
+            while ( resultSet.next() ) {
+                int iid = resultSet.getInt("iid");
+                String name = resultSet.getString("name");
+                float weight  = resultSet.getFloat("weight");
+                float value  = resultSet.getFloat("value");
+                String description  = resultSet.getString("description");
+                int amount  = resultSet.getInt("amount");
+
+                items.add(new Item(iid, name, description, weight, value, amount));
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            assert connection != null;
+            connection.close();
+        }
+        return items;
     }
 }

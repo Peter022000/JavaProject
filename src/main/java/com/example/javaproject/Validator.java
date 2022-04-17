@@ -90,6 +90,34 @@ public class Validator {
         return true;
     }
 
+    static boolean changePasswordValidator(TextField newPasswordField)
+    {
+        Pattern passwordPattern = Pattern.compile("(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})");
+        Matcher passwordMatcher = passwordPattern.matcher(newPasswordField.getText());
+
+        if(newPasswordField.getText().isEmpty() || newPasswordField.equals(null)) {
+            return false;
+        }
+        else if(passwordMatcher.find())
+        {
+            //System.out.println("password matched correct");
+        }
+        else
+        {
+            Alert passwordAlert = new Alert(Alert.AlertType.ERROR);
+            passwordAlert.setHeaderText(null);
+            passwordAlert.setTitle("Password too weak!");
+            passwordAlert.setContentText("Password must contain at least one digit [0-9].\n" +
+                    "Password must contain at least one lowercase Latin character [a-z].\n" +
+                    "Password must contain at least one uppercase Latin character [A-Z].\n" +
+                    "Password must contain at least one special character like ! @ # & ( ).\n" +
+                    "Password must contain a length of at least 8 characters and a maximum of 20 characters.");
+            passwordAlert.showAndWait();
+            return false;
+        }
+        return true;
+    }
+
     static boolean createAccountValidator(PasswordField passwordField, PasswordField passwordConfirmField, TextField emailField, TextField usernameField, TextField securityAnswerField)
     {
         Pattern passwordPattern = Pattern.compile("(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})");
