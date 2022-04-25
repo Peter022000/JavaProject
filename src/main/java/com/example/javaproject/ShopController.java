@@ -60,9 +60,9 @@ public class ShopController {
 
     public void setUserData(UserData userData) throws SQLException {
         this.userData = userData;
-        shopMenu.getItems().add("Kowal");
-        shopMenu.getItems().add("Zaopatrzenie");
-        shopMenu.getItems().add("Krawiec");
+        shopMenu.getItems().add("Blacksmith");
+        shopMenu.getItems().add("Supplies and tools");
+        shopMenu.getItems().add("Arcane shop");
         //Login
         loginLabel.setText(DatabaseConnection.getLogin(userData.getUid()));
         setShop(1);

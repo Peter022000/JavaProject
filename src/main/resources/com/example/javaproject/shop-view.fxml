@@ -168,7 +168,7 @@
                   <Insets top="6.0" />
                </HBox.margin>
             </Button>
-            <ComboBox fx:id="shopMenu" maxHeight="30.0" minHeight="25.0" onAction="#shopMenuAction" prefHeight="30.0" prefWidth="150.0" promptText="Wybierz sklep">
+            <ComboBox fx:id="shopMenu" maxHeight="30.0" minHeight="25.0" onAction="#shopMenuAction" prefHeight="30.0" prefWidth="150.0" promptText="Choose shop type">
                <HBox.margin>
                   <Insets top="6.0" />
                </HBox.margin>
