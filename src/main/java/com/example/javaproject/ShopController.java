@@ -49,11 +49,22 @@ public class ShopController {
 
     private UserData userData;
 
+    @FXML
+    private Label loginLabel;
+
+    @FXML
+    void initialize()
+    {
+
+    }
+
     public void setUserData(UserData userData) throws SQLException {
         this.userData = userData;
-        shopMenu.getItems().add("Kowal");
-        shopMenu.getItems().add("Zaopatrzenie");
-        shopMenu.getItems().add("Krawiec");
+        shopMenu.getItems().add("Blacksmith");
+        shopMenu.getItems().add("Supplies and tools");
+        shopMenu.getItems().add("Arcane shop");
+        //Login
+        loginLabel.setText(DatabaseConnection.getLogin(userData.getUid()));
         setShop(1);
     }
 
@@ -132,6 +143,11 @@ public class ShopController {
                                 });
                                 setGraphic(btn);
                                 setText(null);
+                                btn.setStyle("-fx-background-color:\n" +
+                                        "                        #750a0e,\n" +
+                                        "                        linear-gradient(#ec2127, #bc1016);\n" +
+                                        "    -fx-text-fill: white;\n" +
+                                        "    -fx-background-radius: 10; -fx-font-size: 10;");
                             }
                         }
                     };

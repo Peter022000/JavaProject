@@ -42,8 +42,12 @@ public class EquipmentController {
 
     private UserData userData;
 
+    @FXML
+    private Label loginLabel;
+
     public void setUserData(UserData userData) throws SQLException {
         this.userData = userData;
+        loginLabel.setText(DatabaseConnection.getLogin(userData.getUid()));
         loadTable();
     }
 
@@ -74,6 +78,7 @@ public class EquipmentController {
         moneyLabel.setText(String.format("%.2f", userData.getMoney()));
 
         tableView.setItems(item);
+        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
 
     Callback<TableColumn<Item, String>, TableCell<Item, String>> cellFactory
@@ -83,14 +88,14 @@ public class EquipmentController {
                 public TableCell call(final TableColumn<Item, String> param) {
                     final TableCell<Item, String> cell = new TableCell<Item, String>() {
 
-                        final Button btn = new Button("Delete");
+                        final Button btn = new Button("Discard");
 
                         @Override
                         public void updateItem(String item, boolean empty) {
                             super.updateItem(item, empty);
                             if (empty) {
                                 setGraphic(null);
-                                setText(null);
+                                setText(null);//"-fx-background-color:" + colorString + "; -fx-fill:" + colorString+";"
                             } else {
                                 btn.setOnAction(event -> {
                                     int iid = getTableView().getItems().get(getIndex()).getIid();
@@ -103,6 +108,11 @@ public class EquipmentController {
                                 });
                                 setGraphic(btn);
                                 setText(null);
+                                btn.setStyle("-fx-background-color:\n" +
+                                        "                        #750a0e,\n" +
+                                        "                        linear-gradient(#ec2127, #bc1016);\n" +
+                                        "    -fx-text-fill: white;\n" +
+                                        "    -fx-background-radius: 10; -fx-font-size: 10;");
                             }
                         }
                     };
