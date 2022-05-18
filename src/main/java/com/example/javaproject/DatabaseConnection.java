@@ -80,6 +80,7 @@ public class DatabaseConnection {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Login is incorrect!");
                 alert.show();
+                return false;
             } else {
                 while (resultSet != null && resultSet.next()) {
                     String typedText = resultSet.getString(1);
