@@ -14,35 +14,11 @@
 
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" stylesheets="@../../../css/profileStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javaproject.ProfileController">
    <children>
-      <VBox layoutX="35.0" layoutY="42.0" prefHeight="637.0" prefWidth="447.0" styleClass="backgroundMain">
+      <VBox layoutX="14.0" layoutY="42.0" prefHeight="637.0" prefWidth="397.0" styleClass="backgroundMain">
          <children>
-            <VBox alignment="TOP_CENTER" prefHeight="337.0" prefWidth="447.0">
+            <VBox alignment="TOP_CENTER" prefHeight="208.0" prefWidth="397.0">
                <children>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="90.0">
-                     <children>
-                        <VBox prefHeight="85.0" prefWidth="132.0">
-                           <children>
-                              <ImageView fitHeight="77.0" fitWidth="205.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../../assets/transparent_logo.png" />
-                                 </image>
-                                 <VBox.margin>
-                                    <Insets top="30.0" />
-                                 </VBox.margin>
-                              </ImageView>
-                           </children>
-                        </VBox>
-                     </children>
-                  </HBox>
-                  <Label prefHeight="23.0" prefWidth="81.0" style="-fx-text-fill: #929292;" styleClass="text" text="Virtual Merchant">
-                     <font>
-                        <Font name="Dubai Medium" size="11.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets top="-10.0" />
-                     </VBox.margin>
-                  </Label>
-                  <StackPane prefHeight="294.0" prefWidth="447.0">
+                  <StackPane prefHeight="202.0" prefWidth="397.0">
                      <children>
                         <ImageView fx:id="profileAvatar" fitHeight="87.0" fitWidth="99.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -52,12 +28,20 @@
                               <Insets top="20.0" />
                            </StackPane.margin>
                         </ImageView>
-                        <VBox alignment="CENTER" maxHeight="243.0" maxWidth="229.0" prefHeight="195.0" prefWidth="201.0" styleClass="imageBorder" />
+                        <VBox alignment="CENTER" maxHeight="243.0" maxWidth="229.0" prefHeight="179.0" prefWidth="202.0" styleClass="imageBorder" />
                      </children>
                      <VBox.margin>
-                        <Insets top="-20.0" />
+                        <Insets />
                      </VBox.margin>
                   </StackPane>
+                  <ImageView fx:id="changeAvatarImage" fitHeight="36.0" fitWidth="29.0" onMouseClicked="#openAvatarList" pickOnBounds="true" preserveRatio="true" styleClass="imageHover">
+                     <image>
+                        <Image url="@../../../assets/Icons/icons8-change-user-60.png" />
+                     </image>
+                     <VBox.margin>
+                        <Insets top="-25.0" />
+                     </VBox.margin>
+                  </ImageView>
                </children>
             </VBox>
             <HBox alignment="TOP_CENTER" prefHeight="373.0" prefWidth="499.0">
@@ -66,14 +50,6 @@
                      <children>
                         <VBox alignment="TOP_CENTER" prefHeight="46.0" prefWidth="447.0">
                            <children>
-                              <ImageView fx:id="changeAvatarImage" fitHeight="36.0" fitWidth="29.0" onMouseClicked="#openAvatarList" pickOnBounds="true" preserveRatio="true" styleClass="imageHover">
-                                 <image>
-                                    <Image url="@../../../assets/Icons/icons8-change-user-60.png" />
-                                 </image>
-                                 <VBox.margin>
-                                    <Insets />
-                                 </VBox.margin>
-                              </ImageView>
                               <Label alignment="TOP_LEFT" prefHeight="13.0" prefWidth="301.0" text="Profile informations:" textAlignment="CENTER" textFill="#ab0006">
                                  <font>
                                     <Font name="Dubai Bold" size="24.0" />
@@ -129,7 +105,7 @@
                                           <Font name="Dubai Medium" size="14.0" />
                                        </font>
                                     </Button>
-                                    <Button mnemonicParsing="false" onAction="#goBackToMenu" prefHeight="30.0" prefWidth="120.0" styleClass="MainButtonStyle" text="Menu">
+                                    <Button mnemonicParsing="false" onAction="#goBackToMenu" prefHeight="15.0" prefWidth="120.0" styleClass="MainButtonStyle" text="Menu">
                                        <font>
                                           <Font name="Dubai Medium" size="14.0" />
                                        </font>
@@ -147,31 +123,41 @@
             </HBox>
          </children>
       </VBox>
-      <VBox fx:id="avatarVbox" alignment="CENTER" layoutX="482.0" layoutY="63.0" prefHeight="157.0" prefWidth="718.0" styleClass="avatarsBG" visible="false">
+      <VBox fx:id="avatarVbox" alignment="TOP_CENTER" layoutX="382.0" layoutY="45.0" prefHeight="651.0" prefWidth="894.0" styleClass="imageBorder2" visible="false">
          <children>
-            <HBox alignment="CENTER" prefHeight="30.0" prefWidth="718.0">
+            <VBox alignment="TOP_RIGHT">
                <children>
-                  <Label alignment="CENTER" prefHeight="13.0" prefWidth="301.0" text="Choose your avatar:" textAlignment="CENTER" textFill="#ab0006">
-                     <font>
-                        <Font name="Dubai Bold" size="24.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="200.0" top="10.0" />
-                     </HBox.margin>
-                  </Label>
                   <ImageView fitHeight="38.0" fitWidth="42.0" onMouseClicked="#closeAvatarList" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../assets/Icons/icons8-close-48-2.png" />
                      </image>
-                     <HBox.margin>
-                        <Insets left="150.0" />
-                     </HBox.margin>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
                   </ImageView>
                </children>
+               <VBox.margin>
+                  <Insets right="15.0" top="30.0" />
+               </VBox.margin>
+            </VBox>
+            <HBox alignment="CENTER" prefHeight="30.0" prefWidth="718.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="44.0" prefWidth="324.0" text="Choose your avatar:" textAlignment="CENTER" textFill="#ab0006">
+                     <font>
+                        <Font name="Dubai Bold" size="24.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
             </HBox>
             <HBox alignment="CENTER" prefHeight="119.0" prefWidth="718.0">
                <children>
-                  <ImageView fx:id="av1" fitHeight="87.0" fitWidth="99.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="av1" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../assets/Avatars/av1.png" />
                      </image>
@@ -179,7 +165,7 @@
                         <Insets left="20.0" right="20.0" />
                      </HBox.margin>
                   </ImageView>
-                  <ImageView fx:id="av2" fitHeight="87.0" fitWidth="99.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="av2" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../assets/Avatars/av2.png" />
                      </image>
@@ -187,7 +173,7 @@
                         <Insets right="20.0" />
                      </HBox.margin>
                   </ImageView>
-                  <ImageView fx:id="av3" fitHeight="87.0" fitWidth="99.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="av3" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../assets/Avatars/av3.png" />
                      </image>
@@ -195,7 +181,7 @@
                         <Insets right="20.0" />
                      </HBox.margin>
                   </ImageView>
-                  <ImageView fx:id="av4" fitHeight="87.0" fitWidth="99.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="av4" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../assets/Avatars/av4.png" />
                      </image>
@@ -203,7 +189,7 @@
                         <Insets right="20.0" />
                      </HBox.margin>
                   </ImageView>
-                  <ImageView fx:id="av5" fitHeight="87.0" fitWidth="99.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="av5" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../assets/Avatars/av6.png" />
                      </image>
@@ -211,7 +197,7 @@
                         <Insets right="20.0" />
                      </HBox.margin>
                   </ImageView>
-                  <ImageView fx:id="av6" fitHeight="89.0" fitWidth="92.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="av6" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../assets/Avatars/av5.png" />
                      </image>
@@ -220,10 +206,13 @@
                      </HBox.margin>
                   </ImageView>
                </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox prefHeight="21.0" prefWidth="765.0">
                <children>
-                  <Button fx:id="applyAv1" maxHeight="19.0" mnemonicParsing="false" onAction="#setAvatar1" prefHeight="19.0" prefWidth="85.0" style="-fx-background-color: #F2E4BD; -fx-border-color: #40320d; -fx-border-radius: 20; -fx-background-radius: 20; -fx-background-insets: 1;" text="Apply avatar" textFill="#00682a">
+                  <Button fx:id="applyAv1" maxHeight="19.0" mnemonicParsing="false" onAction="#setAvatar1" prefHeight="20.0" prefWidth="100.0" styleClass="avatarButtonApply" text="Apply avatar" textFill="#00682a">
                      <font>
                         <Font name="Dubai Medium" size="10.0" />
                      </font>
@@ -231,10 +220,10 @@
                         <Insets />
                      </opaqueInsets>
                      <HBox.margin>
-                        <Insets bottom="2.0" left="50.0" right="20.0" />
+                        <Insets left="85.0" right="20.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="applyAv2" mnemonicParsing="false" onAction="#setAvatar2" prefHeight="33.0" prefWidth="85.0" style="-fx-background-color: #F2E4BD; -fx-border-color: #40320d; -fx-border-radius: 20; -fx-background-radius: 20; -fx-background-insets: 1;" text="Apply avatar" textFill="#00682a">
+                  <Button fx:id="applyAv2" mnemonicParsing="false" onAction="#setAvatar2" prefHeight="20.0" prefWidth="100.0" styleClass="avatarButtonApply" text="Apply avatar" textFill="#00682a">
                      <font>
                         <Font name="Dubai Medium" size="10.0" />
                      </font>
@@ -245,7 +234,7 @@
                         <Insets bottom="2.0" right="20.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="applyAv3" mnemonicParsing="false" onAction="#setAvatar3" prefHeight="33.0" prefWidth="85.0" style="-fx-background-color: #F2E4BD; -fx-border-color: #40320d; -fx-border-radius: 20; -fx-background-radius: 20; -fx-background-insets: 1;" text="Apply avatar" textFill="#00682a">
+                  <Button fx:id="applyAv3" mnemonicParsing="false" onAction="#setAvatar3" prefHeight="20.0" prefWidth="100.0" styleClass="avatarButtonApply" text="Apply avatar" textFill="#00682a">
                      <font>
                         <Font name="Dubai Medium" size="10.0" />
                      </font>
@@ -253,10 +242,10 @@
                         <Insets />
                      </opaqueInsets>
                      <HBox.margin>
-                        <Insets bottom="2.0" left="2.0" right="20.0" />
+                        <Insets left="2.0" right="20.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="applyAv4" mnemonicParsing="false" onAction="#setAvatar4" prefHeight="7.0" prefWidth="85.0" style="-fx-background-color: #F2E4BD; -fx-border-color: #40320d; -fx-border-radius: 20; -fx-background-radius: 20; -fx-background-insets: 1;" text="Apply avatar" textFill="#00682a">
+                  <Button fx:id="applyAv4" mnemonicParsing="false" onAction="#setAvatar4" prefHeight="20.0" prefWidth="100.0" styleClass="avatarButtonApply" text="Apply avatar" textFill="#00682a">
                      <font>
                         <Font name="Dubai Medium" size="10.0" />
                      </font>
@@ -264,10 +253,10 @@
                         <Insets />
                      </opaqueInsets>
                      <HBox.margin>
-                        <Insets bottom="2.0" left="5.0" right="20.0" />
+                        <Insets right="20.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="applyAv5" mnemonicParsing="false" onAction="#setAvatar5" prefHeight="33.0" prefWidth="85.0" style="-fx-background-color: #F2E4BD; -fx-border-color: #40320d; -fx-border-radius: 20; -fx-background-radius: 20; -fx-background-insets: 1;" text="Apply avatar" textFill="#00682a">
+                  <Button fx:id="applyAv5" mnemonicParsing="false" onAction="#setAvatar5" prefHeight="20.0" prefWidth="100.0" styleClass="avatarButtonApply" text="Apply avatar" textFill="#00682a">
                      <font>
                         <Font name="Dubai Medium" size="10.0" />
                      </font>
@@ -275,10 +264,10 @@
                         <Insets />
                      </opaqueInsets>
                      <HBox.margin>
-                        <Insets bottom="2.0" right="20.0" />
+                        <Insets right="20.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="applyAv6" mnemonicParsing="false" onAction="#setAvatar6" prefHeight="33.0" prefWidth="85.0" style="-fx-background-color: #F2E4BD; -fx-border-color: #40320d; -fx-border-radius: 20; -fx-background-radius: 20; -fx-background-insets: 1;" text="Apply avatar" textFill="#00682a">
+                  <Button fx:id="applyAv6" mnemonicParsing="false" onAction="#setAvatar6" prefHeight="20.0" prefWidth="100.0" styleClass="avatarButtonApply" text="Apply avatar" textFill="#00682a">
                      <font>
                         <Font name="Dubai Medium" size="10.0" />
                      </font>
@@ -286,53 +275,56 @@
                         <Insets />
                      </opaqueInsets>
                      <HBox.margin>
-                        <Insets bottom="2.0" left="2.0" right="20.0" />
+                        <Insets right="20.0" />
                      </HBox.margin>
                   </Button>
                </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" />
+               </VBox.margin>
             </HBox>
          </children>
       </VBox>
-      <VBox fx:id="otherSettingsVbox" layoutX="461.0" layoutY="42.0" prefHeight="637.0" prefWidth="447.0" styleClass="backgroundMain" visible="false">
+      <VBox fx:id="otherSettingsVbox" layoutX="382.0" layoutY="45.0" prefHeight="651.0" prefWidth="894.0" styleClass="imageBorder2" visible="false">
          <children>
             <VBox alignment="TOP_CENTER" prefHeight="132.0" prefWidth="447.0" spacing="20.0">
                <children>
-                  <HBox prefHeight="38.0" prefWidth="44.0">
+                  <HBox alignment="TOP_RIGHT" prefHeight="38.0" prefWidth="44.0">
                      <children>
                         <ImageView fitHeight="38.0" fitWidth="42.0" onMouseClicked="#closeSettings" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../../assets/Icons/icons8-close-48-2.png" />
                            </image>
                            <HBox.margin>
-                              <Insets left="380.0" />
+                              <Insets right="20.0" top="10.0" />
                            </HBox.margin>
                         </ImageView>
                      </children>
                      <VBox.margin>
-                        <Insets top="40.0" />
+                        <Insets top="20.0" />
                      </VBox.margin>
                   </HBox>
-                  <Label alignment="TOP_LEFT" prefHeight="44.0" prefWidth="161.0" text="Other settings:" textFill="#ab0006">
+                  <Label alignment="TOP_LEFT" prefHeight="44.0" prefWidth="161.0" text="Other settings:">
                      <font>
                         <Font name="Dubai Bold" size="24.0" />
                      </font>
                      <VBox.margin>
-                        <Insets top="-30.0" />
+                        <Insets />
                      </VBox.margin>
                   </Label>
-                  <Button mnemonicParsing="false" onAction="#changePassword" prefHeight="35.0" prefWidth="173.0" styleClass="MainButtonStyle" text="Change password">
+                  <Button mnemonicParsing="false" onAction="#changePassword" prefHeight="30.0" prefWidth="350.0" styleClass="MainButtonStyle" text="Change password">
                      <font>
-                        <Font name="Dubai Medium" size="14.0" />
+                        <Font name="Dubai Medium" size="18.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#changeLogin" prefHeight="35.0" prefWidth="173.0" styleClass="MainButtonStyle" text="Change login">
+                  <Button mnemonicParsing="false" onAction="#changeLogin" prefHeight="30.0" prefWidth="350.0" styleClass="MainButtonStyle" text="Change login">
                      <font>
-                        <Font name="Dubai Medium" size="14.0" />
+                        <Font name="Dubai Medium" size="18.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#changeEmail" prefHeight="35.0" prefWidth="173.0" styleClass="MainButtonStyle" text="Change email">
+                  <Button mnemonicParsing="false" onAction="#changeEmail" prefHeight="30.0" prefWidth="350.0" styleClass="MainButtonStyle" text="Change email">
                      <font>
-                        <Font name="Dubai Medium" size="14.0" />
+                        <Font name="Dubai Medium" size="18.0" />
                      </font>
                   </Button>
                </children>
