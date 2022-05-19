@@ -130,9 +130,9 @@
                   </VBox>
                </children>
             </HBox>
-            <VBox maxHeight="200.0" maxWidth="400.0" prefHeight="186.0" prefWidth="365.0" style="-fx-background-color: rgba(49,55,57,0.8); -fx-border-insets: 4; -fx-border-color: #bc1016;">
+            <VBox maxHeight="400.0" maxWidth="400.0" prefHeight="400.0" prefWidth="400.0" style="-fx-background-color: rgba(49,55,57,0.8); -fx-border-insets: 4; -fx-border-color: #bc1016;">
                <VBox.margin>
-                  <Insets left="4.0" top="60.0" />
+                  <Insets left="4.0" />
                </VBox.margin>
                <children>
                   <Label alignment="CENTER" prefWidth="396.0" text="Item description" textAlignment="CENTER" textFill="WHITE">

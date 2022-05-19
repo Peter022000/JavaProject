@@ -194,6 +194,7 @@ public class ProfileController {
     public void openAvatarList(MouseEvent event)
     {
         avatarVbox.setVisible(true);
+        otherSettingsVbox.setVisible(false);
     }
 
     public void closeAvatarList(MouseEvent event)
@@ -204,6 +205,7 @@ public class ProfileController {
     public void openSettings(ActionEvent event)
     {
         otherSettingsVbox.setVisible(true);
+        avatarVbox.setVisible(false);
     }
 
     public void closeSettings(MouseEvent event)

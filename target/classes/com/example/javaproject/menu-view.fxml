@@ -7,37 +7,31 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" stylesheets="@../../../css/profileStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javaproject.MenuController">
    <children>
-      <VBox alignment="TOP_CENTER" layoutX="434.0" layoutY="65.0" prefHeight="591.0" prefWidth="418.0" spacing="20.0" styleClass="backgroundMain">
+      <VBox alignment="TOP_CENTER" layoutX="432.0" layoutY="25.0" prefHeight="670.0" prefWidth="417.0" spacing="20.0" styleClass="backgroundMain">
          <children>
-            <Label prefHeight="80.0" prefWidth="111.0" style="-fx-font-weight: bold; -fx-font-size: 40; -fx-text-fill: #ab0006;" text="Menu">
-               <font>
-                  <Font size="36.0" />
-               </font>
-               <VBox.margin>
-                  <Insets bottom="-20.0" top="60.0" />
-               </VBox.margin>
-            </Label>
-            <Button maxHeight="40.0" mnemonicParsing="false" onAction="#goToEquipment" prefHeight="40.0" prefWidth="250.0" style="-fx-font-family: medium;" styleClass="MainButtonSecondStyle" text="Equipment" />
-            <Button maxHeight="40.0" mnemonicParsing="false" onAction="#goToShop" prefHeight="40.0" prefWidth="250.0" style="-fx-font-family: medium;" styleClass="MainButtonSecondStyle" text="Shops" />
-            <Button maxHeight="40.0" mnemonicParsing="false" onAction="#GoToUserProfile" prefHeight="40.0" prefWidth="250.0" style="-fx-font-family: medium;" styleClass="MainButtonSecondStyle" text="Profile" />
-            <Button maxHeight="44.0" mnemonicParsing="false" onAction="#goToLoginMenu" prefHeight="44.0" prefWidth="126.0" style="-fx-font-family: medium;" styleClass="MainButtonSecondStyle" text="Log out" />
-            <ImageView fitHeight="55.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="118.0" fitWidth="197.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../assets/transparent_logo.png" />
                </image>
                <VBox.margin>
-                  <Insets top="110.0" />
+                  <Insets top="80.0" />
                </VBox.margin>
             </ImageView>
-            <Label prefHeight="15.0" prefWidth="82.0" style="-fx-font-weight: bold; -fx-font-size: 10;" styleClass="labelGrey" text="Virtual Merchant">
+            <Label prefHeight="21.0" prefWidth="123.0" style="-fx-font-weight: bold; -fx-font-size: 15;" styleClass="labelGrey" text="Virtual Merchant">
                <VBox.margin>
                   <Insets top="-25.0" />
                </VBox.margin>
             </Label>
+            <Button maxHeight="40.0" mnemonicParsing="false" onAction="#goToEquipment" prefHeight="20.0" prefWidth="255.0" style="-fx-font-family: medium;" styleClass="MainButtonSecondStyle" text="Equipment">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin></Button>
+            <Button maxHeight="40.0" mnemonicParsing="false" onAction="#goToShop" prefHeight="11.0" prefWidth="250.0" style="-fx-font-family: medium;" styleClass="MainButtonSecondStyle" text="Shops" />
+            <Button maxHeight="40.0" mnemonicParsing="false" onAction="#GoToUserProfile" prefHeight="31.0" prefWidth="250.0" style="-fx-font-family: medium;" styleClass="MainButtonSecondStyle" text="Profile" />
+            <Button maxHeight="44.0" mnemonicParsing="false" onAction="#goToLoginMenu" prefHeight="37.0" prefWidth="250.0" style="-fx-font-family: medium;" styleClass="MainButtonSecondStyle" text="Log out" />
          </children>
       </VBox>
    </children>
