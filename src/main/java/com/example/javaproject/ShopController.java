@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.SQLException;
 
 public class ShopController {
@@ -57,14 +58,11 @@ public class ShopController {
 
     ObservableList<Item> items;
 
-    @FXML
-    void initialize()
-    {
+    private Connection connection;
 
-    }
-
-    public void setUserData(UserData userData) throws SQLException {
+    public void setUserData(UserData userData, Connection connection) throws SQLException {
         this.userData = userData;
+        this.connection = connection;
         shopMenu.getItems().add("Blacksmith");
         shopMenu.getItems().add("Supplies and tools");
         shopMenu.getItems().add("Arcane shop");
@@ -97,7 +95,7 @@ public class ShopController {
 
         MenuController menuController = loader.getController();
 
-        menuController.setUserData(userData);
+        menuController.setUserData(userData, connection);
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
@@ -107,7 +105,7 @@ public class ShopController {
     }
 
     private void loadTable() throws SQLException {
-        items = DatabaseConnection.getShopItems(sid);
+        items = DatabaseConnection.getShopItems(connection, sid);
         tableName.setCellValueFactory(new PropertyValueFactory<Item,String>("name"));
         tableValue.setCellValueFactory(new PropertyValueFactory<Item,String>("value"));
         tableWeight.setCellValueFactory(new PropertyValueFactory<Item,String>("weight"));
@@ -139,7 +137,7 @@ public class ShopController {
                                 btn.setOnAction(event -> {
                                     int iid = getTableView().getItems().get(getIndex()).getIid();
                                     try {
-                                        float money = DatabaseConnection.buyItemFromEquipment(sid,userData.getUid(),iid, userData.getMoney());
+                                        float money = DatabaseConnection.buyItemFromEquipment(connection, sid,userData.getUid(),iid, userData.getMoney());
                                         userData.setMoney(money);
                                         loadTable();
                                     } catch (SQLException e) {

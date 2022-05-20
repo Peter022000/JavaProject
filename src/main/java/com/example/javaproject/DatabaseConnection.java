@@ -17,6 +17,12 @@ public class DatabaseConnection {
     static String userDB = "2022_krol_marcin";
     static String passwordDB = "34300";
 
+    Connection connection;
+
+    public static Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(url, userDB, passwordDB);
+    }
+
     public static void main(String[] args) {
         try {
             Class.forName("org.postgresql.Driver");
@@ -493,14 +499,12 @@ public class DatabaseConnection {
 
     //---------------------------------------------Equipment&Shop-----------------------------------//
     
-    public static ObservableList<Item> getItems(int uid) throws SQLException {
+    public static ObservableList<Item> getItems(Connection connection, int uid) throws SQLException {
         Statement statement = null;
         ResultSet resultSet = null;
-        Connection connection = null;
         ObservableList<Item> items = FXCollections.observableArrayList();
 
         try {
-            connection = DriverManager.getConnection(url, userDB, passwordDB);
             statement = connection.createStatement();
 
             resultSet = statement.executeQuery( "SELECT\n" +
@@ -533,21 +537,15 @@ public class DatabaseConnection {
         catch (SQLException e) {
             e.printStackTrace();
         }
-        finally {
-            assert connection != null;
-            connection.close();
-        }
         return items;
     }
 
-    public static ObservableList<Item> getShopItems(int sid) throws SQLException {
+    public static ObservableList<Item> getShopItems(Connection connection, int sid) throws SQLException {
         Statement statement = null;
         ResultSet resultSet = null;
-        Connection connection = null;
         ObservableList<Item> items = FXCollections.observableArrayList();
 
         try {
-            connection = DriverManager.getConnection(url, userDB, passwordDB);
             statement = connection.createStatement();
 
             resultSet = statement.executeQuery( "SELECT s.sid, i.*, s.amount\n" +
@@ -575,20 +573,14 @@ public class DatabaseConnection {
         catch (SQLException e) {
             e.printStackTrace();
         }
-        finally {
-            assert connection != null;
-            connection.close();
-        }
         return items;
     }
 
 
-    public static void deleteItemFromEquipment(int uid, int iid) throws SQLException {
+    public static void deleteItemFromEquipment(Connection connection, int uid, int iid) throws SQLException {
         Statement statement = null;
-        Connection connection = null;
 
         try {
-            connection = DriverManager.getConnection(url, userDB, passwordDB);
             statement = connection.createStatement();
 
             statement.executeUpdate( "UPDATE \"VirtualMerchant\".equipments\n" +
@@ -598,19 +590,13 @@ public class DatabaseConnection {
         catch (SQLException e) {
             e.printStackTrace();
         }
-        finally {
-            assert connection != null;
-            connection.close();
-        }
     }
 
-    public static float buyItemFromEquipment(int sid, int uid, int iid, float money) throws SQLException {
+    public static float buyItemFromEquipment(Connection connection, int sid, int uid, int iid, float money) throws SQLException {
         Statement statement = null;
-        Connection connection = null;
         ResultSet resultSet = null;
 
         try {
-            connection = DriverManager.getConnection(url, userDB, passwordDB);
             statement = connection.createStatement();
 
             ResultSet resultSet2 = statement.executeQuery( "SELECT value\n" +
@@ -652,11 +638,6 @@ public class DatabaseConnection {
         catch (SQLException e) {
             e.printStackTrace();
         }
-        finally {
-            assert connection != null;
-            connection.close();
-        }
         return money;
     }
-
 }

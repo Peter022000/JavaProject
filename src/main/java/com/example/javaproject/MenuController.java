@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -16,14 +17,11 @@ public class MenuController {
 
     private UserData userData;
 
-    @FXML
-    void initialize()
-    {
+    private Connection connection;
 
-    }
-
-    public void setUserData(UserData userData) {
+    public void setUserData(UserData userData, Connection connection) {
         this.userData = userData;
+        this.connection = connection;
     }
 
     @FXML
@@ -32,7 +30,7 @@ public class MenuController {
         Parent root = loader.load();
 
         ProfileController profileController = loader.getController();
-        profileController.setUserData(userData);
+        profileController.setUserData(userData, connection);
 
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -49,7 +47,7 @@ public class MenuController {
 
         EquipmentController equipmentController = loader.getController();
 
-        equipmentController.setUserData(userData);
+        equipmentController.setUserData(userData, connection);
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
@@ -59,7 +57,19 @@ public class MenuController {
 
     @FXML
     void goToLoginMenu(ActionEvent event) throws IOException {
-        SwitchScene.switchScene("login-view.fxml", event);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("login-view.fxml"));
+        Parent root = loader.load();
+
+        LoginController loginController = loader.getController();
+
+        loginController.setConnection(connection);
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+
+        //SwitchScene.switchScene("login-view.fxml", event);
     }
 
     @FXML
@@ -69,7 +79,7 @@ public class MenuController {
 
         ShopController shopController = loader.getController();
 
-        shopController.setUserData(userData);
+        shopController.setUserData(userData, connection);
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);

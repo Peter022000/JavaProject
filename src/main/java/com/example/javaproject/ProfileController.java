@@ -14,6 +14,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.ArrayList;
 
 public class ProfileController {
@@ -55,6 +56,8 @@ public class ProfileController {
 
     private UserData userData;
 
+    private Connection connection;
+
     String username;
     String email;
     String profileUrl;
@@ -65,8 +68,9 @@ public class ProfileController {
     {
     }
 
-    public void setUserData(UserData userData) {
+    public void setUserData(UserData userData, Connection connection) {
         this.userData = userData;
+        this.connection = connection;
 
         this.setCredentials();
     }
@@ -78,7 +82,7 @@ public class ProfileController {
 
         MenuController menuController = loader.getController();
 
-        menuController.setUserData(userData);
+        menuController.setUserData(userData, connection);
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);

@@ -11,6 +11,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -57,7 +58,7 @@ public class SignUpController {
     }
 
     @FXML
-    void createAccount(ActionEvent event){
+    void createAccount(ActionEvent event) throws SQLException {
 
         error.setVisible(false);
 
