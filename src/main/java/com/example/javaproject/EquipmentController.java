@@ -45,6 +45,12 @@ public class EquipmentController {
     @FXML
     private Label loginLabel;
 
+    @FXML
+    private TextArea descriptionArea;
+
+
+    ObservableList<Item> items;
+
     public void setUserData(UserData userData) throws SQLException {
         this.userData = userData;
         loginLabel.setText(DatabaseConnection.getLogin(userData.getUid()));
@@ -67,17 +73,17 @@ public class EquipmentController {
     }
 
     private void loadTable() throws SQLException {
-        ObservableList<Item> item = DatabaseConnectv2.getItems(userData.getUid());
+        items = DatabaseConnection.getItems(userData.getUid());
         tableName.setCellValueFactory(new PropertyValueFactory<Item,String>("name"));
         tableValue.setCellValueFactory(new PropertyValueFactory<Item,String>("value"));
         tableWeight.setCellValueFactory(new PropertyValueFactory<Item,String>("weight"));
-        tableDescription.setCellValueFactory(new PropertyValueFactory<Item,String>("description"));
+        tableDescription.setCellFactory(cellFactory2);
         tableAmount.setCellValueFactory(new PropertyValueFactory<Item,String>("amount"));
         TableAction.setCellFactory(cellFactory);
 
         moneyLabel.setText(String.format("%.2f", userData.getMoney()));
 
-        tableView.setItems(item);
+        tableView.setItems(items);
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
 
@@ -100,7 +106,7 @@ public class EquipmentController {
                                 btn.setOnAction(event -> {
                                     int iid = getTableView().getItems().get(getIndex()).getIid();
                                     try {
-                                        DatabaseConnectv2.deleteItemFromEquipment(userData.getUid(),iid);
+                                        DatabaseConnection.deleteItemFromEquipment(userData.getUid(),iid);
                                         loadTable();
                                     } catch (SQLException e) {
                                         e.printStackTrace();
@@ -119,4 +125,47 @@ public class EquipmentController {
                     return cell;
                 }
             };
+
+
+    Callback<TableColumn<Item, String>, TableCell<Item, String>> cellFactory2
+            = //
+            new Callback<TableColumn<Item, String>, TableCell<Item, String>>() {
+                @Override
+                public TableCell call(final TableColumn<Item, String> param) {
+                    final TableCell<Item, String> cell = new TableCell<Item, String>() {
+
+                        final Button btn = new Button("Show");
+
+                        @Override
+                        public void updateItem(String item, boolean empty) {
+                            super.updateItem(item, empty);
+                            if (empty) {
+                                setGraphic(null);
+                                setText(null);
+                            } else {
+                                int iid = getTableView().getItems().get(getIndex()).getIid();
+
+                                btn.setOnAction(event -> {
+                                    int index = 0;
+                                    for(Item a : items) {
+                                        if (a.getIid() == iid) {
+                                            index = items.indexOf(a);
+                                        }
+                                    }
+                                    descriptionArea.setText(items.get(index).getDescription());
+                                });
+                                setGraphic(btn);
+                                setText(null);
+                                btn.setStyle("-fx-background-color:\n" +
+                                        "                        #750a0e,\n" +
+                                        "                        linear-gradient(#ec2127, #bc1016);\n" +
+                                        "    -fx-text-fill: white;\n" +
+                                        "    -fx-background-radius: 10; -fx-font-size: 10;");
+                            }
+                        }
+                    };
+                    return cell;
+                }
+            };
+
 }
