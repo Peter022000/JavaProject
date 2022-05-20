@@ -6,7 +6,7 @@ import javafx.scene.control.Alert;
 
 import java.sql.*;
 
-public class DatabaseConnectv2 {
+class DatabaseConnectv22 {
     static String url = "jdbc:postgresql://195.150.230.210:5436/2022_krol_marcin";
     static String userDB = "2022_krol_marcin";
     static String passwordDB = "34300";
