@@ -17,11 +17,11 @@ public class MenuController {
 
     private UserData userData;
 
-    private Connection connection;
+    private DatabaseConnection databaseConnection;
 
-    public void setUserData(UserData userData, Connection connection) {
+    public void setUserData(UserData userData, DatabaseConnection databaseConnection) {
         this.userData = userData;
-        this.connection = connection;
+        this.databaseConnection = databaseConnection;
     }
 
     @FXML
@@ -30,7 +30,7 @@ public class MenuController {
         Parent root = loader.load();
 
         ProfileController profileController = loader.getController();
-        profileController.setUserData(userData, connection);
+        profileController.setUserData(userData, databaseConnection);
 
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -46,8 +46,7 @@ public class MenuController {
         Parent root = loader.load();
 
         EquipmentController equipmentController = loader.getController();
-
-        equipmentController.setUserData(userData, connection);
+        equipmentController.setUserData(userData, databaseConnection);
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
@@ -61,8 +60,7 @@ public class MenuController {
         Parent root = loader.load();
 
         LoginController loginController = loader.getController();
-
-        loginController.setConnection(connection);
+        loginController.setConnection(databaseConnection);
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
@@ -78,8 +76,7 @@ public class MenuController {
         Parent root = loader.load();
 
         ShopController shopController = loader.getController();
-
-        shopController.setUserData(userData, connection);
+        shopController.setUserData(userData, databaseConnection);
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);

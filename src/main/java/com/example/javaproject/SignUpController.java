@@ -39,6 +39,12 @@ public class SignUpController {
     @FXML
     private Label error;
 
+    private DatabaseConnection databaseConnection;
+
+    public void setConnection(DatabaseConnection databaseConnection) {
+        this.databaseConnection = databaseConnection;
+    }
+
 
     String questions[] = {"What is the name of your favorite pet?", "What primary school did you attend?",
             "In what town or city was your first full time job?", "What is your partner's mother's maiden name?",
@@ -54,11 +60,20 @@ public class SignUpController {
 
     @FXML
     void login(MouseEvent event) throws IOException {
-        SwitchScene.switchScene("login-view.fxml", event);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("login-view.fxml"));
+        Parent root = loader.load();
+
+        LoginController loginController = loader.getController();
+        loginController.setConnection(databaseConnection);
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML
-    void createAccount(ActionEvent event) throws SQLException {
+    void createAccount(ActionEvent event) throws SQLException, IOException {
 
         error.setVisible(false);
 
@@ -74,9 +89,20 @@ public class SignUpController {
         }
         if(Validator.createAccountValidator(passwordField, passwordConfirmField, emailField, usernameField, securityAnswerField))
         {
-            DatabaseConnection databaseConnection = new DatabaseConnection();
             databaseConnection.createAccount(usernameField.getText(), emailField.getText(),
                     securityQuestions.getValue(), securityAnswerField.getText(), passwordField.getText(), error, event);
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("login-view.fxml"));
+            Parent root = loader.load();
+
+            LoginController loginController = loader.getController();
+            loginController.setConnection(databaseConnection);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+
         }
 
     }

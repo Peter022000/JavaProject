@@ -2,9 +2,15 @@ package com.example.javaproject;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -22,6 +28,8 @@ public class ResetPasswordController {
     @FXML
     String email;
 
+    private DatabaseConnection databaseConnection;
+
     @FXML
     public void initialize()
     {
@@ -29,24 +37,45 @@ public class ResetPasswordController {
     }
 
     @FXML
-    public void setFields(ActionEvent event, String email) throws IOException {
-        DatabaseConnection.setSecurityQuestionLabel(event, email, securityQuestionField);
-    }
-
-    @FXML
     private void resetPassword(ActionEvent event) throws IOException {
         error.setVisible(false);
         if(Validator.resetPasswordValidator(newPasswordField, securityQuestionAnswerField, error)) {
-            if(DatabaseConnection.securityAnswerCheck(securityQuestionAnswerField.getText(),email))
+            if(databaseConnection.securityAnswerCheck(securityQuestionAnswerField.getText(),email))
             {
-                DatabaseConnection.resetPassword(event,newPasswordField.getText(),email);
+                databaseConnection.resetPassword(event,newPasswordField.getText(),email);
+
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("login-view.fxml"));
+                Parent root = loader.load();
+
+                LoginController loginController = loader.getController();
+                loginController.setConnection(databaseConnection);
+
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
             }
         }
     }
 
     @FXML
-    public void setEmail(String email) {
+    public void setFields(String email, ActionEvent event, DatabaseConnection databaseConnection) {
         this.email = email;
+        databaseConnection.setSecurityQuestionLabel(event, email, securityQuestionField);
+        this.databaseConnection = databaseConnection;
     }
 
+    @FXML
+    void goBackToLogin(MouseEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("login-view.fxml"));
+        Parent root = loader.load();
+
+        LoginController loginController = loader.getController();
+        loginController.setConnection(databaseConnection);
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
 }

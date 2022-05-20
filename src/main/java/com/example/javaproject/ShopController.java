@@ -58,11 +58,11 @@ public class ShopController {
 
     ObservableList<Item> items;
 
-    private Connection connection;
+    private DatabaseConnection databaseConnection;
 
-    public void setUserData(UserData userData, Connection connection) throws SQLException {
+    public void setUserData(UserData userData, DatabaseConnection databaseConnection) throws SQLException {
         this.userData = userData;
-        this.connection = connection;
+        this.databaseConnection = databaseConnection;
         shopMenu.getItems().add("Blacksmith");
         shopMenu.getItems().add("Supplies and tools");
         shopMenu.getItems().add("Arcane shop");
@@ -79,6 +79,7 @@ public class ShopController {
     @FXML
     void shopMenuAction(ActionEvent event) throws IOException, SQLException {
         int selectedIndex = shopMenu.getSelectionModel().getSelectedIndex();
+        descriptionArea.clear();
         if(selectedIndex == 0) {
             this.setShop(1);
         } else if(selectedIndex == 1) {
@@ -94,8 +95,7 @@ public class ShopController {
         Parent root = loader.load();
 
         MenuController menuController = loader.getController();
-
-        menuController.setUserData(userData, connection);
+        menuController.setUserData(userData, databaseConnection);
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
@@ -105,7 +105,7 @@ public class ShopController {
     }
 
     private void loadTable() throws SQLException {
-        items = DatabaseConnection.getShopItems(connection, sid);
+        items = databaseConnection.getShopItems(sid);
         tableName.setCellValueFactory(new PropertyValueFactory<Item,String>("name"));
         tableValue.setCellValueFactory(new PropertyValueFactory<Item,String>("value"));
         tableWeight.setCellValueFactory(new PropertyValueFactory<Item,String>("weight"));
@@ -137,7 +137,7 @@ public class ShopController {
                                 btn.setOnAction(event -> {
                                     int iid = getTableView().getItems().get(getIndex()).getIid();
                                     try {
-                                        float money = DatabaseConnection.buyItemFromEquipment(connection, sid,userData.getUid(),iid, userData.getMoney());
+                                        float money = databaseConnection.buyItemFromShop(sid,userData.getUid(),iid, userData.getMoney());
                                         userData.setMoney(money);
                                         loadTable();
                                     } catch (SQLException e) {

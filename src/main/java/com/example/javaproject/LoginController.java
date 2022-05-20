@@ -31,10 +31,10 @@ public class LoginController {
     @FXML
     private Parent root;
 
-    private Connection connection;
+    private DatabaseConnection databaseConnection;
 
-    public void setConnection(Connection connection) {
-        this.connection = connection;
+    public void setConnection(DatabaseConnection databaseConnection) {
+        this.databaseConnection = databaseConnection;
     }
 
     @FXML
@@ -52,7 +52,7 @@ public class LoginController {
 
                 UserData userData = DatabaseConnection.setProfileData(username);
 
-                menuController.setUserData(userData, connection);
+                menuController.setUserData(userData, databaseConnection);
 
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 Scene scene = new Scene(root);
@@ -65,11 +65,33 @@ public class LoginController {
 
     @FXML
     private void register(MouseEvent event) throws IOException {
-        SwitchScene.switchScene("signup-view.fxml", event);
+       // SwitchScene.switchScene("signup-view.fxml", event);
+
+        FXMLLoader loader = new FXMLLoader(DatabaseConnection.class.getResource("signup-view.fxml"));
+        root = loader.load();
+
+        SignUpController signUpController = loader.getController();
+
+        signUpController.setConnection(databaseConnection);
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML
     private void resetPassword(MouseEvent event) throws IOException {
-        SwitchScene.switchScene("resetPassword-view.fxml", event);
+        FXMLLoader loader = new FXMLLoader(DatabaseConnection.class.getResource("resetPassword-view.fxml"));
+        root = loader.load();
+
+        ResetEmailController resetEmailController = loader.getController();
+
+        resetEmailController.setConnection(databaseConnection);
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 }

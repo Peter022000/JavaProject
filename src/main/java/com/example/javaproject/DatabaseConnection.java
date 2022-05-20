@@ -19,8 +19,8 @@ public class DatabaseConnection {
 
     Connection connection;
 
-    public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(url, userDB, passwordDB);
+    public DatabaseConnection() throws SQLException {
+        this.connection = DriverManager.getConnection(url, userDB, passwordDB);;
     }
 
     public static void main(String[] args) {
@@ -51,8 +51,7 @@ public class DatabaseConnection {
         String query = "INSERT INTO \"VirtualMerchant\".users(login, password, security_question, security_answer, email)\n" +
                 "\tVALUES (?, ?, ?, ?, ?);";
         try {
-            Connection createAcc = DriverManager.getConnection(url, userDB, passwordDB);
-            PreparedStatement pst = createAcc.prepareCall(query);
+            PreparedStatement pst = connection.prepareCall(query);
             pst.setString(1, username);
             pst.setString(2, password);
             pst.setString(3, securityQuestion);
@@ -60,9 +59,8 @@ public class DatabaseConnection {
             pst.setString(5, email);
             pst.executeUpdate();
             System.out.println("Account created!");
-            SwitchScene.switchScene("login-view.fxml", event);
             return true;
-        } catch (SQLException | IOException e) {
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
             error.setVisible(true);
             e.printStackTrace();
@@ -135,15 +133,12 @@ public class DatabaseConnection {
         return true;
     }
 
-    public static boolean checkIfLoginExist(String username) {
+    public boolean checkIfLoginExist(String username) {
         PreparedStatement psCheckLogin = null;
         ResultSet resultSet = null;
-        Connection logIn = null;
 
         try {
-            logIn = DriverManager.getConnection(url, userDB, passwordDB);
-
-            psCheckLogin = logIn.prepareStatement("SELECT password FROM \"VirtualMerchant\".users WHERE login=?");
+            psCheckLogin = connection.prepareStatement("SELECT password FROM \"VirtualMerchant\".users WHERE login=?");
             psCheckLogin.setString(1, username);
             resultSet = psCheckLogin.executeQuery();
             if (!resultSet.isBeforeFirst()) {
@@ -171,14 +166,6 @@ public class DatabaseConnection {
             if (psCheckLogin != null) {
                 try {
                     psCheckLogin.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    return false;
-                }
-            }
-            if (logIn != null) {
-                try {
-                    logIn.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
                     return false;
@@ -233,12 +220,10 @@ public class DatabaseConnection {
         return "Error";
     }
 
-    public static void changeLogin(String newLogin, String oldLogin) {
+    public void changeLogin(String newLogin, String oldLogin) {
         PreparedStatement psResetLogin = null;
-        Connection resetLoginConnection = null;
         try {
-            resetLoginConnection = DriverManager.getConnection(url, userDB, passwordDB);
-            psResetLogin = resetLoginConnection.prepareStatement("UPDATE \"VirtualMerchant\".users\n" +
+            psResetLogin = connection.prepareStatement("UPDATE \"VirtualMerchant\".users\n" +
                     "\tSET login=?\n" +
                     "\tWHERE login=?;");
             psResetLogin.setString(1, newLogin);
@@ -267,10 +252,9 @@ public class DatabaseConnection {
         }
     }
 
-    public static ArrayList<String> setProfileData(ArrayList<Integer> UID) {
+    public ArrayList<String> setProfileData(ArrayList<Integer> UID) {
         PreparedStatement psCheckProfilData = null;
         ResultSet resultSet = null;
-        Connection emailCheckConnection = null;
         String uid = null;
         String login = null;
         String email = null;
@@ -281,8 +265,7 @@ public class DatabaseConnection {
         ArrayList<String> credentials = new ArrayList<String>();
 
         try {
-            emailCheckConnection = DriverManager.getConnection(url, userDB, passwordDB);
-            psCheckProfilData = emailCheckConnection.prepareStatement("SELECT uid, login, email, password, security_question, security_answer, profile_image_url\n" +
+            psCheckProfilData = connection.prepareStatement("SELECT uid, login, email, password, security_question, security_answer, profile_image_url\n" +
                     "\tFROM \"VirtualMerchant\".users WHERE uid=?");
             psCheckProfilData.setInt(1, UID.get(0));
             resultSet = psCheckProfilData.executeQuery();
@@ -312,8 +295,6 @@ public class DatabaseConnection {
                     credentials.add(securityQuestion);
                     credentials.add(securityAnswer);
                     credentials.add(profileImageUrl);
-                    System.out.println("Uid: "+uid+" Login: "+login+" Email: "+email+" Password: "+password+" SecurityQ: "+
-                            securityQuestion+" SecurityA: "+securityAnswer+" ProfileImageUrl: "+profileImageUrl);
                     return credentials;
                 }
             }
@@ -362,12 +343,10 @@ public class DatabaseConnection {
     }
 
 
-    public static void setNewAvatar(String avatarUrl, int uid) {
+    public void setNewAvatar(String avatarUrl, int uid) {
         PreparedStatement psResetPassword = null;
-        Connection resetPasswordConnection = null;
         try {
-            resetPasswordConnection = DriverManager.getConnection(url, userDB, passwordDB);
-            psResetPassword = resetPasswordConnection.prepareStatement("UPDATE \"VirtualMerchant\".users\n" +
+            psResetPassword = connection.prepareStatement("UPDATE \"VirtualMerchant\".users\n" +
                     "\tSET profile_image_url=?\n" +
                     "\tWHERE uid=?;");
             psResetPassword.setString(1, avatarUrl);
@@ -379,14 +358,12 @@ public class DatabaseConnection {
         }
     }
 
-    public static boolean emailCheck(ActionEvent event, String email) {
+    public boolean emailCheck(ActionEvent event, String email) {
         PreparedStatement psCheckEmail = null;
         ResultSet resultSet = null;
-        Connection emailCheckConnection = null;
 
         try {
-            emailCheckConnection = DriverManager.getConnection(url, userDB, passwordDB);
-            psCheckEmail = emailCheckConnection.prepareStatement("SELECT email FROM \"VirtualMerchant\".users WHERE email=?");
+            psCheckEmail = connection.prepareStatement("SELECT email FROM \"VirtualMerchant\".users WHERE email=?");
             psCheckEmail.setString(1, email);
             resultSet = psCheckEmail.executeQuery();
 
@@ -414,14 +391,12 @@ public class DatabaseConnection {
         return true;
     }
 
-    public static boolean securityAnswerCheck(String answer, String email) {
+    public boolean securityAnswerCheck(String answer, String email) {
         PreparedStatement psCheckSecurityAnswer = null;
         ResultSet resultSet = null;
-        Connection securityAnswerCheckConnection = null;
 
         try {
-            securityAnswerCheckConnection = DriverManager.getConnection(url, userDB, passwordDB);
-            psCheckSecurityAnswer = securityAnswerCheckConnection.prepareStatement("SELECT security_answer FROM \"VirtualMerchant\".users WHERE email=?");
+            psCheckSecurityAnswer = connection.prepareStatement("SELECT security_answer FROM \"VirtualMerchant\".users WHERE email=?");
             psCheckSecurityAnswer.setString(1, email);
             resultSet = psCheckSecurityAnswer.executeQuery();
 
@@ -449,14 +424,12 @@ public class DatabaseConnection {
         return true;
     }
 
-    public static void setSecurityQuestionLabel(ActionEvent event, String email, Label securityQuestion) {
+    public void setSecurityQuestionLabel(ActionEvent event, String email, Label securityQuestion) {
 
         PreparedStatement psCheckSecurityQuestion = null;
         ResultSet resultSet = null;
-        Connection securityQuestionCheckConnection = null;
         try {
-            securityQuestionCheckConnection = DriverManager.getConnection(url, userDB, passwordDB);
-            psCheckSecurityQuestion = securityQuestionCheckConnection.prepareStatement("SELECT security_question\n" +
+            psCheckSecurityQuestion = connection.prepareStatement("SELECT security_question\n" +
                     "\tFROM \"VirtualMerchant\".users WHERE email=?");
             psCheckSecurityQuestion.setString(1, email);
             resultSet = psCheckSecurityQuestion.executeQuery();
@@ -479,13 +452,11 @@ public class DatabaseConnection {
         }
     }
 
-    public static void resetPassword(ActionEvent event, String newPassword, String email) {
+    public void resetPassword(ActionEvent event, String newPassword, String email) {
         PreparedStatement psResetPassword = null;
         //ResultSet resultSet = null;
-        Connection resetPasswordConnection = null;
         try {
-            resetPasswordConnection = DriverManager.getConnection(url, userDB, passwordDB);
-            psResetPassword = resetPasswordConnection.prepareStatement("UPDATE \"VirtualMerchant\".users\n" +
+            psResetPassword = connection.prepareStatement("UPDATE \"VirtualMerchant\".users\n" +
                     "\tSET password=?\n" +
                     "\tWHERE email=?;");
             psResetPassword.setString(1, newPassword);
@@ -499,7 +470,7 @@ public class DatabaseConnection {
 
     //---------------------------------------------Equipment&Shop-----------------------------------//
     
-    public static ObservableList<Item> getItems(Connection connection, int uid) throws SQLException {
+    public ObservableList<Item> getItems(int uid) throws SQLException {
         Statement statement = null;
         ResultSet resultSet = null;
         ObservableList<Item> items = FXCollections.observableArrayList();
@@ -540,7 +511,7 @@ public class DatabaseConnection {
         return items;
     }
 
-    public static ObservableList<Item> getShopItems(Connection connection, int sid) throws SQLException {
+    public ObservableList<Item> getShopItems(int sid) throws SQLException {
         Statement statement = null;
         ResultSet resultSet = null;
         ObservableList<Item> items = FXCollections.observableArrayList();
@@ -553,6 +524,7 @@ public class DatabaseConnection {
                     "INNER JOIN \"VirtualMerchant\".items as i\n" +
                     "ON i.iid = s.iid\n" +
                     "WHERE s.sid = " + sid +"\n" +
+                    "AND amount > 0" +
                     "ORDER BY i.iid;");
 
             if (!resultSet.next()) {
@@ -577,7 +549,7 @@ public class DatabaseConnection {
     }
 
 
-    public static void deleteItemFromEquipment(Connection connection, int uid, int iid) throws SQLException {
+    public void deleteItemFromEquipment(int uid, int iid) throws SQLException {
         Statement statement = null;
 
         try {
@@ -592,7 +564,7 @@ public class DatabaseConnection {
         }
     }
 
-    public static float buyItemFromEquipment(Connection connection, int sid, int uid, int iid, float money) throws SQLException {
+    public float buyItemFromShop(int sid, int uid, int iid, float money) throws SQLException {
         Statement statement = null;
         ResultSet resultSet = null;
 

@@ -56,7 +56,7 @@ public class ProfileController {
 
     private UserData userData;
 
-    private Connection connection;
+    private DatabaseConnection databaseConnection;
 
     String username;
     String email;
@@ -68,9 +68,9 @@ public class ProfileController {
     {
     }
 
-    public void setUserData(UserData userData, Connection connection) {
+    public void setUserData(UserData userData, DatabaseConnection databaseConnection) {
         this.userData = userData;
-        this.connection = connection;
+        this.databaseConnection = databaseConnection;
 
         this.setCredentials();
     }
@@ -82,7 +82,7 @@ public class ProfileController {
 
         MenuController menuController = loader.getController();
 
-        menuController.setUserData(userData, connection);
+        menuController.setUserData(userData, databaseConnection);
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
@@ -96,7 +96,7 @@ public class ProfileController {
         uid.add(userData.getUid());
         ArrayList<String> credentials = new ArrayList<>();
 
-        credentials = DatabaseConnection.setProfileData(uid);
+        credentials = databaseConnection.setProfileData(uid);
         this.username=String.valueOf(credentials.get(1));
         this.email = String.valueOf(credentials.get(2));
         this.profileUrl =String.valueOf(credentials.get(6));
@@ -151,7 +151,7 @@ public class ProfileController {
         Image avatarUrl = new Image("file:src/main/resources/assets/Avatars/av1.png");
         profileAvatar.setImage(avatarUrl);
         //DatabaseConnection.setNewAvatar("file:src/main/resources/assets/Avatars/av1.png",username);
-        DatabaseConnection.setNewAvatar("1",userData.getUid());
+        databaseConnection.setNewAvatar("1",userData.getUid());
 
     }
 
@@ -160,7 +160,7 @@ public class ProfileController {
         Image avatarUrl = new Image("file:src/main/resources/assets/Avatars/av2.png");
         profileAvatar.setImage(avatarUrl);
         //DatabaseConnection.setNewAvatar("file:src/main/resources/assets/Avatars/av2.png",username);
-        DatabaseConnection.setNewAvatar("2",userData.getUid());
+        databaseConnection.setNewAvatar("2",userData.getUid());
     }
 
     public void setAvatar3(ActionEvent event)
@@ -168,7 +168,7 @@ public class ProfileController {
         Image avatarUrl = new Image("file:src/main/resources/assets/Avatars/av3.png");
         profileAvatar.setImage(avatarUrl);
         //DatabaseConnection.setNewAvatar("file:src/main/resources/assets/Avatars/av3.png",username);
-        DatabaseConnection.setNewAvatar("3",userData.getUid());
+        databaseConnection.setNewAvatar("3",userData.getUid());
     }
 
     public void setAvatar4(ActionEvent event)
@@ -176,7 +176,7 @@ public class ProfileController {
         Image avatarUrl = new Image("file:src/main/resources/assets/Avatars/av4.png");
         profileAvatar.setImage(avatarUrl);
         //DatabaseConnection.setNewAvatar("file:src/main/resources/assets/Avatars/av4.png",username);
-        DatabaseConnection.setNewAvatar("4",userData.getUid());
+        databaseConnection.setNewAvatar("4",userData.getUid());
     }
 
     public void setAvatar5(ActionEvent event)
@@ -184,7 +184,7 @@ public class ProfileController {
         Image avatarUrl = new Image("file:src/main/resources/assets/Avatars/av5.png");
         profileAvatar.setImage(avatarUrl);
         //DatabaseConnection.setNewAvatar("file:src/main/resources/assets/Avatars/av5.png",username);
-        DatabaseConnection.setNewAvatar("5",userData.getUid());
+        databaseConnection.setNewAvatar("5",userData.getUid());
     }
 
     public void setAvatar6(ActionEvent event)
@@ -192,7 +192,7 @@ public class ProfileController {
         Image avatarUrl = new Image("file:src/main/resources/assets/Avatars/av6.png");
         profileAvatar.setImage(avatarUrl);
         //DatabaseConnection.setNewAvatar("file:src/main/resources/assets/Avatars/av6.png",username);
-        DatabaseConnection.setNewAvatar("6",userData.getUid());
+        databaseConnection.setNewAvatar("6",userData.getUid());
     }
 
     public void openAvatarList(MouseEvent event)
@@ -215,26 +215,6 @@ public class ProfileController {
     public void closeSettings(MouseEvent event)
     {
         otherSettingsVbox.setVisible(false);
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setProfileUrl(String profileUrl) {
-        this.profileUrl = profileUrl;
-    }
-
-    public void switchToEquipment(MouseEvent event) throws IOException {
-        SwitchScene.switchScene("equipment-view.fxml", event);
-    }
-
-    public void logout(ActionEvent event) throws IOException {
-        SwitchScene.switchScene("login-view.fxml", event);
     }
 
     public void changePassword(ActionEvent event)
@@ -281,8 +261,8 @@ public class ProfileController {
                 {
                     if(textField1.getText().equals(textField2.getText()))
                     {
-                        if (DatabaseConnection.checkIfLoginExist(textField1.getText())) {
-                            DatabaseConnection.changeLogin(textField1.getText(), username);
+                        if (databaseConnection.checkIfLoginExist(textField1.getText())) {
+                            databaseConnection.changeLogin(textField1.getText(), username);
                             Alert passwordAlert = new Alert(Alert.AlertType.CONFIRMATION);
                             passwordAlert.setHeaderText(null);
                             passwordAlert.setTitle("Success");
@@ -314,7 +294,7 @@ public class ProfileController {
                     {
                         if(Validator.changePasswordValidator(textField1))
                         {
-                            DatabaseConnection.resetPassword(event,textField1.getText(),email);
+                            databaseConnection.resetPassword(event,textField1.getText(),email);
                             Alert passwordAlert = new Alert(Alert.AlertType.CONFIRMATION);
                             passwordAlert.setHeaderText(null);
                             passwordAlert.setTitle("Success");
@@ -342,7 +322,7 @@ public class ProfileController {
                     {
                         if(Validator.emailValidator(textField1))
                         {
-                            if (DatabaseConnection.emailCheck(event, email)) {
+                            if (databaseConnection.emailCheck(event, email)) {
                                 DatabaseConnection.changeEmail(textField1.getText(), email);
                                 Alert passwordAlert = new Alert(Alert.AlertType.CONFIRMATION);
                                 passwordAlert.setHeaderText(null);

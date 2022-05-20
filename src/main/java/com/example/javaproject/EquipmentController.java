@@ -52,11 +52,11 @@ public class EquipmentController {
 
     ObservableList<Item> items;
 
-    private Connection connection;
+    private DatabaseConnection databaseConnection;
 
-    public void setUserData(UserData userData, Connection connection) throws SQLException {
+    public void setUserData(UserData userData, DatabaseConnection databaseConnection) throws SQLException {
         this.userData = userData;
-        this.connection = connection;
+        this.databaseConnection = databaseConnection;
         loginLabel.setText(DatabaseConnection.getLogin(userData.getUid()));
         loadTable();
     }
@@ -67,8 +67,7 @@ public class EquipmentController {
         Parent root = loader.load();
 
         MenuController menuController = loader.getController();
-
-        menuController.setUserData(userData, connection);
+        menuController.setUserData(userData, databaseConnection);
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
@@ -77,7 +76,7 @@ public class EquipmentController {
     }
 
     private void loadTable() throws SQLException {
-        items = DatabaseConnection.getItems(connection, userData.getUid());
+        items = databaseConnection.getItems(userData.getUid());
         tableName.setCellValueFactory(new PropertyValueFactory<Item,String>("name"));
         tableValue.setCellValueFactory(new PropertyValueFactory<Item,String>("value"));
         tableWeight.setCellValueFactory(new PropertyValueFactory<Item,String>("weight"));
@@ -110,7 +109,7 @@ public class EquipmentController {
                                 btn.setOnAction(event -> {
                                     int iid = getTableView().getItems().get(getIndex()).getIid();
                                     try {
-                                        DatabaseConnection.deleteItemFromEquipment(connection, userData.getUid(),iid);
+                                        databaseConnection.deleteItemFromEquipment(userData.getUid(),iid);
                                         loadTable();
                                     } catch (SQLException e) {
                                         e.printStackTrace();
