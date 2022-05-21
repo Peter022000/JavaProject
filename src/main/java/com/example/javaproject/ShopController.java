@@ -174,16 +174,8 @@ public class ShopController {
                                 setGraphic(null);
                                 setText(null);
                             } else {
-                                int iid = getTableView().getItems().get(getIndex()).getIid();
-
                                 btn.setOnAction(event -> {
-                                    int index = 0;
-                                    for(Item a : items) {
-                                        if (a.getIid() == iid) {
-                                            index = items.indexOf(a);
-                                        }
-                                    }
-                                    descriptionArea.setText(items.get(index).getDescription());
+                                    descriptionArea.setText(getTableView().getItems().get(getIndex()).getDescription());
                                 });
                                 setGraphic(btn);
                                 setText(null);
