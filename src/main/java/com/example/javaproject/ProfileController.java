@@ -323,7 +323,7 @@ public class ProfileController {
                         if(Validator.emailValidator(textField1))
                         {
                             if (databaseConnection.emailCheck(event, email)) {
-                                DatabaseConnection.changeEmail(textField1.getText(), email);
+                                databaseConnection.changeEmail(textField1.getText(), email);
                                 Alert passwordAlert = new Alert(Alert.AlertType.CONFIRMATION);
                                 passwordAlert.setHeaderText(null);
                                 passwordAlert.setTitle("Success");

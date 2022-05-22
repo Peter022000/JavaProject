@@ -68,15 +68,11 @@ public class DatabaseConnection {
         }
     }
 
-    public static boolean loginCheck(ActionEvent event, String username, String password) {
+    public boolean loginCheck(ActionEvent event, String username, String password) {
         PreparedStatement psCheckLogin = null;
         ResultSet resultSet = null;
-        Connection logIn = null;
-
         try {
-            logIn = DriverManager.getConnection(url, userDB, passwordDB);
-
-            psCheckLogin = logIn.prepareStatement("SELECT password FROM \"VirtualMerchant\".users WHERE login=?");
+            psCheckLogin = connection.prepareStatement("SELECT password FROM \"VirtualMerchant\".users WHERE login=?");
             psCheckLogin.setString(1, username);
             resultSet = psCheckLogin.executeQuery();
             if (!resultSet.isBeforeFirst()) {
@@ -116,14 +112,6 @@ public class DatabaseConnection {
             if (psCheckLogin != null) {
                 try {
                     psCheckLogin.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    return false;
-                }
-            }
-            if (logIn != null) {
-                try {
-                    logIn.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
                     return false;
@@ -174,15 +162,11 @@ public class DatabaseConnection {
         }
     }
 
-    public static String getLogin(int UID) {
+    public String getLogin(int UID) {
         PreparedStatement psCheckLogin = null;
         ResultSet resultSet = null;
-        Connection logIn = null;
-
         try {
-            logIn = DriverManager.getConnection(url, userDB, passwordDB);
-
-            psCheckLogin = logIn.prepareStatement("SELECT login FROM \"VirtualMerchant\".users WHERE uid=?");
+            psCheckLogin = connection.prepareStatement("SELECT login FROM \"VirtualMerchant\".users WHERE uid=?");
             psCheckLogin.setInt(1, UID);
             resultSet = psCheckLogin.executeQuery();
             if (!resultSet.isBeforeFirst()) {
@@ -209,13 +193,6 @@ public class DatabaseConnection {
                     e.printStackTrace();
                 }
             }
-            if (logIn != null) {
-                try {
-                    logIn.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
         }
         return "Error";
     }
@@ -235,12 +212,10 @@ public class DatabaseConnection {
         }
     }
 
-    public static void changeEmail(String newEmail, String oldEmail) {
+    public void changeEmail(String newEmail, String oldEmail) {
         PreparedStatement psResetLogin = null;
-        Connection resetLoginConnection = null;
         try {
-            resetLoginConnection = DriverManager.getConnection(url, userDB, passwordDB);
-            psResetLogin = resetLoginConnection.prepareStatement("UPDATE \"VirtualMerchant\".users\n" +
+            psResetLogin = connection.prepareStatement("UPDATE \"VirtualMerchant\".users\n" +
                     "\tSET email=?\n" +
                     "\tWHERE email=?;");
             psResetLogin.setString(1, newEmail);
@@ -306,17 +281,15 @@ public class DatabaseConnection {
         return credentials;
     }
 
-        public static UserData setProfileData(String username) {
+    public UserData setProfileData(String username) {
         PreparedStatement psCheckProfilData = null;
         ResultSet resultSet = null;
-        Connection emailCheckConnection = null;
         int uid;
         float money;
         UserData userData = null;
 
         try {
-            emailCheckConnection = DriverManager.getConnection(url, userDB, passwordDB);
-            psCheckProfilData = emailCheckConnection.prepareStatement("SELECT uid, money\n" +
+            psCheckProfilData = connection.prepareStatement("SELECT uid, money\n" +
                     "\tFROM \"VirtualMerchant\".users WHERE login=?");
             psCheckProfilData.setString(1, username);
             resultSet = psCheckProfilData.executeQuery();

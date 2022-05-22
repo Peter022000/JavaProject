@@ -41,7 +41,7 @@ public class LoginController {
     private void login(ActionEvent event) throws IOException {
         if(Validator.loginFieldsCheck(passwordField, usernameField))
         {
-            if(DatabaseConnection.loginCheck(event, usernameField.getText(), passwordField.getText()))
+            if(databaseConnection.loginCheck(event, usernameField.getText(), passwordField.getText()))
             {
                 FXMLLoader loader = new FXMLLoader(DatabaseConnection.class.getResource("menu-view.fxml"));
                 root = loader.load();
@@ -50,7 +50,7 @@ public class LoginController {
                 String username;
                 username = usernameField.getText();
 
-                UserData userData = DatabaseConnection.setProfileData(username);
+                UserData userData = databaseConnection.setProfileData(username);
 
                 menuController.setUserData(userData, databaseConnection);
 
