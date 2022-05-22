@@ -64,7 +64,7 @@ public class SignUpController {
         Parent root = loader.load();
 
         LoginController loginController = loader.getController();
-        loginController.setConnection(databaseConnection);
+        loginController.setDatabaseConnection(databaseConnection);
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
@@ -96,7 +96,7 @@ public class SignUpController {
             Parent root = loader.load();
 
             LoginController loginController = loader.getController();
-            loginController.setConnection(databaseConnection);
+            loginController.setDatabaseConnection(databaseConnection);
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);

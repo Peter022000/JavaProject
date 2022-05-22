@@ -30,12 +30,17 @@ public class LoginController {
 
     private DatabaseConnection databaseConnection;
 
-    public void setConnection(DatabaseConnection databaseConnection) {
+    public void setDatabaseConnection(DatabaseConnection databaseConnection) {
         this.databaseConnection = databaseConnection;
     }
 
     @FXML
     private void login(ActionEvent event) throws IOException, SQLException {
+        if(databaseConnection.getConnection() == null) {
+            databaseConnection.setConnection();
+        }
+
+
         if(databaseConnection.getConnection() != null) {
             if (Validator.loginFieldsCheck(passwordField, usernameField)) {
                 if (databaseConnection.loginCheck(event, usernameField.getText(), passwordField.getText())) {
@@ -57,14 +62,16 @@ public class LoginController {
                     root.requestFocus(); //Żeby nie oznaczało pierwszego buttona jako selected
                 }
             }
-        } else {
-            databaseConnection = new DatabaseConnection();
         }
     }
 
     @FXML
     private void register(MouseEvent event) throws IOException, SQLException {
        // SwitchScene.switchScene("signup-view.fxml", event);
+
+        if(databaseConnection.getConnection() == null) {
+            databaseConnection.setConnection();
+        }
 
         if(databaseConnection.getConnection() != null) {
             FXMLLoader loader = new FXMLLoader(DatabaseConnection.class.getResource("signup-view.fxml"));
@@ -78,13 +85,16 @@ public class LoginController {
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
-        } else {
-            databaseConnection = new DatabaseConnection();
         }
     }
 
     @FXML
     private void resetPassword(MouseEvent event) throws IOException, SQLException {
+
+        if(databaseConnection.getConnection() == null) {
+            databaseConnection.setConnection();
+        }
+
         if(databaseConnection.getConnection() != null) {
 
             FXMLLoader loader = new FXMLLoader(DatabaseConnection.class.getResource("resetPassword-view.fxml"));
@@ -98,8 +108,6 @@ public class LoginController {
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
-        } else {
-            databaseConnection = new DatabaseConnection();
         }
     }
 }

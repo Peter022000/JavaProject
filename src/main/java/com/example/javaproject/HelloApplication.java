@@ -22,7 +22,7 @@ public class HelloApplication extends Application {
         DatabaseConnection databaseConnection = new DatabaseConnection();
 
         LoginController loginController = fxmlLoader.getController();
-        loginController.setConnection(databaseConnection);
+        loginController.setDatabaseConnection(databaseConnection);
 
         stage.getIcons().add(icon);
         stage.setTitle("Virtual Merchant");

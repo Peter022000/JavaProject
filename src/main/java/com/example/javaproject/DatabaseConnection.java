@@ -597,6 +597,10 @@ public class DatabaseConnection {
         return connection;
     }
 
+    public void setConnection() throws SQLException {
+        this.connection = DriverManager.getConnection(url, userDB, passwordDB);
+    }
+
     private void sqlException(SQLException e) throws SQLException {
         e.printStackTrace();
         showErrorMessage(e.getErrorCode()+": "+e.getMessage());
