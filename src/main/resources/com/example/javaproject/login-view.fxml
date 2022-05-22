@@ -14,7 +14,7 @@
 
 <AnchorPane prefHeight="780.0" prefWidth="1280.0" stylesheets="@../../../css/logStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javaproject.LoginController">
    <children>
-      <VBox alignment="CENTER" layoutX="410.0" layoutY="62.0" prefHeight="657.0" prefWidth="460.0" style="-fx-background-color: background-color: rgba(0, 0, 0, 0.8);;" styleClass="backgroundMain">
+      <VBox alignment="CENTER" layoutX="410.0" layoutY="62.0" prefHeight="657.0" prefWidth="460.0" styleClass="backgroundMain">
          <children>
             <ImageView fitHeight="107.0" fitWidth="274.0" pickOnBounds="true" preserveRatio="true">
 
