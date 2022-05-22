@@ -7,10 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
@@ -38,60 +35,71 @@ public class LoginController {
     }
 
     @FXML
-    private void login(ActionEvent event) throws IOException {
-        if(Validator.loginFieldsCheck(passwordField, usernameField))
-        {
-            if(DatabaseConnection.loginCheck(event, usernameField.getText(), passwordField.getText()))
-            {
-                FXMLLoader loader = new FXMLLoader(DatabaseConnection.class.getResource("menu-view.fxml"));
-                root = loader.load();
+    private void login(ActionEvent event) throws IOException, SQLException {
+        if(databaseConnection.getConnection() != null) {
+            if (Validator.loginFieldsCheck(passwordField, usernameField)) {
+                if (databaseConnection.loginCheck(event, usernameField.getText(), passwordField.getText())) {
+                    FXMLLoader loader = new FXMLLoader(DatabaseConnection.class.getResource("menu-view.fxml"));
+                    root = loader.load();
 
-                MenuController menuController = loader.getController();
-                String username;
-                username = usernameField.getText();
+                    MenuController menuController = loader.getController();
+                    String username;
+                    username = usernameField.getText();
 
-                UserData userData = DatabaseConnection.setProfileData(username);
+                    UserData userData = databaseConnection.setProfileData(username);
 
-                menuController.setUserData(userData, databaseConnection);
+                    menuController.setUserData(userData, databaseConnection);
 
-                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                Scene scene = new Scene(root);
-                stage.setScene(scene);
-                stage.show();
-                root.requestFocus(); //Żeby nie oznaczało pierwszego buttona jako selected
+                    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    Scene scene = new Scene(root);
+                    stage.setScene(scene);
+                    stage.show();
+                    root.requestFocus(); //Żeby nie oznaczało pierwszego buttona jako selected
+                }
             }
+        } else {
+            databaseConnection = new DatabaseConnection();
         }
     }
 
     @FXML
-    private void register(MouseEvent event) throws IOException {
+    private void register(MouseEvent event) throws IOException, SQLException {
        // SwitchScene.switchScene("signup-view.fxml", event);
 
-        FXMLLoader loader = new FXMLLoader(DatabaseConnection.class.getResource("signup-view.fxml"));
-        root = loader.load();
+        if(databaseConnection.getConnection() != null) {
+            FXMLLoader loader = new FXMLLoader(DatabaseConnection.class.getResource("signup-view.fxml"));
+            root = loader.load();
 
-        SignUpController signUpController = loader.getController();
+            SignUpController signUpController = loader.getController();
 
-        signUpController.setConnection(databaseConnection);
+            signUpController.setConnection(databaseConnection);
 
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } else {
+            databaseConnection = new DatabaseConnection();
+        }
     }
 
     @FXML
-    private void resetPassword(MouseEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(DatabaseConnection.class.getResource("resetPassword-view.fxml"));
-        root = loader.load();
+    private void resetPassword(MouseEvent event) throws IOException, SQLException {
+        if(databaseConnection.getConnection() != null) {
 
-        ResetEmailController resetEmailController = loader.getController();
+            FXMLLoader loader = new FXMLLoader(DatabaseConnection.class.getResource("resetPassword-view.fxml"));
+            root = loader.load();
 
-        resetEmailController.setConnection(databaseConnection);
+            ResetEmailController resetEmailController = loader.getController();
 
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+            resetEmailController.setConnection(databaseConnection);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } else {
+            databaseConnection = new DatabaseConnection();
+        }
     }
 }

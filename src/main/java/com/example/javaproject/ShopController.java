@@ -67,7 +67,7 @@ public class ShopController {
         shopMenu.getItems().add("Supplies and tools");
         shopMenu.getItems().add("Arcane shop");
         //Login
-        loginLabel.setText(DatabaseConnection.getLogin(userData.getUid()));
+        loginLabel.setText(this.databaseConnection.getLogin(userData.getUid()));
         setShop(1);
     }
 

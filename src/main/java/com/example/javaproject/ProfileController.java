@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ProfileController {
@@ -68,7 +69,7 @@ public class ProfileController {
     {
     }
 
-    public void setUserData(UserData userData, DatabaseConnection databaseConnection) {
+    public void setUserData(UserData userData, DatabaseConnection databaseConnection) throws SQLException {
         this.userData = userData;
         this.databaseConnection = databaseConnection;
 
@@ -90,8 +91,7 @@ public class ProfileController {
         stage.show();
     }
 
-    public void setCredentials()
-    {
+    public void setCredentials() throws SQLException {
         ArrayList<Integer> uid = new ArrayList<>();
         uid.add(userData.getUid());
         ArrayList<String> credentials = new ArrayList<>();
@@ -146,8 +146,7 @@ public class ProfileController {
         emailLabel.setText(email);
     }
 
-    public void setAvatar1(ActionEvent event)
-    {
+    public void setAvatar1(ActionEvent event) throws SQLException {
         Image avatarUrl = new Image("file:src/main/resources/assets/Avatars/av1.png");
         profileAvatar.setImage(avatarUrl);
         //DatabaseConnection.setNewAvatar("file:src/main/resources/assets/Avatars/av1.png",username);
@@ -155,40 +154,35 @@ public class ProfileController {
 
     }
 
-    public void setAvatar2(ActionEvent event)
-    {
+    public void setAvatar2(ActionEvent event) throws SQLException {
         Image avatarUrl = new Image("file:src/main/resources/assets/Avatars/av2.png");
         profileAvatar.setImage(avatarUrl);
         //DatabaseConnection.setNewAvatar("file:src/main/resources/assets/Avatars/av2.png",username);
         databaseConnection.setNewAvatar("2",userData.getUid());
     }
 
-    public void setAvatar3(ActionEvent event)
-    {
+    public void setAvatar3(ActionEvent event) throws SQLException {
         Image avatarUrl = new Image("file:src/main/resources/assets/Avatars/av3.png");
         profileAvatar.setImage(avatarUrl);
         //DatabaseConnection.setNewAvatar("file:src/main/resources/assets/Avatars/av3.png",username);
         databaseConnection.setNewAvatar("3",userData.getUid());
     }
 
-    public void setAvatar4(ActionEvent event)
-    {
+    public void setAvatar4(ActionEvent event) throws SQLException {
         Image avatarUrl = new Image("file:src/main/resources/assets/Avatars/av4.png");
         profileAvatar.setImage(avatarUrl);
         //DatabaseConnection.setNewAvatar("file:src/main/resources/assets/Avatars/av4.png",username);
         databaseConnection.setNewAvatar("4",userData.getUid());
     }
 
-    public void setAvatar5(ActionEvent event)
-    {
+    public void setAvatar5(ActionEvent event) throws SQLException {
         Image avatarUrl = new Image("file:src/main/resources/assets/Avatars/av5.png");
         profileAvatar.setImage(avatarUrl);
         //DatabaseConnection.setNewAvatar("file:src/main/resources/assets/Avatars/av5.png",username);
         databaseConnection.setNewAvatar("5",userData.getUid());
     }
 
-    public void setAvatar6(ActionEvent event)
-    {
+    public void setAvatar6(ActionEvent event) throws SQLException {
         Image avatarUrl = new Image("file:src/main/resources/assets/Avatars/av6.png");
         profileAvatar.setImage(avatarUrl);
         //DatabaseConnection.setNewAvatar("file:src/main/resources/assets/Avatars/av6.png",username);
@@ -247,8 +241,7 @@ public class ProfileController {
         type.setText("email");
     }
 
-    public void confirmChanges(ActionEvent event)
-    {
+    public void confirmChanges(ActionEvent event) throws SQLException {
         switch (type.getText())
         {
             case "login":
@@ -323,7 +316,7 @@ public class ProfileController {
                         if(Validator.emailValidator(textField1))
                         {
                             if (databaseConnection.emailCheck(event, email)) {
-                                DatabaseConnection.changeEmail(textField1.getText(), email);
+                                databaseConnection.changeEmail(textField1.getText(), email);
                                 Alert passwordAlert = new Alert(Alert.AlertType.CONFIRMATION);
                                 passwordAlert.setHeaderText(null);
                                 passwordAlert.setTitle("Success");

@@ -15,6 +15,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Objects;
 
 public class ResetEmailController {
@@ -54,7 +55,7 @@ public class ResetEmailController {
     }
 
     @FXML
-    private void resetPassword(ActionEvent event) throws IOException {
+    private void resetPassword(ActionEvent event) throws IOException, SQLException {
         if(Validator.emailValidator(emailField)) {
             if(databaseConnection.emailCheck(event,emailField.getText()))
             {

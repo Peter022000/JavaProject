@@ -13,6 +13,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class ResetPasswordController {
 
@@ -37,7 +38,7 @@ public class ResetPasswordController {
     }
 
     @FXML
-    private void resetPassword(ActionEvent event) throws IOException {
+    private void resetPassword(ActionEvent event) throws IOException, SQLException {
         error.setVisible(false);
         if(Validator.resetPasswordValidator(newPasswordField, securityQuestionAnswerField, error)) {
             if(databaseConnection.securityAnswerCheck(securityQuestionAnswerField.getText(),email))
@@ -59,7 +60,7 @@ public class ResetPasswordController {
     }
 
     @FXML
-    public void setFields(String email, ActionEvent event, DatabaseConnection databaseConnection) {
+    public void setFields(String email, ActionEvent event, DatabaseConnection databaseConnection) throws SQLException {
         this.email = email;
         databaseConnection.setSecurityQuestionLabel(event, email, securityQuestionField);
         this.databaseConnection = databaseConnection;

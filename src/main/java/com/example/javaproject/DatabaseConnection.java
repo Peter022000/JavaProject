@@ -13,14 +13,19 @@ import java.util.List;
 
 public class DatabaseConnection {
 
-    static String url = "jdbc:postgresql://195.150.230.210:5436/2022_krol_marcin";
-    static String userDB = "2022_krol_marcin";
-    static String passwordDB = "34300";
+    private final static String url = "jdbc:postgresql://195.150.230.210:5436/2022_krol_marcin";
+    private final static String userDB = "2022_krol_marcin";
+    private final static String passwordDB = "34300";
 
-    Connection connection;
+    private Connection connection;
 
     public DatabaseConnection() throws SQLException {
-        this.connection = DriverManager.getConnection(url, userDB, passwordDB);;
+        try {
+            this.connection = DriverManager.getConnection(url, userDB, passwordDB);
+        }
+        catch (SQLException e) {
+            showErrorMessage(e.getErrorCode()+": "+e.getMessage());
+        }
     }
 
     public static void main(String[] args) {
@@ -47,7 +52,7 @@ public class DatabaseConnection {
 
     //TODO: Zmienić wywoływanie alertu
 
-    boolean createAccount(String username, String email, String securityQuestion, String securityAnswer, String password, Label error, ActionEvent event) {
+    boolean createAccount(String username, String email, String securityQuestion, String securityAnswer, String password, Label error, ActionEvent event) throws SQLException {
         String query = "INSERT INTO \"VirtualMerchant\".users(login, password, security_question, security_answer, email)\n" +
                 "\tVALUES (?, ?, ?, ?, ?);";
         try {
@@ -63,20 +68,16 @@ public class DatabaseConnection {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             error.setVisible(true);
-            e.printStackTrace();
+            sqlException(e);
             return false;
         }
     }
 
-    public static boolean loginCheck(ActionEvent event, String username, String password) {
+    public boolean loginCheck(ActionEvent event, String username, String password) throws SQLException {
         PreparedStatement psCheckLogin = null;
         ResultSet resultSet = null;
-        Connection logIn = null;
-
         try {
-            logIn = DriverManager.getConnection(url, userDB, passwordDB);
-
-            psCheckLogin = logIn.prepareStatement("SELECT password FROM \"VirtualMerchant\".users WHERE login=?");
+            psCheckLogin = connection.prepareStatement("SELECT password FROM \"VirtualMerchant\".users WHERE login=?");
             psCheckLogin.setString(1, username);
             resultSet = psCheckLogin.executeQuery();
             if (!resultSet.isBeforeFirst()) {
@@ -102,14 +103,14 @@ public class DatabaseConnection {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            sqlException(e);
             return false;
         } finally {
             if (resultSet != null) {
                 try {
                     resultSet.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    sqlException(e);
                     return false;
                 }
             }
@@ -117,15 +118,7 @@ public class DatabaseConnection {
                 try {
                     psCheckLogin.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
-                    return false;
-                }
-            }
-            if (logIn != null) {
-                try {
-                    logIn.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
+                    sqlException(e);
                     return false;
                 }
             }
@@ -133,7 +126,7 @@ public class DatabaseConnection {
         return true;
     }
 
-    public boolean checkIfLoginExist(String username) {
+    public boolean checkIfLoginExist(String username) throws SQLException {
         PreparedStatement psCheckLogin = null;
         ResultSet resultSet = null;
 
@@ -152,14 +145,14 @@ public class DatabaseConnection {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            sqlException(e);
             return false;
         } finally {
             if (resultSet != null) {
                 try {
                     resultSet.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    sqlException(e);
                     return false;
                 }
             }
@@ -167,22 +160,19 @@ public class DatabaseConnection {
                 try {
                     psCheckLogin.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    sqlException(e);
                     return false;
                 }
             }
         }
     }
 
-    public static String getLogin(int UID) {
+    public String getLogin(int UID) throws SQLException {
         PreparedStatement psCheckLogin = null;
         ResultSet resultSet = null;
-        Connection logIn = null;
 
         try {
-            logIn = DriverManager.getConnection(url, userDB, passwordDB);
-
-            psCheckLogin = logIn.prepareStatement("SELECT login FROM \"VirtualMerchant\".users WHERE uid=?");
+            psCheckLogin = connection.prepareStatement("SELECT login FROM \"VirtualMerchant\".users WHERE uid=?");
             psCheckLogin.setInt(1, UID);
             resultSet = psCheckLogin.executeQuery();
             if (!resultSet.isBeforeFirst()) {
@@ -194,33 +184,27 @@ public class DatabaseConnection {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            showErrorMessage(e.getErrorCode()+": "+e.getMessage());
         } finally {
             if (resultSet != null) {
                 try {
                     resultSet.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    sqlException(e);
                 }
             }
             if (psCheckLogin != null) {
                 try {
                     psCheckLogin.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (logIn != null) {
-                try {
-                    logIn.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
+                    sqlException(e);
                 }
             }
         }
         return "Error";
     }
 
-    public void changeLogin(String newLogin, String oldLogin) {
+    public void changeLogin(String newLogin, String oldLogin) throws SQLException {
         PreparedStatement psResetLogin = null;
         try {
             psResetLogin = connection.prepareStatement("UPDATE \"VirtualMerchant\".users\n" +
@@ -231,16 +215,14 @@ public class DatabaseConnection {
             psResetLogin.executeUpdate();
         }
         catch (SQLException e) {
-            e.printStackTrace();
+            sqlException(e);
         }
     }
 
-    public static void changeEmail(String newEmail, String oldEmail) {
+    public void changeEmail(String newEmail, String oldEmail) throws SQLException {
         PreparedStatement psResetLogin = null;
-        Connection resetLoginConnection = null;
         try {
-            resetLoginConnection = DriverManager.getConnection(url, userDB, passwordDB);
-            psResetLogin = resetLoginConnection.prepareStatement("UPDATE \"VirtualMerchant\".users\n" +
+            psResetLogin = connection.prepareStatement("UPDATE \"VirtualMerchant\".users\n" +
                     "\tSET email=?\n" +
                     "\tWHERE email=?;");
             psResetLogin.setString(1, newEmail);
@@ -248,11 +230,11 @@ public class DatabaseConnection {
             psResetLogin.executeUpdate();
         }
         catch (SQLException e) {
-            e.printStackTrace();
+            sqlException(e);
         }
     }
 
-    public ArrayList<String> setProfileData(ArrayList<Integer> UID) {
+    public ArrayList<String> setProfileData(ArrayList<Integer> UID) throws SQLException {
         PreparedStatement psCheckProfilData = null;
         ResultSet resultSet = null;
         String uid = null;
@@ -300,23 +282,21 @@ public class DatabaseConnection {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            sqlException(e);
             return credentials;
         }
         return credentials;
     }
 
-        public static UserData setProfileData(String username) {
+    public UserData setProfileData(String username) throws SQLException {
         PreparedStatement psCheckProfilData = null;
         ResultSet resultSet = null;
-        Connection emailCheckConnection = null;
         int uid;
         float money;
         UserData userData = null;
 
         try {
-            emailCheckConnection = DriverManager.getConnection(url, userDB, passwordDB);
-            psCheckProfilData = emailCheckConnection.prepareStatement("SELECT uid, money\n" +
+            psCheckProfilData = connection.prepareStatement("SELECT uid, money\n" +
                     "\tFROM \"VirtualMerchant\".users WHERE login=?");
             psCheckProfilData.setString(1, username);
             resultSet = psCheckProfilData.executeQuery();
@@ -337,13 +317,13 @@ public class DatabaseConnection {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            sqlException(e);
         }
         return userData;
     }
 
 
-    public void setNewAvatar(String avatarUrl, int uid) {
+    public void setNewAvatar(String avatarUrl, int uid) throws SQLException {
         PreparedStatement psResetPassword = null;
         try {
             psResetPassword = connection.prepareStatement("UPDATE \"VirtualMerchant\".users\n" +
@@ -354,11 +334,11 @@ public class DatabaseConnection {
             psResetPassword.executeUpdate();
         }
         catch (SQLException e) {
-            e.printStackTrace();
+            sqlException(e);
         }
     }
 
-    public boolean emailCheck(ActionEvent event, String email) {
+    public boolean emailCheck(ActionEvent event, String email) throws SQLException {
         PreparedStatement psCheckEmail = null;
         ResultSet resultSet = null;
 
@@ -385,13 +365,13 @@ public class DatabaseConnection {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            sqlException(e);
             return false;
         }
         return true;
     }
 
-    public boolean securityAnswerCheck(String answer, String email) {
+    public boolean securityAnswerCheck(String answer, String email) throws SQLException {
         PreparedStatement psCheckSecurityAnswer = null;
         ResultSet resultSet = null;
 
@@ -418,13 +398,13 @@ public class DatabaseConnection {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            sqlException(e);
             return false;
         }
         return true;
     }
 
-    public void setSecurityQuestionLabel(ActionEvent event, String email, Label securityQuestion) {
+    public void setSecurityQuestionLabel(ActionEvent event, String email, Label securityQuestion) throws SQLException {
 
         PreparedStatement psCheckSecurityQuestion = null;
         ResultSet resultSet = null;
@@ -448,11 +428,11 @@ public class DatabaseConnection {
             }
         }
         catch (SQLException e) {
-            e.printStackTrace();
+            sqlException(e);
         }
     }
 
-    public void resetPassword(ActionEvent event, String newPassword, String email) {
+    public void resetPassword(ActionEvent event, String newPassword, String email) throws SQLException {
         PreparedStatement psResetPassword = null;
         //ResultSet resultSet = null;
         try {
@@ -464,7 +444,7 @@ public class DatabaseConnection {
             psResetPassword.executeUpdate();
         }
         catch (SQLException e) {
-            e.printStackTrace();
+            sqlException(e);
         }
     }
 
@@ -506,7 +486,7 @@ public class DatabaseConnection {
             }
         }
         catch (SQLException e) {
-            e.printStackTrace();
+            sqlException(e);
         }
         return items;
     }
@@ -543,7 +523,7 @@ public class DatabaseConnection {
             }
         }
         catch (SQLException e) {
-            e.printStackTrace();
+            sqlException(e);
         }
         return items;
     }
@@ -560,7 +540,7 @@ public class DatabaseConnection {
                     "\tWHERE uid = " + uid + " AND iid = " + iid + ";");
         }
         catch (SQLException e) {
-            e.printStackTrace();
+            sqlException(e);
         }
     }
 
@@ -608,8 +588,24 @@ public class DatabaseConnection {
             }
         }
         catch (SQLException e) {
-            e.printStackTrace();
+            sqlException(e);
         }
         return money;
+    }
+
+    public Connection getConnection() {
+        return connection;
+    }
+
+    private void sqlException(SQLException e) throws SQLException {
+        e.printStackTrace();
+        showErrorMessage(e.getErrorCode()+": "+e.getMessage());
+        this.connection = DriverManager.getConnection(url, userDB, passwordDB);
+    }
+
+    private void showErrorMessage(String message){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setContentText(message);
+        alert.show();
     }
 }

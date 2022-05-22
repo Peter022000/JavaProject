@@ -57,7 +57,7 @@ public class EquipmentController {
     public void setUserData(UserData userData, DatabaseConnection databaseConnection) throws SQLException {
         this.userData = userData;
         this.databaseConnection = databaseConnection;
-        loginLabel.setText(DatabaseConnection.getLogin(userData.getUid()));
+        loginLabel.setText(this.databaseConnection.getLogin(userData.getUid()));
         loadTable();
     }
 

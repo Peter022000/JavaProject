@@ -25,7 +25,7 @@ public class MenuController {
     }
 
     @FXML
-    void GoToUserProfile(ActionEvent event) throws IOException {
+    void GoToUserProfile(ActionEvent event) throws IOException, SQLException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("userProfile-view.fxml"));
         Parent root = loader.load();
 
