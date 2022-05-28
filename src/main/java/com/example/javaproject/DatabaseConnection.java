@@ -27,31 +27,7 @@ public class DatabaseConnection {
             showErrorMessage(e.getErrorCode()+": "+e.getMessage());
         }
     }
-
-    public static void main(String[] args) {
-        try {
-            Class.forName("org.postgresql.Driver");
-        }
-        catch (java.lang.ClassNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
-
-        String url = "jdbc:postgresql://195.150.230.210:5436/2022_krol_marcin";
-        String username = "2022_krol_marcin";
-        String password = "34300";
-
-        try {
-            Connection db = DriverManager.getConnection(url, username, password);
-            //Connection db = DriverManager.getConnection("jdbc:postgresql://localhost/postgres", "postgres", "admin");
-            db.close();
-        }
-        catch (java.sql.SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    //TODO: Zmienić wywoływanie alertu
-
+    
     boolean createAccount(String username, String email, String securityQuestion, String securityAnswer, String password, Label error, ActionEvent event) throws SQLException {
         String query = "INSERT INTO \"VirtualMerchant\".users(login, password, security_question, security_answer, email)\n" +
                 "\tVALUES (?, ?, ?, ?, ?);";
@@ -269,7 +245,6 @@ public class DatabaseConnection {
                     securityQuestion = resultSet.getString(5);
                     securityAnswer = resultSet.getString(6);
                     profileImageUrl = resultSet.getString(7);
-                    //TODO: chyba do poprawy, rozwiązanie tymczasowe
                     credentials.add(uid);
                     credentials.add(login);
                     credentials.add(email);
