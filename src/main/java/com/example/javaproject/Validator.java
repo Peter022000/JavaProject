@@ -8,8 +8,17 @@ import javafx.scene.control.TextField;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Klasa odpowiedzialna za weryfikację poprawności wprowadzonych danych.
+ */
 public class Validator {
 
+    /**
+     * Sprawdza poprawność danych logowania.
+     * @param passwordField hasło użytkownika, wprowadzone w textfield
+     * @param usernameField nazwa użytkownika, wprowadzona w textfield
+     * @return
+     */
     static boolean loginFieldsCheck(PasswordField passwordField, TextField usernameField)
     {
         if(usernameField.getText().isEmpty() && passwordField.getText().isEmpty())
@@ -35,6 +44,11 @@ public class Validator {
         return true;
     }
 
+    /**
+     * Sprawdza poprawność emaila.
+     * @param emailField email użytkownika, wprowadzony w textfield
+     * @return
+     */
     static boolean emailValidator(TextField emailField)
     {
         Pattern emailPattern = Pattern.compile("^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$");
@@ -61,6 +75,13 @@ public class Validator {
         return true;
     }
 
+    /**
+     * Sprawdza poprawność hasła.
+     * @param newPasswordField nowe hasło użytkownika
+     * @param answerField odpowiedź na hasło bezpieczeństwa użytkownika
+     * @param error
+     * @return
+     */
     static boolean resetPasswordValidator(PasswordField newPasswordField, TextField answerField, Label error)
     {
         Pattern passwordPattern = Pattern.compile("(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})");
@@ -90,6 +111,11 @@ public class Validator {
         return true;
     }
 
+    /**
+     * Sprawdza poprawność hasła.
+     * @param newPasswordField nowe hasło użytkownika
+     * @return
+     */
     static boolean changePasswordValidator(TextField newPasswordField)
     {
         Pattern passwordPattern = Pattern.compile("(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})");
@@ -118,6 +144,15 @@ public class Validator {
         return true;
     }
 
+    /**
+     * Sprawdza poprawność danych przy tworzeniu konta.
+     * @param passwordField hasło użytkownika
+     * @param passwordConfirmField potwierdzenie hasła użytkownika
+     * @param emailField email użytkownika
+     * @param usernameField nazwa użytkownika
+     * @param securityAnswerField odpowiedź na pytanie bezpieczeństwa użytkownika
+     * @return
+     */
     static boolean createAccountValidator(PasswordField passwordField, PasswordField passwordConfirmField, TextField emailField, TextField usernameField, TextField securityAnswerField)
     {
         Pattern passwordPattern = Pattern.compile("(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})");

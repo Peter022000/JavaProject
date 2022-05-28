@@ -18,6 +18,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * Klasa odpowiedzialna za widok profilu.
+ */
 public class ProfileController {
 
     @FXML
@@ -63,12 +66,12 @@ public class ProfileController {
     String email;
     String profileUrl;
 
-
-    @FXML
-    public void initialize()
-    {
-    }
-
+    /**
+     * Funkcja ustawia dane użytkownika.
+     * @param userData obiekt przechowuje dane użytkownika.
+     * @param databaseConnection obiekt połączenia
+     * @throws SQLException
+     */
     public void setUserData(UserData userData, DatabaseConnection databaseConnection) throws SQLException {
         this.userData = userData;
         this.databaseConnection = databaseConnection;
@@ -76,6 +79,11 @@ public class ProfileController {
         this.setCredentials();
     }
 
+    /**
+     * Funkcja odpowiedzialna za przejście do sceny menu.
+     * @param event zdarzenie
+     * @throws IOException
+     */
     @FXML
     void goBackToMenu(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("menu-view.fxml"));
@@ -91,6 +99,10 @@ public class ProfileController {
         stage.show();
     }
 
+    /**
+     * Funkcja ustawiająca/drukująca dane użytkownika w widoku aplikacji.
+     * @throws SQLException
+     */
     public void setCredentials() throws SQLException {
         ArrayList<Integer> uid = new ArrayList<>();
         uid.add(userData.getUid());
@@ -100,17 +112,7 @@ public class ProfileController {
         this.username=String.valueOf(credentials.get(1));
         this.email = String.valueOf(credentials.get(2));
         this.profileUrl =String.valueOf(credentials.get(6));
-        
-        /*//INFO: nie da sie zrobić tak V wyskakuje błąd
-        String url = "\""+profileUrl+"\"";
-        System.out.println(url);
 
-        //INFO: ale Image avatarUrl = new Image("file:src/main/resources/assets/Avatars/av1.png") zadziała
-        Image avatarUrl = new Image(profileUrl);
-        profileAvatar.setImage(avatarUrl);*/
-
-        //TODO: Naprawić, żeby czytało url z bazy danych
-        //Rozwiązanie tymczasowe w związku z problemem z czytaniem ścieżki: "illegal char <"> at index 24 java..."
         switch (profileUrl)
         {
             case "1":
@@ -146,6 +148,11 @@ public class ProfileController {
         emailLabel.setText(email);
     }
 
+    /**
+     * Funkcja ustawia avatar użytkownika.
+     * @param event zdarzenie
+     * @throws SQLException
+     */
     public void setAvatar1(ActionEvent event) throws SQLException {
         Image avatarUrl = new Image("file:src/main/resources/assets/Avatars/av1.png");
         profileAvatar.setImage(avatarUrl);
@@ -154,6 +161,11 @@ public class ProfileController {
 
     }
 
+    /**
+     * Funkcja ustawia avatar użytkownika.
+     * @param event zdarzenie
+     * @throws SQLException
+     */
     public void setAvatar2(ActionEvent event) throws SQLException {
         Image avatarUrl = new Image("file:src/main/resources/assets/Avatars/av2.png");
         profileAvatar.setImage(avatarUrl);
@@ -161,6 +173,11 @@ public class ProfileController {
         databaseConnection.setNewAvatar("2",userData.getUid());
     }
 
+    /**
+     * Funkcja ustawia avatar użytkownika.
+     * @param event zdarzenie
+     * @throws SQLException
+     */
     public void setAvatar3(ActionEvent event) throws SQLException {
         Image avatarUrl = new Image("file:src/main/resources/assets/Avatars/av3.png");
         profileAvatar.setImage(avatarUrl);
@@ -168,6 +185,11 @@ public class ProfileController {
         databaseConnection.setNewAvatar("3",userData.getUid());
     }
 
+    /**
+     * Funkcja ustawia avatar użytkownika.
+     * @param event zdarzenie
+     * @throws SQLException
+     */
     public void setAvatar4(ActionEvent event) throws SQLException {
         Image avatarUrl = new Image("file:src/main/resources/assets/Avatars/av4.png");
         profileAvatar.setImage(avatarUrl);
@@ -175,6 +197,11 @@ public class ProfileController {
         databaseConnection.setNewAvatar("4",userData.getUid());
     }
 
+    /**
+     * Funkcja ustawia avatar użytkownika.
+     * @param event zdarzenie
+     * @throws SQLException
+     */
     public void setAvatar5(ActionEvent event) throws SQLException {
         Image avatarUrl = new Image("file:src/main/resources/assets/Avatars/av5.png");
         profileAvatar.setImage(avatarUrl);
@@ -182,6 +209,11 @@ public class ProfileController {
         databaseConnection.setNewAvatar("5",userData.getUid());
     }
 
+    /**
+     * Funkcja ustawia awatar użytkownika.
+     * @param event zdarzenie
+     * @throws SQLException
+     */
     public void setAvatar6(ActionEvent event) throws SQLException {
         Image avatarUrl = new Image("file:src/main/resources/assets/Avatars/av6.png");
         profileAvatar.setImage(avatarUrl);
@@ -189,28 +221,48 @@ public class ProfileController {
         databaseConnection.setNewAvatar("6",userData.getUid());
     }
 
+    /**
+     * Funkcja pokazuje listę awatarów.
+     * @param event
+     */
     public void openAvatarList(MouseEvent event)
     {
         avatarVbox.setVisible(true);
         otherSettingsVbox.setVisible(false);
     }
 
+    /**
+     * Funkcja zamyka liste awatarów
+     * @param event
+     */
     public void closeAvatarList(MouseEvent event)
     {
         avatarVbox.setVisible(false);
     }
 
+    /**
+     * Otwiera okno ustawień.
+     * @param event
+     */
     public void openSettings(ActionEvent event)
     {
         otherSettingsVbox.setVisible(true);
         avatarVbox.setVisible(false);
     }
 
+    /**
+     * Zamyka okno ustawień.
+     * @param event
+     */
     public void closeSettings(MouseEvent event)
     {
         otherSettingsVbox.setVisible(false);
     }
 
+    /**
+     * Funkcja ustawia treść etykiet oraz flagę dla zmiany hasła.
+     * @param event
+     */
     public void changePassword(ActionEvent event)
     {
         changeLabel.setText("Change your password:");
@@ -221,6 +273,10 @@ public class ProfileController {
         type.setText("password");
     }
 
+    /**
+     * Funkcja ustawia treść etykiet oraz flagę dla zmiany loginu.
+     * @param event
+     */
     public void changeLogin(ActionEvent event)
     {
         changeLabel.setText("Change your login:");
@@ -231,6 +287,10 @@ public class ProfileController {
         type.setText("login");
     }
 
+    /**
+     * Funkcja ustawia treść etykiet oraz flagę dla zmiany emaila.
+     * @param event
+     */
     public void changeEmail(ActionEvent event)
     {
         changeLabel.setText("Change your email:");
@@ -241,6 +301,11 @@ public class ProfileController {
         type.setText("email");
     }
 
+    /**
+     * Funkcja realizuje walidację i weryfikację danych oraz zapytanie do bazy danych o zmianę danych użytkownika.
+     * @param event
+     * @throws SQLException
+     */
     public void confirmChanges(ActionEvent event) throws SQLException {
         switch (type.getText())
         {
@@ -340,6 +405,9 @@ public class ProfileController {
         }
     }
 
+    /**
+     * Włącza etykiety.
+     */
     public void enableChange()
     {
         changeLabel.setVisible(true);
@@ -350,6 +418,9 @@ public class ProfileController {
         confirmButton.setVisible(true);
     }
 
+    /**
+     * Wyłącza etykiety.
+     */
     public void disableChange()
     {
         changeLabel.setVisible(false);

@@ -15,6 +15,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.SQLException;
 
+/**
+ * Klasa odpowiedzialna za widok resetowania hasła, widok 2.
+ */
 public class ResetPasswordController {
 
     @FXML
@@ -31,12 +34,12 @@ public class ResetPasswordController {
 
     private DatabaseConnection databaseConnection;
 
-    @FXML
-    public void initialize()
-    {
-
-    }
-
+    /**
+     * Funkcja realizuje walidację, weryfikację oraz wysłanie zapytania o zmianę hasła
+     * @param event
+     * @throws IOException
+     * @throws SQLException
+     */
     @FXML
     private void resetPassword(ActionEvent event) throws IOException, SQLException {
         error.setVisible(false);
@@ -59,6 +62,13 @@ public class ResetPasswordController {
         }
     }
 
+    /**
+     * Ustawia m.in. email użytkownika.
+     * @param email email użytkownika
+     * @param event zdarzenie
+     * @param databaseConnection obiekt połaczenia
+     * @throws SQLException
+     */
     @FXML
     public void setFields(String email, ActionEvent event, DatabaseConnection databaseConnection) throws SQLException {
         this.email = email;
@@ -66,6 +76,11 @@ public class ResetPasswordController {
         this.databaseConnection = databaseConnection;
     }
 
+    /**
+     * Funkcja realizuje przejście do sceny z logowaniem.
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void goBackToLogin(MouseEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("login-view.fxml"));

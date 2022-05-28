@@ -11,8 +11,17 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+/**
+ * Klasa odpowiedzialna za start aplikacji.
+ */
 public class HelloApplication extends Application {
 
+    /**
+     * Funkcja generująca obiekt stage. Wyświetla interfejs graficzny.
+     * @param stage obiekt stage
+     * @throws IOException
+     * @throws SQLException
+     */
     @Override
     public void start(Stage stage) throws IOException, SQLException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("login-view.fxml"));
@@ -30,6 +39,10 @@ public class HelloApplication extends Application {
         stage.show();
     }
 
+    /**
+     * Funkcja startowa. Uruchamia program.
+     * @param args argumenty wywołania
+     */
     public static void main(String[] args) {
         launch();
     }

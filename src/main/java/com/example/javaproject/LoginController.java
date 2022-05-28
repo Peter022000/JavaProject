@@ -17,6 +17,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Objects;
 
+
+/**
+ * Klasa odpowiedzialna za scene logowania.
+ */
 public class LoginController {
 
     @FXML
@@ -30,10 +34,20 @@ public class LoginController {
 
     private DatabaseConnection databaseConnection;
 
+    /**
+     * Ustawia obiekt połączenia bazy danych.
+     * @param databaseConnection obiekt połączenia
+     */
     public void setDatabaseConnection(DatabaseConnection databaseConnection) {
         this.databaseConnection = databaseConnection;
     }
 
+    /**
+     * Główna funkcja kontrolera odpowiedzialna za sprawdzenie poprawności wprowadzonych danych.
+     * @param event zdarzenie
+     * @throws IOException
+     * @throws SQLException
+     */
     @FXML
     private void login(ActionEvent event) throws IOException, SQLException {
         if(databaseConnection.getConnection() == null) {
@@ -65,6 +79,12 @@ public class LoginController {
         }
     }
 
+    /**
+     * Funkcja odpowiedzialna za przejście do sceny rejestracji.
+     * @param event zdarzenie
+     * @throws IOException
+     * @throws SQLException
+     */
     @FXML
     private void register(MouseEvent event) throws IOException, SQLException {
        // SwitchScene.switchScene("signup-view.fxml", event);
@@ -88,6 +108,12 @@ public class LoginController {
         }
     }
 
+    /**
+     * Funkcja odpowiedzialna za przejście do sceny resetowania hasła.
+     * @param event zdarzenie
+     * @throws IOException
+     * @throws SQLException
+     */
     @FXML
     private void resetPassword(MouseEvent event) throws IOException, SQLException {
 
