@@ -37,6 +37,18 @@ public class DatabaseConnection {
         }
     }
 
+    /**
+     * Funkcja wykonuje zapytanie do bazy i tworzy nowego użytkownika.
+     * @param username nazwa użytkownika
+     * @param email email użytkownika
+     * @param securityQuestion pytanie bezpieczeństwa użytkownika
+     * @param securityAnswer odpowiedź na pytanie bezpieczeństwa użytkownika
+     * @param password hasło użytkownika
+     * @param error kod błędu
+     * @param event zdarzenie
+     * @return
+     * @throws SQLException
+     */
     boolean createAccount(String username, String email, String securityQuestion, String securityAnswer, String password, Label error, ActionEvent event) throws SQLException {
         String query = "INSERT INTO \"VirtualMerchant\".users(login, password, security_question, security_answer, email)\n" +
                 "\tVALUES (?, ?, ?, ?, ?);";
@@ -58,6 +70,14 @@ public class DatabaseConnection {
         }
     }
 
+    /**
+     * Funkcja wykonuje zapytanie do bazy danych i sprawdza, czy dane użytkownika się zgadzają, jeżeli tak zaloguje użytkownika do aplikacji.
+     * @param event
+     * @param username nazwa użytkownika
+     * @param password hasło użytkownika
+     * @return
+     * @throws SQLException
+     */
     public boolean loginCheck(ActionEvent event, String username, String password) throws SQLException {
         PreparedStatement psCheckLogin = null;
         ResultSet resultSet = null;
@@ -111,6 +131,12 @@ public class DatabaseConnection {
         return true;
     }
 
+    /**
+     * Funkcja sprawdza czy dany użytkownik już istnieje w bazie danych.
+     * @param username nazwa użytkownika
+     * @return
+     * @throws SQLException
+     */
     public boolean checkIfLoginExist(String username) throws SQLException {
         PreparedStatement psCheckLogin = null;
         ResultSet resultSet = null;
@@ -152,6 +178,12 @@ public class DatabaseConnection {
         }
     }
 
+    /**
+     * Funkcja pobiera login na podstawie podanego uid z bazy danych.
+     * @param UID uid użytkownika
+     * @return zwraca login
+     * @throws SQLException
+     */
     public String getLogin(int UID) throws SQLException {
         PreparedStatement psCheckLogin = null;
         ResultSet resultSet = null;
@@ -189,6 +221,12 @@ public class DatabaseConnection {
         return "Error";
     }
 
+    /**
+     * Funkcja pozwala na zmianę loginu.
+     * @param newLogin nowa nazwa użytkownika
+     * @param oldLogin stary login użytkownika
+     * @throws SQLException
+     */
     public void changeLogin(String newLogin, String oldLogin) throws SQLException {
         PreparedStatement psResetLogin = null;
         try {
@@ -204,6 +242,12 @@ public class DatabaseConnection {
         }
     }
 
+    /**
+     * Funkcja pozwala na zmianę emaila.
+     * @param newEmail nowy email
+     * @param oldEmail stary email
+     * @throws SQLException
+     */
     public void changeEmail(String newEmail, String oldEmail) throws SQLException {
         PreparedStatement psResetLogin = null;
         try {
@@ -219,6 +263,12 @@ public class DatabaseConnection {
         }
     }
 
+    /**
+     * Funkcja pozwala na zwrócenie wszystkich danych danego użytkownika.
+     * @param UID uid użytkownika
+     * @return zwraca dane użytkownika
+     * @throws SQLException
+     */
     public ArrayList<String> setProfileData(ArrayList<Integer> UID) throws SQLException {
         PreparedStatement psCheckProfilData = null;
         ResultSet resultSet = null;
@@ -272,6 +322,12 @@ public class DatabaseConnection {
         return credentials;
     }
 
+    /**
+     * Funkcja zwraca uid oraz liczbę pieniędzy użytkownika.
+     * @param username nazwa użytkownika
+     * @return zwraca dane użytkownika
+     * @throws SQLException
+     */
     public UserData setProfileData(String username) throws SQLException {
         PreparedStatement psCheckProfilData = null;
         ResultSet resultSet = null;
@@ -307,6 +363,12 @@ public class DatabaseConnection {
     }
 
 
+    /**
+     * Funkcja zmienia avatar użytkownika.
+     * @param avatarUrl avatar
+     * @param uid uid użytkownika
+     * @throws SQLException
+     */
     public void setNewAvatar(String avatarUrl, int uid) throws SQLException {
         PreparedStatement psResetPassword = null;
         try {
@@ -322,6 +384,13 @@ public class DatabaseConnection {
         }
     }
 
+    /**
+     * Funkcja sprawdzająca, czy podany email znajduje się w bazie danych
+     * @param event zdarzenie
+     * @param email email użytkownika
+     * @return prawda lub fałsz
+     * @throws SQLException
+     */
     public boolean emailCheck(ActionEvent event, String email) throws SQLException {
         PreparedStatement psCheckEmail = null;
         ResultSet resultSet = null;
@@ -355,6 +424,13 @@ public class DatabaseConnection {
         return true;
     }
 
+    /**
+     * Funkcja sprawdzająca poprawność odpowiedzi na pytanie bezpieczeństwa
+     * @param answer odpowiedź
+     * @param email email użytkownika
+     * @return
+     * @throws SQLException
+     */
     public boolean securityAnswerCheck(String answer, String email) throws SQLException {
         PreparedStatement psCheckSecurityAnswer = null;
         ResultSet resultSet = null;
@@ -388,6 +464,13 @@ public class DatabaseConnection {
         return true;
     }
 
+    /**
+     * Pobiera z bazy danych pytanie bezpieczeństwa użytkownika
+     * @param event zdarzenie
+     * @param email email użytkownika
+     * @param securityQuestion pytanie bezpieczeństwa
+     * @throws SQLException
+     */
     public void setSecurityQuestionLabel(ActionEvent event, String email, Label securityQuestion) throws SQLException {
 
         PreparedStatement psCheckSecurityQuestion = null;
@@ -416,6 +499,13 @@ public class DatabaseConnection {
         }
     }
 
+    /**
+     * Funkcja zmieniająca hasło użytkownika w bazie danych
+     * @param event zdarzenie
+     * @param newPassword nowe hasło
+     * @param email email użytkownika
+     * @throws SQLException
+     */
     public void resetPassword(ActionEvent event, String newPassword, String email) throws SQLException {
         PreparedStatement psResetPassword = null;
         //ResultSet resultSet = null;
