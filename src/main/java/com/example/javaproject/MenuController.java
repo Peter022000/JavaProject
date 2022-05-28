@@ -13,16 +13,33 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * Klasa, która przełącza użytkownika do innych aktywności
+ */
+
 public class MenuController {
 
     private UserData userData;
 
     private DatabaseConnection databaseConnection;
 
+    /**
+     * Funkcja wywoływana w innej klasie w celu przekazania danych użytkownika i połączenia z bazą danych
+     * @param userData dane użytkownika
+     * @param databaseConnection połączenie z bazą danych
+     */
+
     public void setUserData(UserData userData, DatabaseConnection databaseConnection) {
         this.userData = userData;
         this.databaseConnection = databaseConnection;
     }
+
+    /**
+     * Funkcja przekierowująca użytkownika do zarządzania profilem
+     * @param event zdarzenie
+     * @throws IOException
+     * @throws SQLException
+     */
 
     @FXML
     void GoToUserProfile(ActionEvent event) throws IOException, SQLException {
@@ -40,6 +57,13 @@ public class MenuController {
 
     }
 
+    /**
+     * Funkcja przekierowująca użytkownika do ekwipunku
+     * @param event zdarzenie
+     * @throws IOException
+     * @throws SQLException
+     */
+
     @FXML
     void goToEquipment(ActionEvent event) throws IOException, SQLException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("equipment-view.fxml"));
@@ -53,6 +77,12 @@ public class MenuController {
         stage.setScene(scene);
         stage.show();
     }
+
+    /**
+     * Funkcja wylogowująca użytkownika
+     * @param event zdarzenie
+     * @throws IOException
+     */
 
     @FXML
     void goToLoginMenu(ActionEvent event) throws IOException {
@@ -69,6 +99,13 @@ public class MenuController {
 
         //SwitchScene.switchScene("login-view.fxml", event);
     }
+
+    /**
+     * Funkcja przekierowująca użytkownika do sklepu
+     * @param event zdarzenie
+     * @throws IOException
+     * @throws SQLException
+     */
 
     @FXML
     void goToShop(ActionEvent event) throws IOException, SQLException {

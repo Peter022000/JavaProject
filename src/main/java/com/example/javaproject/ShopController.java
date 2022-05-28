@@ -16,6 +16,10 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+/**
+ * Klasa obsługująca sklep
+ */
+
 public class ShopController {
 
     @FXML
@@ -60,6 +64,13 @@ public class ShopController {
 
     private DatabaseConnection databaseConnection;
 
+    /**
+     * Funkcja wywoływana w innej klasie w celu przekazania danych użytkownika i połączenia z bazą danych
+     * @param userData dane użytkownika
+     * @param databaseConnection połączenie z bazą danych
+     * @throws SQLException
+     */
+
     public void setUserData(UserData userData, DatabaseConnection databaseConnection) throws SQLException {
         this.userData = userData;
         this.databaseConnection = databaseConnection;
@@ -71,10 +82,23 @@ public class ShopController {
         setShop(1);
     }
 
+    /**
+     * Funkcja ustawiająca sklep
+     * @param sid id sklepu
+     * @throws SQLException
+     */
+
     public void setShop(int sid) throws SQLException {
         this.sid = sid;
         loadTable();
     }
+
+    /**
+     * Funkcja odpowiedzialna za wybranie sklepu
+     * @param event zdarzenie
+     * @throws IOException
+     * @throws SQLException
+     */
 
     @FXML
     void shopMenuAction(ActionEvent event) throws IOException, SQLException {
@@ -88,6 +112,12 @@ public class ShopController {
             this.setShop(3);
         }
     }
+
+    /**
+     * Funkcja przekierowująca użytkownika do menu
+     * @param event zdarzenie
+     * @throws IOException
+     */
 
     @FXML
     void goBackToMenu(ActionEvent event) throws IOException {
@@ -104,6 +134,11 @@ public class ShopController {
 
     }
 
+    /**
+     * Funkcja pobierająca przedmioty użytkownika z bazy danych i generująca tabelę
+     * @throws SQLException
+     */
+
     private void loadTable() throws SQLException {
         items = databaseConnection.getShopItems(sid);
         tableName.setCellValueFactory(new PropertyValueFactory<Item,String>("name"));
@@ -117,6 +152,10 @@ public class ShopController {
 
         tableView.setItems(items);
     }
+
+    /**
+     * Funkcja generująca w tabeli przycisk odpowiedzialny za kupienie przedmiotu ze sklepu
+     */
 
     Callback<TableColumn<Item, String>, TableCell<Item, String>> cellFactory
             = //
@@ -157,6 +196,10 @@ public class ShopController {
                     return cell;
                 }
             };
+
+    /**
+     * Funkcja generująca w tabeli przycisk odpowiedzialny za wyświetlenie opisu przedmiotu
+     */
 
     Callback<TableColumn<Item, String>, TableCell<Item, String>> cellFactory2
             = //

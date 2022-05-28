@@ -11,6 +11,10 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Klasa obsługująca połączenia z bazą danych
+ */
+
 public class DatabaseConnection {
 
     private final static String url = "jdbc:postgresql://195.150.230.210:5436/2022_krol_marcin";
@@ -18,6 +22,11 @@ public class DatabaseConnection {
     private final static String passwordDB = "34300";
 
     private Connection connection;
+
+    /**
+     * Konstruktor nawiązujący połączenie z bazą danych
+     * @throws SQLException
+     */
 
     public DatabaseConnection() throws SQLException {
         try {
@@ -27,7 +36,7 @@ public class DatabaseConnection {
             showErrorMessage(e.getErrorCode()+": "+e.getMessage());
         }
     }
-    
+
     boolean createAccount(String username, String email, String securityQuestion, String securityAnswer, String password, Label error, ActionEvent event) throws SQLException {
         String query = "INSERT INTO \"VirtualMerchant\".users(login, password, security_question, security_answer, email)\n" +
                 "\tVALUES (?, ?, ?, ?, ?);";
@@ -424,7 +433,14 @@ public class DatabaseConnection {
     }
 
     //---------------------------------------------Equipment&Shop-----------------------------------//
-    
+
+    /**
+     * Funkcja pobierająca przedmioty użytkownika z bazy danych
+     * @param uid id użytkownika
+     * @return przedmioty
+     * @throws SQLException
+     */
+
     public ObservableList<Item> getItems(int uid) throws SQLException {
         Statement statement = null;
         ResultSet resultSet = null;
@@ -466,6 +482,13 @@ public class DatabaseConnection {
         return items;
     }
 
+    /**
+     * Funkcja pobierająca przedmioty z wybranego sklepu z bazy danych
+     * @param sid id sklepu
+     * @return przedmioty
+     * @throws SQLException
+     */
+
     public ObservableList<Item> getShopItems(int sid) throws SQLException {
         Statement statement = null;
         ResultSet resultSet = null;
@@ -503,6 +526,12 @@ public class DatabaseConnection {
         return items;
     }
 
+    /**
+     * Funkcja zmniejszająca ilość przedmiotu z ekwipunku użytkownika w bazie danych
+     * @param uid id użytkownika
+     * @param iid id przedmiotu
+     * @throws SQLException
+     */
 
     public void deleteItemFromEquipment(int uid, int iid) throws SQLException {
         Statement statement = null;
@@ -518,6 +547,17 @@ public class DatabaseConnection {
             sqlException(e);
         }
     }
+
+    /**
+     * Funkcja zwiększająca ilość lub dodająca przedmiot w ekwipunku użytkownika w bazie danych.
+     * Po kupieniu przedmiotu zmniejsza jego ilość w sklepie w bazie danych
+     * @param sid id sklepu
+     * @param uid id użytkownika
+     * @param iid id przedmiotu
+     * @param money pieniądze
+     * @return pieniądze po odjęciu wartości przedmiotu
+     * @throws SQLException
+     */
 
     public float buyItemFromShop(int sid, int uid, int iid, float money) throws SQLException {
         Statement statement = null;
@@ -568,19 +608,40 @@ public class DatabaseConnection {
         return money;
     }
 
+    /**
+     * Funkcja zwracająca połączenie z bazą danych
+     * @return
+     */
+
     public Connection getConnection() {
         return connection;
     }
 
+    /**
+     * Funkcja nawiązująca połączenie z bazą danych
+     * @throws SQLException
+     */
+
     public void setConnection() throws SQLException {
         this.connection = DriverManager.getConnection(url, userDB, passwordDB);
     }
+
+    /**
+     * Funkcja wyświetlająca komunikat o błędzie SQL oraz nawiązująca połączenie
+     * @param e błąd SQL
+     * @throws SQLException
+     */
 
     private void sqlException(SQLException e) throws SQLException {
         e.printStackTrace();
         showErrorMessage(e.getErrorCode()+": "+e.getMessage());
         this.connection = DriverManager.getConnection(url, userDB, passwordDB);
     }
+
+    /**
+     * Funkcja wyświetlająca komunikat
+     * @param message treść komunikatu
+     */
 
     private void showErrorMessage(String message){
         Alert alert = new Alert(Alert.AlertType.ERROR);

@@ -16,6 +16,10 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+/**
+ * Klasa zarządzająca ekwipunkiem
+ */
+
 public class EquipmentController {
     @FXML
     private TableView<Item> tableView;
@@ -54,6 +58,13 @@ public class EquipmentController {
 
     private DatabaseConnection databaseConnection;
 
+    /**
+     * Funkcja wywoływana w innej klasie w celu przekazania danych użytkownika i połączenia z bazą danych
+     * @param userData dane użytkownika
+     * @param databaseConnection połączenie z bazą danych
+     * @throws SQLException
+     */
+
     public void setUserData(UserData userData, DatabaseConnection databaseConnection) throws SQLException {
         this.userData = userData;
         this.databaseConnection = databaseConnection;
@@ -61,8 +72,14 @@ public class EquipmentController {
         loadTable();
     }
 
+    /**
+     * Funkcja przekierowująca użytkownika do menu
+     * @param event zdarzenie
+     * @throws IOException
+     */
+
     @FXML
-    private void goBackToMenu(ActionEvent event) throws IOException, SQLException {
+    private void goBackToMenu(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("menu-view.fxml"));
         Parent root = loader.load();
 
@@ -74,6 +91,11 @@ public class EquipmentController {
         stage.setScene(scene);
         stage.show();
     }
+
+    /**
+     * Funkcja pobierająca przedmioty użytkownika z bazy danych i generująca tabelę
+     * @throws SQLException
+     */
 
     private void loadTable() throws SQLException {
         items = databaseConnection.getItems(userData.getUid());
@@ -89,6 +111,10 @@ public class EquipmentController {
         tableView.setItems(items);
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
+
+    /**
+     * Funkcja generująca w tabeli przycisk odpowiedzialny za usunięcie przedmiotu z ekwipunku
+     */
 
     Callback<TableColumn<Item, String>, TableCell<Item, String>> cellFactory
             = //
@@ -129,6 +155,9 @@ public class EquipmentController {
                 }
             };
 
+    /**
+     * Funkcja generująca w tabeli przycisk odpowiedzialny za wyświetlenie opisu przedmiotu
+     */
 
     Callback<TableColumn<Item, String>, TableCell<Item, String>> cellFactory2
             = //

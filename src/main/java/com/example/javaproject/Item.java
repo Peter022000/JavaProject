@@ -1,11 +1,8 @@
 package com.example.javaproject;
 
-import javafx.collections.ObservableList;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.util.Callback;
+/**
+ * Klasa odpowiedzialna za przechowywanie przedmiotu
+ */
 
 public class Item {
     private int iid;
@@ -16,6 +13,16 @@ public class Item {
 
     private int amount;
 
+    /**
+     * Konstruktor tworzący obiekt zawierający dane dotyczące przedmiotu
+     * @param iid id przedmiotu
+     * @param name nazwa przedmiotu
+     * @param description opis przedmiotu
+     * @param weight waga przedmiotu
+     * @param value wartość przedmiotu
+     * @param amount ilość przedmiotu
+     */
+
     public Item(int iid, String name, String description, float weight, float value, int amount) {
         this.iid = iid;
         this.name = name;
@@ -25,48 +32,40 @@ public class Item {
         this.amount = amount;
     }
 
+    /**
+     * Funkcja zwracająca id przedmiotu
+     * @return id przemiotu
+     */
+
     public int getIid() {
         return iid;
     }
 
-    public void setIid(int iid) {
-        this.iid = iid;
-    }
+    /**
+     * Funkcja zwracająca id przedmiotu
+     * @return id przemiotu
+     */
 
     public String getName() {
         return name;
     }
 
+    /**
+     * Funkcja zwracająca nazwę przedmiotu
+     * @return nazwa przedmiotu
+     */
+
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Funkcja zwracająca opis przedmiotu
+     * @return opis przedmiotu
+     */
+
     public String getDescription() {
         return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public float getWeight() {
-        return weight;
-    }
-
-    public void setWeight(float weight) {
-        this.weight = weight;
-    }
-
-    public float getValue() {
-        return value;
-    }
-
-    public void setValue(float value) {
-        this.value = value;
-    }
-
-    public int getAmount() {
-        return amount;
     }
 
     @Override
