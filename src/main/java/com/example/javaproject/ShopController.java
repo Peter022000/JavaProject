@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.SQLException;
 
 public class ShopController {
@@ -57,19 +58,16 @@ public class ShopController {
 
     ObservableList<Item> items;
 
-    @FXML
-    void initialize()
-    {
+    private DatabaseConnection databaseConnection;
 
-    }
-
-    public void setUserData(UserData userData) throws SQLException {
+    public void setUserData(UserData userData, DatabaseConnection databaseConnection) throws SQLException {
         this.userData = userData;
+        this.databaseConnection = databaseConnection;
         shopMenu.getItems().add("Blacksmith");
         shopMenu.getItems().add("Supplies and tools");
         shopMenu.getItems().add("Arcane shop");
         //Login
-        loginLabel.setText(DatabaseConnection.getLogin(userData.getUid()));
+        loginLabel.setText(this.databaseConnection.getLogin(userData.getUid()));
         setShop(1);
     }
 
@@ -81,6 +79,7 @@ public class ShopController {
     @FXML
     void shopMenuAction(ActionEvent event) throws IOException, SQLException {
         int selectedIndex = shopMenu.getSelectionModel().getSelectedIndex();
+        descriptionArea.clear();
         if(selectedIndex == 0) {
             this.setShop(1);
         } else if(selectedIndex == 1) {
@@ -96,8 +95,7 @@ public class ShopController {
         Parent root = loader.load();
 
         MenuController menuController = loader.getController();
-
-        menuController.setUserData(userData);
+        menuController.setUserData(userData, databaseConnection);
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
@@ -107,7 +105,7 @@ public class ShopController {
     }
 
     private void loadTable() throws SQLException {
-        items = DatabaseConnection.getShopItems(sid);
+        items = databaseConnection.getShopItems(sid);
         tableName.setCellValueFactory(new PropertyValueFactory<Item,String>("name"));
         tableValue.setCellValueFactory(new PropertyValueFactory<Item,String>("value"));
         tableWeight.setCellValueFactory(new PropertyValueFactory<Item,String>("weight"));
@@ -139,7 +137,7 @@ public class ShopController {
                                 btn.setOnAction(event -> {
                                     int iid = getTableView().getItems().get(getIndex()).getIid();
                                     try {
-                                        float money = DatabaseConnection.buyItemFromEquipment(sid,userData.getUid(),iid, userData.getMoney());
+                                        float money = databaseConnection.buyItemFromShop(sid,userData.getUid(),iid, userData.getMoney());
                                         userData.setMoney(money);
                                         loadTable();
                                     } catch (SQLException e) {
@@ -176,16 +174,8 @@ public class ShopController {
                                 setGraphic(null);
                                 setText(null);
                             } else {
-                                int iid = getTableView().getItems().get(getIndex()).getIid();
-
                                 btn.setOnAction(event -> {
-                                    int index = 0;
-                                    for(Item a : items) {
-                                        if (a.getIid() == iid) {
-                                            index = items.indexOf(a);
-                                        }
-                                    }
-                                    descriptionArea.setText(items.get(index).getDescription());
+                                    descriptionArea.setText(getTableView().getItems().get(getIndex()).getDescription());
                                 });
                                 setGraphic(btn);
                                 setText(null);

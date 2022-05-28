@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.SQLException;
 
 public class EquipmentController {
@@ -51,9 +52,12 @@ public class EquipmentController {
 
     ObservableList<Item> items;
 
-    public void setUserData(UserData userData) throws SQLException {
+    private DatabaseConnection databaseConnection;
+
+    public void setUserData(UserData userData, DatabaseConnection databaseConnection) throws SQLException {
         this.userData = userData;
-        loginLabel.setText(DatabaseConnection.getLogin(userData.getUid()));
+        this.databaseConnection = databaseConnection;
+        loginLabel.setText(this.databaseConnection.getLogin(userData.getUid()));
         loadTable();
     }
 
@@ -63,8 +67,7 @@ public class EquipmentController {
         Parent root = loader.load();
 
         MenuController menuController = loader.getController();
-
-        menuController.setUserData(userData);
+        menuController.setUserData(userData, databaseConnection);
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
@@ -73,7 +76,7 @@ public class EquipmentController {
     }
 
     private void loadTable() throws SQLException {
-        items = DatabaseConnection.getItems(userData.getUid());
+        items = databaseConnection.getItems(userData.getUid());
         tableName.setCellValueFactory(new PropertyValueFactory<Item,String>("name"));
         tableValue.setCellValueFactory(new PropertyValueFactory<Item,String>("value"));
         tableWeight.setCellValueFactory(new PropertyValueFactory<Item,String>("weight"));
@@ -106,7 +109,7 @@ public class EquipmentController {
                                 btn.setOnAction(event -> {
                                     int iid = getTableView().getItems().get(getIndex()).getIid();
                                     try {
-                                        DatabaseConnection.deleteItemFromEquipment(userData.getUid(),iid);
+                                        databaseConnection.deleteItemFromEquipment(userData.getUid(),iid);
                                         loadTable();
                                     } catch (SQLException e) {
                                         e.printStackTrace();
@@ -143,16 +146,8 @@ public class EquipmentController {
                                 setGraphic(null);
                                 setText(null);
                             } else {
-                                int iid = getTableView().getItems().get(getIndex()).getIid();
-
                                 btn.setOnAction(event -> {
-                                    int index = 0;
-                                    for(Item a : items) {
-                                        if (a.getIid() == iid) {
-                                            index = items.indexOf(a);
-                                        }
-                                    }
-                                    descriptionArea.setText(items.get(index).getDescription());
+                                    descriptionArea.setText(getTableView().getItems().get(getIndex()).getDescription());
                                 });
                                 setGraphic(btn);
                                 setText(null);

@@ -15,6 +15,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Objects;
 
 public class ResetEmailController {
@@ -33,21 +34,35 @@ public class ResetEmailController {
     @FXML
     private Parent root;
 
-    @FXML
-    private void login(MouseEvent event) throws IOException {
-        SwitchScene.switchScene("login-view.fxml", event);
+    private DatabaseConnection databaseConnection;
+
+    public void setConnection(DatabaseConnection databaseConnection) {
+        this.databaseConnection = databaseConnection;
     }
 
     @FXML
-    private void resetPassword(ActionEvent event) throws IOException {
+    private void login(MouseEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("login-view.fxml"));
+        Parent root = loader.load();
+
+        LoginController loginController = loader.getController();
+        loginController.setDatabaseConnection(databaseConnection);
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    private void resetPassword(ActionEvent event) throws IOException, SQLException {
         if(Validator.emailValidator(emailField)) {
-            if(DatabaseConnection.emailCheck(event,emailField.getText()))
+            if(databaseConnection.emailCheck(event,emailField.getText()))
             {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("resetPassword2-view.fxml"));
                 root = loader.load();
                 ResetPasswordController resetPasswordController = loader.getController();
-                resetPasswordController.setFields(event, emailField.getText());
-                resetPasswordController.setEmail(emailField.getText());
+                resetPasswordController.setFields(emailField.getText(), event, databaseConnection);
                 Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
