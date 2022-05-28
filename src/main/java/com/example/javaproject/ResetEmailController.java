@@ -18,6 +18,9 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Objects;
 
+/**
+ * Klasa odpowiedzialna za widok resetowania hasła, widok 1.
+ */
 public class ResetEmailController {
     @FXML
     private TextField emailField;
@@ -36,10 +39,19 @@ public class ResetEmailController {
 
     private DatabaseConnection databaseConnection;
 
+    /**
+     * Ustawia obiekt połączenia z bazą danych.
+     * @param databaseConnection obiekt połączenia
+     */
     public void setConnection(DatabaseConnection databaseConnection) {
         this.databaseConnection = databaseConnection;
     }
 
+    /**
+     * Funkcja realizuje przejście do sceny logowania.
+     * @param event
+     * @throws IOException
+     */
     @FXML
     private void login(MouseEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("login-view.fxml"));
@@ -54,6 +66,11 @@ public class ResetEmailController {
         stage.show();
     }
 
+    /**
+     * Funkcja realizuje przejście do sceny resetowania hasła.
+     * @param event
+     * @throws IOException
+     */
     @FXML
     private void resetPassword(ActionEvent event) throws IOException, SQLException {
         if(Validator.emailValidator(emailField)) {
